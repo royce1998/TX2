@@ -48,7 +48,6 @@ static int demo_total = 0;
 double demo_time;
 
 int count = 0;
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
@@ -189,7 +188,6 @@ void *detect_loop(void *ptr)
         printf("Done!\n");
         count++;
         // pthread_mutex_unlock(&lock);
-        sleep(2);
     }
 }
 
@@ -299,6 +297,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
         int j;
 
         cpu_set_t cpuset;
+        cpu_set_t cpuset2;
 
         CPU_ZERO(&cpuset);
         for (j = 0; j < 2; j++)
@@ -306,9 +305,9 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
         pthread_setaffinity_np(fetch_thread, 4, &cpuset);
 
-        CPU_ZERO(&cpuset);
+        CPU_ZERO(&cpuset2);
         for (j = 2; j < 4; j++)
-            CPU_SET(j, &cpuset);
+            CPU_SET(j, &cpuset2);
 
         pthread_setaffinity_np(detect_thread, 4, &cpuset);
 
