@@ -42,6 +42,8 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
+static pthread_mutex_t lock;
+
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
 int size_network(network *net)
@@ -166,6 +168,7 @@ void *detect_loop(void *ptr)
 {
     int count = 0;
     while(1){
+        pthread_mutex_lock(&lock);
         printf("Looping detect ...\n");
         if(!pfix){
             fps = 1./(what_time_is_it_now() - demo_time);
@@ -180,15 +183,18 @@ void *detect_loop(void *ptr)
         display_in_thread(0);
         printf("Done!\n");
         count++;
+        pthread_mutex_unlock(&lock);
     }
 }
 
 void *fetch_loop(void *ptr)
 {
     while(1){
+        pthread_mutex_lock(&lock);
         printf("Looping fetch ...\n");
         fetch_loop(0);
         printf("Done!\n");
+        pthread_mutex_unlock(&lock);
     }
 }
 
