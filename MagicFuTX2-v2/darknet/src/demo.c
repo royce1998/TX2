@@ -188,7 +188,7 @@ void *fetch_loop(void *ptr)
     while(1){
         printf("Looping fetch ...\n");
         fetch_loop(0);
-        printf("Done!\n")
+        printf("Done!\n");
     }
 }
 
