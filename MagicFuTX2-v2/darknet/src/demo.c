@@ -311,7 +311,9 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
         pthread_setaffinity_np(detect_thread, 4, &cpuset);
 
+        printf("Fetch thread started!\n")
         pthread_join(fetch_thread, 0);
+        printf("Detect thread started!\n");
         pthread_join(detect_thread, 0);
         ++count;
     }
