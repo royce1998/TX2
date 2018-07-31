@@ -292,17 +292,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
         if(pthread_create(&detect_thread, 0, detect_loop, 0)) error("Thread creation failed");
 
-        int s, j;
-        cpu_set_t cpuset;
-
-        s = pthread_setaffinity_np(fetch_thread, 4, 0);
-        if (s != 0)
-            handle_error_en(s, "pthread_setaffinity_np");
-
-        s = pthread_setaffinity_np(fetch_thread, 4, 1);
-        if (s != 0)
-            handle_error_en(s, "pthread_setaffinity_np2");
-
+        pthread_setaffinity_np(fetch_thread, 4, 0);
+        pthread_setaffinity_np(fetch_thread, 4, 1);
 
         pthread_join(fetch_thread, 0);
         pthread_join(detect_thread, 0);
