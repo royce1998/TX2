@@ -1,3 +1,7 @@
+#define _GNU_SOURCE
+
+#include <sched.h>
+
 #include "network.h"
 #include "detection_layer.h"
 #include "region_layer.h"
