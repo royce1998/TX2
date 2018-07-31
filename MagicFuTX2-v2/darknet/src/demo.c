@@ -195,7 +195,7 @@ void *fetch_loop(void *ptr)
         pthread_mutex_lock(&lock);
         count+=1;
         printf("Looping fetch ...\n");
-        fetch_loop(0);
+        fetch_in_thread(0);
         printf("Done!\n");
         count-=1;
         pthread_mutex_unlock(&lock);
