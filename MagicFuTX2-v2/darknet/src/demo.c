@@ -42,7 +42,7 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
-static pthread_mutex_t lock;
+pthread_mutex_t lock;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
@@ -190,11 +190,9 @@ void *detect_loop(void *ptr)
 void *fetch_loop(void *ptr)
 {
     while(1){
-        pthread_mutex_lock(&lock);
         printf("Looping fetch ...\n");
         fetch_loop(0);
         printf("Done!\n");
-        pthread_mutex_unlock(&lock);
     }
 }
 
