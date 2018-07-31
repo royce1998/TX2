@@ -33,7 +33,7 @@ static float fps = 0;
 static float demo_thresh = 0;
 static float demo_hier = .5;
 static int running = 0;
-
+static char *pfix;
 static int demo_frame = 3;
 static int demo_index = 0;
 static float **predictions;
@@ -114,10 +114,10 @@ void *detect_in_thread(void *ptr)
     //printf("\033[1;1H");
     //printf("\nFPS:%.1f\n",fps);
     image display = buff[(buff_index+2) % 3];
-    
+
     // 显示检测结果bbox
     draw_detections(display, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-    
+
     free_detections(dets, nboxes);
 
     demo_index = (demo_index + 1)%demo_frame;
@@ -164,8 +164,31 @@ void *display_loop(void *ptr)
 
 void *detect_loop(void *ptr)
 {
+    int count = 0;
     while(1){
+        printf("Looping detect ...\n");
+        if(!pfix){
+            fps = 1./(what_time_is_it_now() - demo_time);
+            demo_time = what_time_is_it_now();
+            display_in_thread(0);
+        }else{
+            char name[256];
+            sprintf(name, "%s_%08d", pfix, count);
+            save_image(buff[(buff_index + 1)%3], name);
+        }
         detect_in_thread(0);
+        display_in_thread(0);
+        printf("Done!\n");
+        count++;
+    }
+}
+
+void *fetch_loop(void *ptr)
+{
+    while(1){
+        printf("Looping fetch ...\n");
+        fetch_loop(0);
+        printf("Done!\n")
     }
 }
 
@@ -218,7 +241,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     int width  = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH);
     int height = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT);
     printf("video source width=%d, height=%d\n", width, height);
-    
+
     buff[0] = get_image_from_stream(cap);
     buff[1] = copy_image(buff[0]);
     buff[2] = copy_image(buff[0]);
@@ -229,7 +252,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     int count = 0;
     if(!prefix){
-        cvNamedWindow("Demo", CV_WINDOW_NORMAL); 
+        cvNamedWindow("Demo", CV_WINDOW_NORMAL);
         if(fullscreen){
             cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
         } else {
@@ -239,12 +262,12 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     }
 
     demo_time = what_time_is_it_now();
-
+    pfix = prefix;
     while(!demo_done){
-        
+
         buff_index = (buff_index + 1) %3;
-        if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
-        
+        if(pthread_create(&fetch_thread, 0, fetch_loop, 0)) error("Thread creation failed");
+
         // 每隔若干帧检测一次(仅用于视频文件调试模式)
         if (1) // 将来改成0
         {
@@ -258,17 +281,9 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
                 continue;
             }
         }
-        
-        if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");
-        if(!prefix){
-            fps = 1./(what_time_is_it_now() - demo_time);
-            demo_time = what_time_is_it_now();
-            display_in_thread(0);
-        }else{
-            char name[256];
-            sprintf(name, "%s_%08d", prefix, count);
-            save_image(buff[(buff_index + 1)%3], name);
-        }
+
+        if(pthread_create(&detect_thread, 0, detect_loop, 0)) error("Thread creation failed");
+
         pthread_join(fetch_thread, 0);
         pthread_join(detect_thread, 0);
         ++count;
@@ -281,4 +296,3 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     fprintf(stderr, "Demo needs OpenCV for webcam images.\n");
 }
 #endif
-
