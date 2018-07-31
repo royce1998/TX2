@@ -169,7 +169,7 @@ void *display_loop(void *ptr)
 void *detect_loop(void *ptr)
 {
     while(1){
-        pthread_mutex_lock(&lock);
+        // pthread_mutex_lock(&lock);
         printf("Looping detect ...\n");
         if(!pfix){
             fps = 1./(what_time_is_it_now() - demo_time);
@@ -184,7 +184,7 @@ void *detect_loop(void *ptr)
         display_in_thread(0);
         printf("Done!\n");
         count++;
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
         sleep(2);
     }
 }
@@ -192,11 +192,11 @@ void *detect_loop(void *ptr)
 void *fetch_loop(void *ptr)
 {
     while(1){
-        pthread_mutex_lock(&lock);
+        // pthread_mutex_lock(&lock);
         printf("Looping fetch ...\n");
         fetch_in_thread(0);
         printf("Done!\n");
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
         sleep(2);
     }
 }
