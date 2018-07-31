@@ -8,6 +8,7 @@
 #include "image.h"
 #include "demo.h"
 #include <sys/time.h>
+#include <unistd.h>
 
 #define DEMO 1
 
@@ -42,6 +43,7 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
+int count = 0;
 pthread_mutex_t lock;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
@@ -166,7 +168,6 @@ void *display_loop(void *ptr)
 
 void *detect_loop(void *ptr)
 {
-    int count = 0;
     while(1){
         pthread_mutex_lock(&lock);
         printf("Looping detect ...\n");
@@ -184,15 +185,21 @@ void *detect_loop(void *ptr)
         printf("Done!\n");
         count++;
         pthread_mutex_unlock(&lock);
+        sleep(0.1);
     }
 }
 
 void *fetch_loop(void *ptr)
 {
     while(1){
+        pthread_mutex_lock(&lock);
+        count+=1;
         printf("Looping fetch ...\n");
         fetch_loop(0);
         printf("Done!\n");
+        count-=1;
+        pthread_mutex_unlock(&lock);
+        sleep(0.1);
     }
 }
 
@@ -268,7 +275,10 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     demo_time = what_time_is_it_now();
     pfix = prefix;
     while(!demo_done){
-
+        if (pthread_mutex_init(&lock, NULL) != 0){
+            printf("\n mutex init failed\n");
+            return;
+        }
         buff_index = (buff_index + 1) %3;
         if(pthread_create(&fetch_thread, 0, fetch_loop, 0)) error("Thread creation failed");
 
