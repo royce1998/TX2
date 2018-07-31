@@ -574,11 +574,17 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
     if(right > im.w-1) right = im.w-1;
     if(top < 0) top = 0;
     if(bot > im.h-1) bot = im.h-1;
-    FILE* box_coordinate=fopen("box_coordinate.txt","c+");
+   /* 
+    FILE* box_coordinate=malloc(100*sizeof(FILE*));
+    box_coordinate=fopen("box_coordinate.txt","c+");
+    if(box_coordinate == NULL)
+        printf("NULL file\n");
     fprintf(box_coordinate,"BOX:(%d,%d),(%d,%d)\n",left,top,right,bot);
     fclose(box_coordinate);
     printf("BOX:(%d,%d),(%d,%d)\n",left,top,right,bot);
-    // 画出每个目标的bbox
+*/    
+
+// 画出每个目标的bbox
     draw_box_width(im, left, top, right, bot, width, red, green, blue);
 
     // 在每个bbox上显示类名
