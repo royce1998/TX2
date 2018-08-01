@@ -42,6 +42,8 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
+static pthread_mutex_t lock;
+
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
 int size_network(network *net)
@@ -135,6 +137,7 @@ void *fetch_in_thread(void *ptr)
 
 void *display_in_thread(void *ptr)
 {
+    pthread_mutex_lock(&lock);
     show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
     int c = cvWaitKey(1);
     if (c != -1) c = c%256;
@@ -152,6 +155,7 @@ void *display_in_thread(void *ptr)
         demo_hier -= .02;
         if(demo_hier <= .0) demo_hier = .0;
     }
+    pthread_mutex_unlock(&lock);
     return 0;
 }
 
@@ -248,6 +252,12 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     }
 
     demo_time = what_time_is_it_now();
+
+    if (pthread_mutex_init(&lock, NULL) != 0)
+    {
+        printf("\n mutex init failed\n");
+        return 1;
+    }
 
     pthread_t fetch_loop_thread;
     pthread_t detect_loop_thread;
