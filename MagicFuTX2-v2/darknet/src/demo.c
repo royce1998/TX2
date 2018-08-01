@@ -217,6 +217,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     set_batch_network(net, 1);
     pthread_t detect_thread;
     pthread_t fetch_thread;
+    pthread_t fetch_thread_original;
 
     srand(2222222);
 
@@ -278,9 +279,10 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
         buff_index = (buff_index + 1) %3;
         printf("Debugging location 1");
         if(pthread_create(&fetch_thread, 0, fetch_loop, 0)) error("Thread creation failed");
+        if(pthread_create(&fetch_thread_original, 0, fetch_in_thread, 0)) error("Thread creation failed");
         printf("Debugging location 4");
         // 每隔若干帧检测一次(仅用于视频文件调试模式)
-        if (0) // 将来改成0
+        if (1) // 将来改成0
         {
             printf("Debugging location 2");
             frame_skipped++;
@@ -289,7 +291,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
             }
             else{
                 display_in_thread(0);
-                pthread_join(fetch_thread, 0);
+                pthread_join(fetch_thread_original, 0);
                 continue;
             }
         }
