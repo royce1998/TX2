@@ -300,8 +300,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     pthread_setaffinity_np(detect_loop_thread, 4, &cpuset2);
 
-    print("\n\n\nCPUs in cpuset : %d\n\n\n", CPU_COUNT(cpuset));
-    print("\n\n\nCPUs in cpuset2 : %d\n\n\n", CPU_COUNT(cpuset2));
+    printf("\n\n\nCPUs in cpuset : %d\n\n\n", CPU_COUNT(cpuset));
+    printf("\n\n\nCPUs in cpuset2 : %d\n\n\n", CPU_COUNT(cpuset2));
 
     pthread_join(fetch_loop_thread, 0);
     pthread_join(detect_loop_thread, 0);
