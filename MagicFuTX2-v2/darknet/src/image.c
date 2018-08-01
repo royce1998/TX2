@@ -588,7 +588,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         else error("File not opened");
         
         fclose(box_coordinate);
-        printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
+        // printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
     }
     // 画出每个目标的bbox
     draw_box_width(im, left, top, right, bot, width, red, green, blue);
