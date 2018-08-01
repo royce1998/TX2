@@ -94,6 +94,28 @@ detection *avg_predictions(network *net, int *nboxes)
     return dets;
 }
 
+void *display_in_thread(void *ptr)
+{
+    show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
+    int c = cvWaitKey(1);
+    if (c != -1) c = c%256;
+    if (c == 27) {
+        demo_done = 1;
+        return 0;
+    } else if (c == 82) {
+        demo_thresh += .02;
+    } else if (c == 84) {
+        demo_thresh -= .02;
+        if(demo_thresh <= .02) demo_thresh = .02;
+    } else if (c == 83) {
+        demo_hier += .02;
+    } else if (c == 81) {
+        demo_hier -= .02;
+        if(demo_hier <= .0) demo_hier = .0;
+    }
+    return 0;
+}
+
 void *detect_in_thread(void *ptr)
 {
     running = 1;
@@ -135,28 +157,6 @@ void *fetch_in_thread(void *ptr)
     int status = fill_image_from_stream(cap, buff[buff_index]);
     letterbox_image_into(buff[buff_index], net->w, net->h, buff_letter[buff_index]);
     if(status == 0) demo_done = 1;
-    return 0;
-}
-
-void *display_in_thread(void *ptr)
-{
-    show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
-    int c = cvWaitKey(1);
-    if (c != -1) c = c%256;
-    if (c == 27) {
-        demo_done = 1;
-        return 0;
-    } else if (c == 82) {
-        demo_thresh += .02;
-    } else if (c == 84) {
-        demo_thresh -= .02;
-        if(demo_thresh <= .02) demo_thresh = .02;
-    } else if (c == 83) {
-        demo_hier += .02;
-    } else if (c == 81) {
-        demo_hier -= .02;
-        if(demo_hier <= .0) demo_hier = .0;
-    }
     return 0;
 }
 
