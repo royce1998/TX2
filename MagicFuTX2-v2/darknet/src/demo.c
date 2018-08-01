@@ -172,7 +172,14 @@ void *display_loop(void *ptr)
 void *detect_loop(void *ptr)
 {
     while(1){
-        // pthread_mutex_lock(&lock);
+        pthread_mutex_lock(&lock);
+        buff[0] = get_image_from_stream(cap);
+        buff[1] = copy_image(buff[0]);
+        buff[2] = copy_image(buff[0]);
+        buff_letter[0] = letterbox_image(buff[0], net->w, net->h);
+        buff_letter[1] = letterbox_image(buff[0], net->w, net->h);
+        buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
+        ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
         printf("Looping detect ...\n");
         if(!pfix){
             fps = 1./(what_time_is_it_now() - demo_time);
@@ -187,7 +194,7 @@ void *detect_loop(void *ptr)
         display_in_thread(0);
         printf("Done!\n");
         count++;
-        // pthread_mutex_unlock(&lock);
+        pthread_mutex_unlock(&lock);
     }
 }
 
