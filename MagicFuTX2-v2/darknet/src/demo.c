@@ -218,7 +218,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     int width  = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH);
     int height = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT);
     printf("video source width=%d, height=%d\n", width, height);
-
+    printf("Debugging location 1"\n);
     buff[0] = get_image_from_stream(cap);
     buff[1] = copy_image(buff[0]);
     buff[2] = copy_image(buff[0]);
@@ -226,9 +226,11 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     buff_letter[1] = letterbox_image(buff[0], net->w, net->h);
     buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
     ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
+    printf("Debugging location 2"\n);
 
     int count = 0;
     if(!prefix){
+        printf("Debugging location 3"\n);
         cvNamedWindow("Demo", CV_WINDOW_NORMAL);
         if(fullscreen){
             cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
@@ -241,7 +243,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     demo_time = what_time_is_it_now();
 
     while(!demo_done){
-
+        printf("Debugging location 4"\n);
         buff_index = (buff_index + 1) %3;
         if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
 
@@ -261,10 +263,12 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
         if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");
         if(!prefix){
+            printf("Debugging location 5"\n);
             fps = 1./(what_time_is_it_now() - demo_time);
             demo_time = what_time_is_it_now();
-            // display_in_thread(0);
+            display_in_thread(0);
         }else{
+            printf("Debugging location 6"\n);
             char name[256];
             sprintf(name, "%s_%08d", prefix, count);
             save_image(buff[(buff_index + 1)%3], name);
