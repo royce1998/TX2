@@ -181,7 +181,7 @@ void *detect_loop(void *ptr)
 }
 
 void *fetch_loop(){
-    double last_detect_time = 0.0;
+    double last_detect_time = -1.0;
     while(!demo_done){
         if (detect_time != last_detect_time){
           // pthread_mutex_lock(&lock);
