@@ -583,7 +583,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         box_coordinate=fopen("box_coordinate.txt","a+");
         if(box_coordinate!=NULL)
         {
-            fprintf(box_coordinate,INFO: "\n%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
+            fprintf(box_coordinate,"INFO:\n%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
         }
         else error("File not opened");
         
