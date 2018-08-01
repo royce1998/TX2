@@ -276,11 +276,13 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     pfix = prefix;
     while(!demo_done){
         buff_index = (buff_index + 1) %3;
+        printf("Debugging location 1");
         if(pthread_create(&fetch_thread, 0, fetch_loop, 0)) error("Thread creation failed");
-
+        printf("Debugging location 4");
         // 每隔若干帧检测一次(仅用于视频文件调试模式)
         if (1) // 将来改成0
         {
+            printf("Debugging location 2");
             frame_skipped++;
             if (frame_skipped >= FRAME_SKIP){
                 frame_skipped = 0;
@@ -291,7 +293,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
                 continue;
             }
         }
-
+        printf("Debugging location 3");
         if(pthread_create(&detect_thread, 0, detect_loop, 0)) error("Thread creation failed");
 
         int j;
