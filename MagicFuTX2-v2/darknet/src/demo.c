@@ -292,13 +292,13 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     for (j = 0; j < 1; j++)
         CPU_SET(j, &cpuset);
 
-    pthread_setaffinity_np(fetch_loop_thread, 8, &cpuset);
+    pthread_setaffinity_np(fetch_loop_thread, 4, &cpuset);
 
     CPU_ZERO(&cpuset2);
     for (j = 1; j < 8; j++)
         CPU_SET(j, &cpuset2);
 
-    pthread_setaffinity_np(detect_loop_thread, 8, &cpuset2);
+    pthread_setaffinity_np(detect_loop_thread, 4, &cpuset2);
 
     pthread_join(fetch_loop_thread, 0);
     pthread_join(detect_loop_thread, 0);
