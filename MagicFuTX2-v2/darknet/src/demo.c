@@ -193,6 +193,8 @@ void *detect_loop(void *ptr)
 
 void *fetch_loop(void *ptr)
 {
+  pthread_t fetch_thread_original;
+  if(pthread_create(&fetch_thread_original, 0, fetch_in_thread, 0)) error("Thread creation failed");
     while(1){
         if (1) // 将来改成0
         {
