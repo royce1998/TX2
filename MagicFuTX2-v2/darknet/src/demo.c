@@ -47,7 +47,7 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
-static double detect_time = 0.0;
+// static double detect_time = 0.0;
 
 // static pthread_mutex_t lock;
 
@@ -173,19 +173,19 @@ void *display_loop(void *ptr)
 
 void *detect_loop(void *ptr)
 {
-    double start = what_time_is_it_now();
+    // double start = what_time_is_it_now();
     while(!demo_done){
         // pthread_mutex_lock(&lock);
         detect_in_thread(0);
-        detect_time = what_time_is_it_now() - start;
-        start = what_time_is_it_now();
+        // detect_time = what_time_is_it_now() - start;
+        // start = what_time_is_it_now();
         // pthread_mutex_unlock(&lock);
     }
     return 0;
 }
 
 void *fetch_loop(){
-    double last_detect_time = -1.0;
+    // double last_detect_time = -1.0;
     while(!demo_done){
         // pthread_mutex_lock(&lock);
         buff_index = (buff_index + 1) % 3;
@@ -195,7 +195,7 @@ void *fetch_loop(){
         fetch_in_thread(0);
         // sleep(detect_time * 0.8);
         // printf("\n%.3f\n", detect_time);
-        last_detect_time = detect_time;
+        // last_detect_time = detect_time;
         // pthread_mutex_unlock(&lock);
     }
     return 0;
@@ -300,8 +300,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     pthread_setaffinity_np(detect_loop_thread, 4, &cpuset2);
 
-    printf("\n\n\nCPUs in cpuset : %d\n\n\n", CPU_COUNT(cpuset));
-    printf("\n\n\nCPUs in cpuset2 : %d\n\n\n", CPU_COUNT(cpuset2));
+    printf("\n\n\nCPUs in cpuset : %d\n\n\n", CPU_COUNT(&cpuset));
+    printf("\n\n\nCPUs in cpuset2 : %d\n\n\n", CPU_COUNT(&cpuset2));
 
     pthread_join(fetch_loop_thread, 0);
     pthread_join(detect_loop_thread, 0);
