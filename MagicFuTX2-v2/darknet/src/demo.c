@@ -122,7 +122,7 @@ void *detect_in_thread(void *ptr)
 
     // 显示检测结果bbox
     draw_detections(display, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-
+    display_in_thread(0);
     free_detections(dets, nboxes);
 
     demo_index = (demo_index + 1)%demo_frame;
@@ -173,7 +173,6 @@ void *detect_loop(void *ptr)
     while(!demo_done){
         // pthread_mutex_lock(&lock);
         detect_in_thread(0);
-        display_in_thread(0);
         detect_time = what_time_is_it_now() - start;
         start = what_time_is_it_now();
         // pthread_mutex_unlock(&lock);
