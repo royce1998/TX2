@@ -183,18 +183,16 @@ void *detect_loop(void *ptr)
 void *fetch_loop(){
     double last_detect_time = -1.0;
     while(!demo_done){
-        if (detect_time != last_detect_time){
-          // pthread_mutex_lock(&lock);
-          buff_index = (buff_index + 1) % 3;
-          fps = 1./(what_time_is_it_now() - demo_time);
-          demo_time = what_time_is_it_now();
-          display_in_thread(0);
-          fetch_in_thread(0);
-          sleep(detect_time * 0.8);
-          printf("\n%.3f\n", detect_time);
-          last_detect_time = detect_time;
-          // pthread_mutex_unlock(&lock);
-        }
+        // pthread_mutex_lock(&lock);
+        buff_index = (buff_index + 1) % 3;
+        fps = 1./(what_time_is_it_now() - demo_time);
+        demo_time = what_time_is_it_now();
+        if (detect_time != last_detect_time) display_in_thread(0);
+        fetch_in_thread(0);
+        sleep(detect_time * 0.8);
+        printf("\n%.3f\n", detect_time);
+        last_detect_time = detect_time;
+        // pthread_mutex_unlock(&lock);
     }
     return 0;
 }
