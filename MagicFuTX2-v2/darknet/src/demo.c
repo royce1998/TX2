@@ -137,7 +137,6 @@ void *fetch_in_thread(void *ptr)
 
 void *display_in_thread(void *ptr)
 {
-    pthread_mutex_lock(&lock);
     show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
     int c = cvWaitKey(1);
     if (c != -1) c = c%256;
@@ -155,7 +154,6 @@ void *display_in_thread(void *ptr)
         demo_hier -= .02;
         if(demo_hier <= .0) demo_hier = .0;
     }
-    pthread_mutex_unlock(&lock);
     return 0;
 }
 
@@ -169,18 +167,22 @@ void *display_loop(void *ptr)
 void *detect_loop(void *ptr)
 {
     while(!demo_done){
+        pthread_mutex_lock(&lock);
         detect_in_thread(0);
+        pthread_mutex_unlock(&lock);
     }
     return 0;
 }
 
 void *fetch_loop(){
     while(!demo_done){
+        pthread_mutex_lock(&lock);
         buff_index = (buff_index + 1) % 3;
         fps = 1./(what_time_is_it_now() - demo_time);
         demo_time = what_time_is_it_now();
         display_in_thread(0);
         fetch_in_thread(0);
+        pthread_mutex_unlock(&lock);
     }
     return 0;
 }
