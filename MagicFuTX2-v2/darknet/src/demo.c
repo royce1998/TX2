@@ -188,6 +188,7 @@ void *fetch_loop(){
         display_in_thread(0);
         fetch_in_thread(0);
         sleep(detect_time / 2.0);
+        printf("HELLO\n");
         printf(detect_time);
         // pthread_mutex_unlock(&lock);
     }
@@ -272,11 +273,12 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     pthread_t fetch_loop_thread;
     pthread_t detect_loop_thread;
-
+    printf("HELLO2\n");
     if (pthread_create(&fetch_loop_thread, 0, fetch_loop, 0)) error("Thread creation failed");
     if (pthread_create(&detect_loop_thread, 0, detect_loop, 0)) error("Thread creation failed");
 
     pthread_join(fetch_loop_thread, 0);
+    printf("HELLO3\n");
     pthread_join(detect_loop_thread, 0);
 }
 
