@@ -577,18 +577,18 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
     /*
     show position of each bbox and write into box_coordinate.txt
     */
-    if(alphabet && info[0]!=0 && status[0]!=0)
+    if(alphabet && info[0]!=0)
     {
         FILE* box_coordinate=malloc(1000*sizeof(FILE*));
         box_coordinate=fopen("box_coordinate.txt","a+");
         if(box_coordinate!=NULL)
         {
-            fprintf(box_coordinate,"INFO:\n%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
+            fprintf(box_coordinate, "INFO\n%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
         }
         else error("File not opened");
         
         fclose(box_coordinate);
-       // printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
+        printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
     }
     // 画出每个目标的bbox
     draw_box_width(im, left, top, right, bot, width, red, green, blue);
