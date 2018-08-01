@@ -188,7 +188,7 @@ void *fetch_loop(){
         demo_time = what_time_is_it_now();
         display_in_thread(0);
         fetch_in_thread(0);
-        Sleep(detect_time * 500);
+        sleep(detect_time * 500);
         printf("\n%.3f\n", detect_time);
         // pthread_mutex_unlock(&lock);
     }
