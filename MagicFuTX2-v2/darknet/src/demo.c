@@ -194,6 +194,19 @@ void *detect_loop(void *ptr)
 void *fetch_loop(void *ptr)
 {
     while(1){
+        if (1) // 将来改成0
+        {
+            printf("Debugging location 2");
+            frame_skipped++;
+            if (frame_skipped >= FRAME_SKIP){
+                frame_skipped = 0;
+            }
+            else{
+                display_in_thread(0);
+                pthread_join(fetch_thread_original, 0);
+                continue;
+            }
+        }
         // pthread_mutex_lock(&lock);
         printf("Looping fetch ...\n");
         fetch_in_thread(0);
@@ -282,7 +295,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
         if(pthread_create(&fetch_thread_original, 0, fetch_in_thread, 0)) error("Thread creation failed");
         printf("Debugging location 4");
         // 每隔若干帧检测一次(仅用于视频文件调试模式)
-        if (1) // 将来改成0
+        if (0) // 将来改成0
         {
             printf("Debugging location 2");
             frame_skipped++;
