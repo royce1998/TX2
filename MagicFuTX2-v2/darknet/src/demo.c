@@ -164,8 +164,18 @@ void *display_loop(void *ptr)
 
 void *detect_loop(void *ptr)
 {
-    while(1){
+    while(!demo_done){
         detect_in_thread(0);
+    }
+}
+
+void *fetch_loop(){
+    while(!demo_done){
+        buff_index = (buff_index + 1) % 3;
+        fps = 1./(what_time_is_it_now() - demo_time);
+        demo_time = what_time_is_it_now();
+        display_in_thread(0);
+        fetch_in_thread(0);
     }
 }
 
@@ -228,7 +238,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
     printf("Debugging location 2\n");
 
-    int count = 0;
+    // int count = 0;
     if(!prefix){
         printf("Debugging location 3\n");
         cvNamedWindow("Demo", CV_WINDOW_NORMAL);
@@ -242,7 +252,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     demo_time = what_time_is_it_now();
 
-    while(!demo_done){
+    /*while(!demo_done){
         printf("Debugging location 4\n");
         buff_index = (buff_index + 1) %3;
         if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
@@ -276,7 +286,15 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
         pthread_join(fetch_thread, 0);
         pthread_join(detect_thread, 0);
         ++count;
-    }
+    }*/
+    pthread_t fetch_loop_thread;
+    pthread_t detect_loop_thread;
+
+    if (pthread_create(&fetch_loop_thread, 0, fetch_loop, 0)) error("Thread creation failed");
+    if (pthread_create(&detect_loop_thread, 0, detect_loop, 0)) error("Thread creation failed");
+
+    pthread_join(fetch_loop_thread, 0);
+    pthread_join(detect_loop_thread, 0);
 }
 
 #else
