@@ -171,6 +171,7 @@ void *detect_loop(void *ptr)
     while(!demo_done){
         detect_in_thread(0);
     }
+    return 0;
 }
 
 void *fetch_loop(){
@@ -181,6 +182,7 @@ void *fetch_loop(){
         display_in_thread(0);
         fetch_in_thread(0);
     }
+    return 0;
 }
 
 void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const char *filename, char **names, int classes, int delay, char *prefix, int avg_frames, float hier, int w, int h, int frames, int fullscreen)
@@ -195,8 +197,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     printf("Demo\n");
     net = load_network(cfgfile, weightfile, 0);
     set_batch_network(net, 1);
-    pthread_t detect_thread;
-    pthread_t fetch_thread;
+    // pthread_t detect_thread;
+    // pthread_t fetch_thread;
 
     srand(2222222);
 
@@ -256,7 +258,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     if (pthread_mutex_init(&lock, NULL) != 0)
     {
         printf("\n mutex init failed\n");
-        return 1;
+        return;
     }
 
     pthread_t fetch_loop_thread;
