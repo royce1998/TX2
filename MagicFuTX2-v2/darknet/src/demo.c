@@ -42,7 +42,7 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
-static pthread_mutex_t lock;
+// static pthread_mutex_t lock;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
@@ -167,22 +167,22 @@ void *display_loop(void *ptr)
 void *detect_loop(void *ptr)
 {
     while(!demo_done){
-        pthread_mutex_lock(&lock);
+        // pthread_mutex_lock(&lock);
         detect_in_thread(0);
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
     }
     return 0;
 }
 
 void *fetch_loop(){
     while(!demo_done){
-        pthread_mutex_lock(&lock);
+        // pthread_mutex_lock(&lock);
         buff_index = (buff_index + 1) % 3;
         fps = 1./(what_time_is_it_now() - demo_time);
         demo_time = what_time_is_it_now();
         display_in_thread(0);
         fetch_in_thread(0);
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
     }
     return 0;
 }
@@ -257,11 +257,11 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     demo_time = what_time_is_it_now();
 
-    if (pthread_mutex_init(&lock, NULL) != 0)
+    /*if (pthread_mutex_init(&lock, NULL) != 0)
     {
         printf("\n mutex init failed\n");
         return;
-    }
+    }*/
 
     pthread_t fetch_loop_thread;
     pthread_t detect_loop_thread;
