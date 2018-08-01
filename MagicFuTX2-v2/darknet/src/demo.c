@@ -172,14 +172,7 @@ void *display_loop(void *ptr)
 void *detect_loop(void *ptr)
 {
     while(1){
-        pthread_mutex_lock(&lock);
-        buff[0] = get_image_from_stream(cap);
-        buff[1] = copy_image(buff[0]);
-        buff[2] = copy_image(buff[0]);
-        buff_letter[0] = letterbox_image(buff[0], net->w, net->h);
-        buff_letter[1] = letterbox_image(buff[0], net->w, net->h);
-        buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
-        ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
+        // pthread_mutex_lock(&lock);
         printf("Looping detect ...\n");
         if(!pfix){
             fps = 1./(what_time_is_it_now() - demo_time);
@@ -194,7 +187,7 @@ void *detect_loop(void *ptr)
         display_in_thread(0);
         printf("Done!\n");
         count++;
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
     }
 }
 
@@ -203,6 +196,19 @@ void *fetch_loop(void *ptr)
   pthread_t fetch_thread_original;
   if(pthread_create(&fetch_thread_original, 0, fetch_in_thread, 0)) error("Thread creation failed");
     while(1){
+        cap = cvCaptureFromCAM(cam_index);
+        net = load_network(cfgfile, weightfile, 0);
+        set_batch_network(net, 1);
+        int width  = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH);
+        int height = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT);
+
+        buff[0] = get_image_from_stream(cap);
+        buff[1] = copy_image(buff[0]);
+        buff[2] = copy_image(buff[0]);
+        buff_letter[0] = letterbox_image(buff[0], net->w, net->h);
+        buff_letter[1] = letterbox_image(buff[0], net->w, net->h);
+        buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
+        ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
         if (1) // 将来改成0
         {
             printf("Debugging location 2");
