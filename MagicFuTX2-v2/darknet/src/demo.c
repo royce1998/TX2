@@ -196,7 +196,7 @@ void *fetch_loop(void *ptr)
   pthread_t fetch_thread_original;
   if(pthread_create(&fetch_thread_original, 0, fetch_in_thread, 0)) error("Thread creation failed");
     while(1){
-        cap = cvCaptureFromCAM(cam_index);
+        cap = cvCaptureFromCAM(0);
         net = load_network(cfgfile, weightfile, 0);
         set_batch_network(net, 1);
         int width  = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH);
