@@ -188,6 +188,7 @@ void *fetch_loop(){
         display_in_thread(0);
         fetch_in_thread(0);
         sleep(detect_time / 2.0);
+        printf(detect_time);
         // pthread_mutex_unlock(&lock);
     }
     return 0;
