@@ -42,6 +42,8 @@ static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
 
+static double detect_time = 0.0;
+
 // static pthread_mutex_t lock;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
@@ -166,9 +168,12 @@ void *display_loop(void *ptr)
 
 void *detect_loop(void *ptr)
 {
+    double start = what_time_is_it_now();
     while(!demo_done){
         // pthread_mutex_lock(&lock);
         detect_in_thread(0);
+        detect_time = what_time_is_it_now() - start;
+        start = what_time_is_it_now();
         // pthread_mutex_unlock(&lock);
     }
     return 0;
@@ -182,6 +187,7 @@ void *fetch_loop(){
         demo_time = what_time_is_it_now();
         display_in_thread(0);
         fetch_in_thread(0);
+        sleep(detect_time / 2.0);
         // pthread_mutex_unlock(&lock);
     }
     return 0;
