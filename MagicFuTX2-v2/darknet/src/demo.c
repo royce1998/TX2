@@ -174,7 +174,7 @@ void *fetch_loop(){
         buff_index = (buff_index + 1) % 3;
         fps = 1./(what_time_is_it_now() - demo_time);
         demo_time = what_time_is_it_now();
-        display_in_thread(0);
+        // display_in_thread(0);
         fetch_in_thread(0);
     }
 }
