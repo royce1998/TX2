@@ -144,7 +144,7 @@ void *detect_in_thread(void *ptr)
 
     // 显示检测结果bbox
     draw_detections(display, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-    display_in_thread(0);
+    // display_in_thread(0);
     free_detections(dets, nboxes);
 
     demo_index = (demo_index + 1)%demo_frame;
@@ -187,9 +187,9 @@ void *fetch_loop(){
         buff_index = (buff_index + 1) % 3;
         fps = 1./(what_time_is_it_now() - demo_time);
         demo_time = what_time_is_it_now();
-        // display_in_thread(0);
+        display_in_thread(0);
         fetch_in_thread(0);
-        sleep(detect_time * 0.8);
+        // sleep(detect_time * 0.8);
         // printf("\n%.3f\n", detect_time);
         last_detect_time = detect_time;
         // pthread_mutex_unlock(&lock);
