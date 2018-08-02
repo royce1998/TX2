@@ -585,7 +585,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         {
             fprintf(box_coordinate, "\n\n[Object Info] of [%s] : \n\tBox Coordinates : (%d,%d), (%d,%d)",info,left,top,right,bot);
         }
-        if (status == 0){
+        if (status[1] != NULL){
           fprintf(box_coordinate, "\nStatus : %s", status);
         }
         else error("File not opened");
