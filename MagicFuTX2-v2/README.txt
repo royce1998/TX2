@@ -5,3 +5,8 @@ To run:
 Note that if you do not specify video file, then the camera will be used for real-time processing.
 
 Alternatively, run bash run.sh to run for real-time camera/processing.
+
+New features for this version:
+Multithread processing.
+Split 4 core processing (1:3 ratio for fetch and detect).
+Output information is also saved in darknet/box_coordinate.txt.
