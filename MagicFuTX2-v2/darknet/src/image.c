@@ -109,8 +109,8 @@ static float bilinear_interpolate(image im, float x, float y, int c)
     float dx = x - ix;
     float dy = y - iy;
 
-    float val = (1-dy) * (1-dx) * get_pixel_extend(im, ix, iy, c) + 
-        dy     * (1-dx) * get_pixel_extend(im, ix, iy+1, c) + 
+    float val = (1-dy) * (1-dx) * get_pixel_extend(im, ix, iy, c) +
+        dy     * (1-dx) * get_pixel_extend(im, ix, iy+1, c) +
         (1-dy) *   dx   * get_pixel_extend(im, ix+1, iy, c) +
         dy     *   dx   * get_pixel_extend(im, ix+1, iy+1, c);
     return val;
@@ -152,7 +152,7 @@ image tile_images(image a, image b, int dx)
     if(a.w == 0) return copy_image(b);
     image c = make_image(a.w + b.w + dx, (a.h > b.h) ? a.h : b.h, (a.c > b.c) ? a.c : b.c);
     fill_cpu(c.w*c.h*c.c, 1, c.data, 1);
-    embed_image(a, c, 0, 0); 
+    embed_image(a, c, 0, 0);
     composite_image(b, c, a.w + dx, 0);
     return c;
 }
@@ -292,63 +292,63 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
     float iou_ratio[MAX_OBJ_NUM] = {0};   // 有效目标与人的相交比
     char *classname[] = {"unknown", "person", "bicycle", "chair", "sports ball"};
     char classname0[30];
-    
+
     frameNo++;
     printf("%d ", frameNo);
     if (frameNo%20 == 0) printf("\n");
-    
+
     // 遍历每一个检测到的目标，如果置信度足够大，则将其归类(classname)
-    for(i = 0; i < num; ++i){     
+    for(i = 0; i < num; ++i){
         char labelstr[128] = {0}; // 目标原始类名
         int class = -1;           // 目标原始类号(-1： 置信度不足)
         float prob = 0;           // 目标置信度
         int cate = -1;            // 目标归并后的类号(-1: 置信度不足) 注：归并后的类名见classname
-        
+
         // 如果目标i有效，则设置为置信度最大那个分类
         for(j = 0; j < classes; ++j){
             if (dets[i].prob[j] > thresh){
-                if (class < 0 || dets[i].prob[j] > prob){ 
+                if (class < 0 || dets[i].prob[j] > prob){
                     strcpy(labelstr, names[j]);
                     class = j;
                     prob = dets[i].prob[j];
                 }
             }
         }
-        
+
         // 提取感兴趣的几个类,并修正被误判的类名
         if(class >= 0){  // 如果目标i的置信度足够大
             if (strcmp(labelstr, "person")==0) // 人
                 cate = 1;
-            
-            else if (strcmp(labelstr, "bicycle")==0 || 
+
+            else if (strcmp(labelstr, "bicycle")==0 ||
                      strcmp(labelstr, "motorbike")==0) // 自行车
                 cate = 2;
-            
-            else if (strcmp(labelstr, "chair")==0 || 
+
+            else if (strcmp(labelstr, "chair")==0 ||
                      strcmp(labelstr, "sofa")==0) // 椅子
                 cate = 3;
-            
-            else if (strcmp(labelstr, "sports ball")==0 || 
-                     strcmp(labelstr, "apple")==0 || 
+
+            else if (strcmp(labelstr, "sports ball")==0 ||
+                     strcmp(labelstr, "apple")==0 ||
                      strcmp(labelstr, "mouse")==0 ||
                      strcmp(labelstr, "frisbee")==0 ||
                      strcmp(labelstr, "skateboard")==0 ||
                      strcmp(labelstr, "surfboard")==0
                     )// 球
                 cate = 4;
-            
+
             else  // 用于发现新的误判类
                 cate = 0;
-            
+
             // debug 发现新的误判类，根据位置和大小，决定是否加到上面的if中
-            if (cate == 0){  
+            if (cate == 0){
                 box b = dets[i].bbox;
                 if (sw_showNewClass){
-                    printf("\nfound new class: %s [%.2f, %.2f, %.2f, %.2f], prob=%.2f\n", 
+                    printf("\nfound new class: %s [%.2f, %.2f, %.2f, %.2f], prob=%.2f\n",
                            labelstr, b.x, b.y, b.w, b.h, prob);
                 }
             }
-            
+
             if (prob > probs[cate]) {// 如果本未知类的置信度大于当前已保存的未知类，则替换
                 bboxes[cate] = dets[i].bbox;
                 probs[cate]  = prob;
@@ -359,19 +359,19 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 //       (strcmp(labelstr,classname[cate])==0? "": labelstr), prob*100);
             }
         }
-        
+
         // 显示bbox
         // (如果是感兴趣类，或是其他类但允许显示)
         if (showEachBox && (cate>0 || (cate==0 && showUnknown==1))){  // 如果目标i的置信度足够大
             draw_bbox_info(im, class, classes, bboxes[cate], labelstr, "", alphabet);
         }
     }
-    
+
     // 分析场景
     int person_h = 0;
     if (found[1]==1){ // 有人存在时才分析
         // 修正处于遮挡中的椅子
-        if (1) {  
+        if (1) {
             // 修正椅子(遮挡)
             if (found[3] == 1){
                 // 学习
@@ -379,7 +379,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 if (abnormal && chair_n > chair_learn_n){
                     bboxes[3] = chair_pos;
                     if (0)
-                        printf("\nadjust chair, abnormal: [%.2f, %.2f, %.2f, %.2f]\n", 
+                        printf("\nadjust chair, abnormal: [%.2f, %.2f, %.2f, %.2f]\n",
                            bboxes[3].x, bboxes[3].y, bboxes[3].w, bboxes[3].h); // debug
                 }
             }
@@ -393,9 +393,9 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 }
             }
         }
-        
+
         // 判断感兴趣目标是否处于使用状态
-        box person = bboxes[1]; // 人的bbox, (0.7, 0.5, 0.2, 0.7) 
+        box person = bboxes[1]; // 人的bbox, (0.7, 0.5, 0.2, 0.7)
         person_h = learn_person(person, im.h); // 更新/获取人体的平均身高
         for (i=2; i<5; i++){
             // 根据人与目标的重合度，判断是否进入或结束使用状态
@@ -403,7 +403,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 box obj = bboxes[i];  // 感兴趣目标的bbox
                 iou_ratio[i] = IOU(person, obj, im.w, im.h); // 相交比例
                 if (iou_ratio[i] > iou_thresh) { // 人与该目标高度重合
-                    
+
                     if (i==3){ // 判断是否开始使用椅子(坐下)
                         if (person_h!=0){ // 平均身高数据已经计算出来
                             int personHeight = (int)(person.h*im.h); // 本帧身高
@@ -419,7 +419,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                 }
                                 break;
                             }
-                            else{ 
+                            else{
                                 if (h_status[i] == 2){
                                     h_status[i] = 0; // 站起
                                     printf("\nstand up\n"); // debug
@@ -451,7 +451,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
             }
         }
     }
-    
+
     // 显示结果
     char info[100];
     char status[30];
@@ -468,7 +468,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
         }
         else
             info[0] = 0;
-        
+
         if (h_status[i]==2)
             strcpy(status, h_status_info[i]);
         else
@@ -490,29 +490,29 @@ bool learn_chair(box chair, int imagew, int imageh)
         chair_pos.w = (chair_pos.w*chair_n + chair.w) / (chair_n+1);
         chair_pos.h = (chair_pos.h*chair_n + chair.h) / (chair_n+1);
     }
-    
+
     chair_n = chair_n+1;
     if (chair_n == 100000)
         chair_n--;
-    
-    if (chair_n == chair_learn_n){ 
-        printf("\nchair learned! [%.2f, %.2f, %.2f, %.2f]\n", 
+
+    if (chair_n == chair_learn_n){
+        printf("\nchair learned! [%.2f, %.2f, %.2f, %.2f]\n",
                chair_pos.x, chair_pos.y, chair_pos.w, chair_pos.h); // debug
     }
-    
+
     // 判断位置和大小是否异常变化
     bool abnormal = false;
-    if (chair_n >= chair_learn_n){ 
+    if (chair_n >= chair_learn_n){
         float T = 0.85;
         float _iou = IOU(chair, chair_pos, imagew, imageh);
         if (_iou < T){
             abnormal = true;
             if (0)
-                printf("\nchair abnormal! %.2f [%.2f, %.2f, %.2f, %.2f]\n", 
+                printf("\nchair abnormal! %.2f [%.2f, %.2f, %.2f, %.2f]\n",
                        _iou, chair.x, chair.y, chair.w, chair.h); // debug
         }
     }
-    
+
     return abnormal;
 }
 
@@ -525,13 +525,13 @@ float getHeightRatio(float h, int imageh)
     else
         return (h*imageh/person_h);
 }
-                       
-                        
+
+
 // 在人出现的最初若干帧内，学习人的身高
 int learn_person(box person, int imageh)
 {
-    int h = person.h*imageh; 
-    
+    int h = person.h*imageh;
+
     if (person_n < PERSON_LEARN_N){
         person_h += h;
         person_n++;
@@ -543,7 +543,7 @@ int learn_person(box person, int imageh)
     }
     else
         return person_h;
-    
+
 }
 
 // 画框和显示提示信息
@@ -551,14 +551,14 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
 {
     int xx = 20;
     int yy = 50;
-    
+
     int width = im.h * .006;
 
     int offset = class*123457 % classes;
     float red = get_color(2,offset,classes);
     float green = get_color(1,offset,classes);
     float blue = get_color(0,offset,classes);
-    
+
     float rgb[3];
     rgb[0] = red;
     rgb[1] = green;
@@ -583,10 +583,11 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         box_coordinate=fopen("box_coordinate.txt","a+");
         if(box_coordinate!=NULL)
         {
-            fprintf(box_coordinate, "INFO\n%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
+            fprintf(box_coordinate, "\n\n[Object Info] of [%s] : \n\tBox Coordinates : (%d,%d), (%d,%d)",info,left,top,right,bot);
         }
+        if(status[0] != 0) fprintf(box_coordinate, "\nStatus : %s", status);
         else error("File not opened");
-        
+
         fclose(box_coordinate);
         // printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
     }
@@ -600,7 +601,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         free_image(label);
         //printf("alphabet==True\n");
     }
-    
+
     // 显示文字
     if (alphabet && status[0]!=0) {
         image label = get_label(alphabet, status, (im.h*.03));
@@ -608,7 +609,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         free_image(label);
         //printf("alphabet==True\n");
     }
- 
+
 
     // 不知道这段程序有个鸟用
     /*
@@ -634,11 +635,11 @@ bool runaway(box person, box obj, int imagew, int imageh)
     int w1 = person.w*imagew;
     int x2 = (obj.x-obj.w/2.)*imagew;
     int w2 = obj.w*imagew;
-    
+
     int dist = (x1-x2<0? x2-x1: x1-x2);
     int T = (w1/2.+w2/2.)*ratio;
     return (dist > T);
-        
+
 }
 
 // siyao
@@ -650,22 +651,22 @@ float IOU(box person, box obj, int imagew, int imageh)
     int y1 = (person.y-person.h/2.)*imageh;
     int w1 = person.w*imagew;
     int h1 = person.h*imageh;
-    
+
     int x2 = (obj.x-obj.w/2.)*imagew;
     int y2 = (obj.y-obj.h/2.)*imageh;
     int w2 = obj.w*imagew;
     int h2 = obj.h*imageh;
-    
+
     // 相交区域的宽度
     int startx = min(x1, x2);
     int endx   = max(x1+w1, x2+w2);
     int w = w1 + w2 - (endx - startx);
-    
+
     // 相交区域的高度
     int starty = min(y1, y2);
     int endy   = max(y1+h1, y2+h2);
     int h = h1 + h2 - (endy - starty);
-    
+
     // 计算相交比例
     float ratio;
     if (w<=1 || h<=1)
@@ -676,9 +677,9 @@ float IOU(box person, box obj, int imagew, int imageh)
             ratio = 0.0;
         else
             ratio = (w*h) / (float)(area);
-    }   
-    
-    
+    }
+
+
     return ratio;
 }
 
@@ -920,7 +921,7 @@ void show_image_cv(image p, const char *name, IplImage *disp)
     sprintf(buff, "%s", name);
 
     int step = disp->widthStep;
-    cvNamedWindow(buff, CV_WINDOW_NORMAL); 
+    cvNamedWindow(buff, CV_WINDOW_NORMAL);
     //cvMoveWindow(buff, 100*(windows%10) + 200*(windows/10), 100*(windows%10));
     ++windows;
     for(y = 0; y < p.h; ++y){
@@ -1165,7 +1166,7 @@ void place_image(image im, int w, int h, int dx, int dy, image canvas)
 
 image center_crop_image(image im, int w, int h)
 {
-    int m = (im.w < im.h) ? im.w : im.h;   
+    int m = (im.w < im.h) ? im.w : im.h;
     image c = crop_image(im, (im.w - m) / 2, (im.h - m)/2, m, m);
     image r = resize_image(c, w, h);
     free_image(c);
@@ -1327,7 +1328,7 @@ void letterbox_image_into(image im, int w, int h, image boxed)
         new_w = (im.w * h)/im.h;
     }
     image resized = resize_image(im, new_w, new_h);
-    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2); 
+    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2);
     free_image(resized);
 }
 
@@ -1347,7 +1348,7 @@ image letterbox_image(image im, int w, int h)
     fill_image(boxed, .5);
     //int i;
     //for(i = 0; i < boxed.w*boxed.h*boxed.c; ++i) boxed.data[i] = 0;
-    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2); 
+    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2);
     free_image(resized);
     return boxed;
 }
@@ -1613,7 +1614,7 @@ image blend_image(image fore, image back, float alpha)
     for(k = 0; k < fore.c; ++k){
         for(j = 0; j < fore.h; ++j){
             for(i = 0; i < fore.w; ++i){
-                float val = alpha * get_pixel(fore, i, j, k) + 
+                float val = alpha * get_pixel(fore, i, j, k) +
                     (1 - alpha)* get_pixel(back, i, j, k);
                 set_pixel(blend, i, j, k, val);
             }
@@ -1720,7 +1721,7 @@ void saturate_exposure_image(image im, float sat, float exposure)
 
 image resize_image(image im, int w, int h)
 {
-    image resized = make_image(w, h, im.c);   
+    image resized = make_image(w, h, im.c);
     image part = make_image(w, im.h, im.c);
     int r, c, k;
     float w_scale = (float)(im.w - 1) / (w - 1);
@@ -1917,7 +1918,7 @@ image collapse_images_vert(image *ims, int n)
         free_image(copy);
     }
     return filters;
-} 
+}
 
 image collapse_images_horz(image *ims, int n)
 {
@@ -1953,7 +1954,7 @@ image collapse_images_horz(image *ims, int n)
         free_image(copy);
     }
     return filters;
-} 
+}
 
 void show_image_normalized(image im, const char *name)
 {
