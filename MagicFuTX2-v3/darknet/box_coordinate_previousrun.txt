@@ -1,0 +1,16 @@
+
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (33,260), (324,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (69,256), (341,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (43,263), (314,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (30,264), (310,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (9,266), (320,477)
