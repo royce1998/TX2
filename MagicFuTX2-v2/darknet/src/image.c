@@ -39,6 +39,8 @@ int chair_n = 0;
 
 int sw_showNewClass = 0; // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里)
 
+static FILE* box_coordinate=malloc(1000*sizeof(FILE*));
+
 
 float get_color(int c, int x, int max)
 {
@@ -413,14 +415,12 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                         if (j!=i)
                                             h_status[j] = 0;
                                     }
-                                    FILE* box_coordinate=malloc(1000*sizeof(FILE*));
                                     box_coordinate=fopen("box_coordinate.txt","a+");
                                     if(box_coordinate!=NULL)
                                     {
                                         fprintf(box_coordinate, "\n\tUser sits down.");
                                     }
                                     fclose(box_coordinate);
-                                    free(box_coordinate);
                                     printf("\nsit down\n"); // debug
                                 }
                                 break;
@@ -428,14 +428,12 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                             else{
                                 if (h_status[i] == 2){
                                     h_status[i] = 0; // 站起
-                                    FILE* box_coordinate=malloc(1000*sizeof(FILE*));
                                     box_coordinate=fopen("box_coordinate.txt","a+");
                                     if(box_coordinate!=NULL)
                                     {
                                         fprintf(box_coordinate, "\n\tUser stands up.");
                                     }
                                     fclose(box_coordinate);
-                                    free(box_coordinate);
                                     printf("\nstand up\n"); // debug
                                 }
                             }
@@ -449,14 +447,12 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                 if (j!=i)
                                     h_status[j] = 0;
                             }
-                            FILE* box_coordinate=malloc(1000*sizeof(FILE*));
                             box_coordinate=fopen("box_coordinate.txt","a+");
                             if(box_coordinate!=NULL)
                             {
                                 fprintf(box_coordinate, "\n\tStatus : %s", h_status_info[i]);
                             }
                             fclose(box_coordinate);
-                            free(box_coordinate);
                             printf("\n%s\n", h_status_info[i]); // debug
                         }
                         break;
@@ -601,7 +597,6 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
     */
     if(alphabet && info[0]!=0)
     {
-        FILE* box_coordinate=malloc(1000*sizeof(FILE*));
         box_coordinate=fopen("box_coordinate.txt","a+");
         if(box_coordinate!=NULL)
         {
@@ -616,7 +611,6 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
 
         fclose(box_coordinate);
         // printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
-        free(box_coordinate);
     }
     // 画出每个目标的bbox
     draw_box_width(im, left, top, right, bot, width, red, green, blue);
