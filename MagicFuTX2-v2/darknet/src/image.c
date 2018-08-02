@@ -39,7 +39,7 @@ int chair_n = 0;
 
 int sw_showNewClass = 0; // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里)
 
-FILE* box_coordinate;
+
 
 
 float get_color(int c, int x, int max)
@@ -281,7 +281,6 @@ image **load_alphabet()
 */
 void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
-    box_coordinate=malloc(1000*sizeof(FILE*));
     float iou_thresh = 0.5;
     int i,j;
     int showEachBox = 0; // (调试阶段)
@@ -416,12 +415,6 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                         if (j!=i)
                                             h_status[j] = 0;
                                     }
-                                    box_coordinate=fopen("box_coordinate.txt","a+");
-                                    if(box_coordinate!=NULL)
-                                    {
-                                        fprintf(box_coordinate, "\n\tUser sits down.");
-                                    }
-                                    fclose(box_coordinate);
                                     printf("\nsit down\n"); // debug
                                 }
                                 break;
@@ -429,12 +422,6 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                             else{
                                 if (h_status[i] == 2){
                                     h_status[i] = 0; // 站起
-                                    box_coordinate=fopen("box_coordinate.txt","a+");
-                                    if(box_coordinate!=NULL)
-                                    {
-                                        fprintf(box_coordinate, "\n\tUser stands up.");
-                                    }
-                                    fclose(box_coordinate);
                                     printf("\nstand up\n"); // debug
                                 }
                             }
@@ -448,12 +435,6 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                 if (j!=i)
                                     h_status[j] = 0;
                             }
-                            box_coordinate=fopen("box_coordinate.txt","a+");
-                            if(box_coordinate!=NULL)
-                            {
-                                fprintf(box_coordinate, "\n\tStatus : %s", h_status_info[i]);
-                            }
-                            fclose(box_coordinate);
                             printf("\n%s\n", h_status_info[i]); // debug
                         }
                         break;
@@ -494,7 +475,6 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
             status[0] = 0;
         draw_bbox_info(im, i, classes, bboxes[i], info, status, alphabet);
     }
-    free(box_coordinate);
 }
 
 // 只要椅子检测到就学习椅子的位置(因为椅子在坐下之前恰好被挡住)
@@ -569,7 +549,6 @@ int learn_person(box person, int imageh)
 // 画框和显示提示信息
 void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char *status, image **alphabet)
 {
-    box_coordinate=malloc(1000*sizeof(FILE*));
     int xx = 20;
     int yy = 50;
 
@@ -600,6 +579,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
     */
     if(alphabet && info[0]!=0)
     {
+        FILE* box_coordinate=malloc(1000*sizeof(FILE*));
         box_coordinate=fopen("box_coordinate.txt","a+");
         if(box_coordinate!=NULL)
         {
