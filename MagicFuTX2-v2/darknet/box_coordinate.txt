@@ -1,28 +1,16 @@
-INFO
-person, 1.00:(0,180),(381,477)
-INFO
-person, 1.00:(13,121),(422,467)
-INFO
-person, 1.00:(62,0),(481,479)
-INFO
-chair, 0.47, 0.55:(13,259),(124,327)
-INFO
-person, 1.00:(115,3),(510,479)
-INFO
-chair, 0.71, 0.28:(8,290),(156,475)
-INFO
-person, 1.00:(121,10),(508,479)
-INFO
-chair, 0.67, 0.23:(7,287),(155,474)
-INFO
-person, 1.00:(116,5),(507,479)
-INFO
-chair, 0.47, 0.23:(9,284),(149,472)
-INFO
-person, 1.18:(84,0),(533,479)
-INFO
-person, 1.16:(0,0),(448,479)
-INFO
-person, 1.34:(0,0),(386,479)
-INFO
-person, 1.33:(0,0),(394,479)
+
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (33,260), (324,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (69,256), (341,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (43,263), (314,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (30,264), (310,479)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (9,266), (320,477)
