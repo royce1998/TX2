@@ -39,7 +39,7 @@ int chair_n = 0;
 
 int sw_showNewClass = 0; // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里)
 
-static FILE* box_coordinate=malloc(1000*sizeof(FILE*));
+FILE* box_coordinate;
 
 
 float get_color(int c, int x, int max)
@@ -281,6 +281,7 @@ image **load_alphabet()
 */
 void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
+    box_coordinate=malloc(1000*sizeof(FILE*));
     float iou_thresh = 0.5;
     int i,j;
     int showEachBox = 0; // (调试阶段)
@@ -493,6 +494,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
             status[0] = 0;
         draw_bbox_info(im, i, classes, bboxes[i], info, status, alphabet);
     }
+    free(box_coordinate);
 }
 
 // 只要椅子检测到就学习椅子的位置(因为椅子在坐下之前恰好被挡住)
@@ -567,6 +569,7 @@ int learn_person(box person, int imageh)
 // 画框和显示提示信息
 void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char *status, image **alphabet)
 {
+    box_coordinate=malloc(1000*sizeof(FILE*));
     int xx = 20;
     int yy = 50;
 
@@ -610,6 +613,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         else error("File not opened");
 
         fclose(box_coordinate);
+        free(box_coordinate);
         // printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
     }
     // 画出每个目标的bbox
