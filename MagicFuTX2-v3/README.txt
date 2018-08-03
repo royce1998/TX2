@@ -17,3 +17,4 @@ Multithread processing.
 Split 4 core processing (1:3 ratio for fetch and detect).
 Output information is also saved in darknet/box_coordinate.txt.
 Fixed output information.
+RUNS 3x FASTER than VERSION 2!!!
