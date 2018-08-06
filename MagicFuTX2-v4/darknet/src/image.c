@@ -16,29 +16,46 @@ int windows = 0;
 
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} };
 
-// siyao
-// 人与各个目标的关系状态
-// 各单元对应的目标：[2]：自行车，[3]：椅子，[4]：球
-// 各单元含义：
+//   siyao
+//   人与各个目标的关系状态
+//   各单元对应的目标：[2]：自行车，[3]：椅子，[4]：球
+//   各单元含义：
 //   [2]: 0-none，1-near, 2-use bike
 //   [3]: 0-none，1-near, 2-sit on chair
 //   [4]: 0-none，1-near, 2-play with ball
+
 #define MAX_OBJ_NUM 10
 int h_status[MAX_OBJ_NUM] = {0};
-#define CUR_OBJ_N 5  // 当前感兴趣目标数
+#define CUR_OBJ_N 5        // 当前感兴趣目标数
 char *h_status_info[] = {"", "", "use bike", "sit on chair", "play with ball"};
-#define PERSON_LEARN_N 7  // 检测到人的初始多少帧内，累计计算人体的平均高度
+
+// 人参数
+#define PERSON_LEARN_N 7   // 检测到人的初始多少帧内，累计计算人体的平均高度
 int person_n = 0;          // 已经累计几针了
 int person_h = 0;          // 平均身高/中间数据
-float personHeightT = 0.76; // 当前身高/平均身高小于这个值时认为是坐下了
-int frameNo = 0;  // 当前帧号
-// 椅子
+int person_area_T = 0;     // person 面积大于这个值才检测为人(这个需要用试凑的值) 请通过视频给出建议值
+float personHeightT = 0.8; // 当前身高/平均身高小于这个值时认为是坐下了
+int frameNo = 0;           // 当前帧号
+
+// 椅子参数
 box chair_pos;
-int chair_n = 0;
-#define chair_learn_n 10
+int chair_n = 0;    
+#define chair_learn_n 10    // 最少学习帧数
+#define CHAIR_HISTORY_N 200 // 椅子一共保存多少帧的历史记录
+int sw_showNewClass = 0;    // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里，参见椅子判断部分)
 
-int sw_showNewClass = 0; // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里)
+// 算法更新！===== 判断球是否在使用 20180802 =====================
+// 瑜伽球参数
+int ball_learn_T = 10;      // 最初用多少帧来学习球的初始位置 tx2上建议可以少一点 树莓派上可以多一点
+int ball_learn_n = 0;       // 目前已经用了多少帧来学习球的初始位置
+float ball_pos;             // 球的平均初始位置(y坐标)
+float ball_rad;             // 球的平均高度pixel
+float ball_ratio = 0.8;     // 球离地的高度阈值计算公式 = 初始位置y坐标 + 平均高度*ratio 大于该阈值认为球已经被拿起
+// 注意！ 这个ratio需要在测试中用具体球来调整 不同size的球的ratio不一样 可给出lookup table
 
+
+// 车参数
+// TBD
 
 float get_color(int c, int x, int max)
 {
@@ -107,8 +124,8 @@ static float bilinear_interpolate(image im, float x, float y, int c)
     float dx = x - ix;
     float dy = y - iy;
 
-    float val = (1-dy) * (1-dx) * get_pixel_extend(im, ix, iy, c) +
-        dy     * (1-dx) * get_pixel_extend(im, ix, iy+1, c) +
+    float val = (1-dy) * (1-dx) * get_pixel_extend(im, ix, iy, c) + 
+        dy     * (1-dx) * get_pixel_extend(im, ix, iy+1, c) + 
         (1-dy) *   dx   * get_pixel_extend(im, ix+1, iy, c) +
         dy     *   dx   * get_pixel_extend(im, ix+1, iy+1, c);
     return val;
@@ -150,7 +167,7 @@ image tile_images(image a, image b, int dx)
     if(a.w == 0) return copy_image(b);
     image c = make_image(a.w + b.w + dx, (a.h > b.h) ? a.h : b.h, (a.c > b.c) ? a.c : b.c);
     fill_cpu(c.w*c.h*c.c, 1, c.data, 1);
-    embed_image(a, c, 0, 0);
+    embed_image(a, c, 0, 0); 
     composite_image(b, c, a.w + dx, 0);
     return c;
 }
@@ -262,7 +279,30 @@ image **load_alphabet()
     return alphabets;
 }
 
-// siyao
+// siyao 20180802
+// 判断是否正在持球进行运动
+// 如果没有达到学习帧数，则学习球的平均位置和高度，并返回假 此时球的参数没有被固定
+// 如果达到学习帧数，则判断当前球的位置是否高于[平均位置+平均高度]，是则返回真，否则返回假
+// 运动完毕，球如能正常放回初始位置，则球的位置不再高于[平均位置+平均高度]，返回假
+int judgeBall(box ball)
+{
+    if (ball_learn_n >= ball_learn_T){ // 达到学习次数，则不再学习，位置已经固定
+        if (ball.y < (ball_pos - (ball_rad*ball_ratio))){
+            //printf("judge %.2f to be used, pos=%.2f, rad=%.2f\n", ball.y, ball_pos, ball_rad);
+            // debug ONLY
+            return 1;
+        }
+        else
+            return 0;
+    }
+    ball_pos = ((ball_pos*ball_learn_n + ball.y)/(ball_learn_n+1));
+    ball_rad = ((ball_rad*ball_learn_n + ball.h)/(ball_learn_n+1));
+    printf("learning ball (%d): pos=%.2f, rad=%.2f\n", ball_learn_n, ball_pos, ball_rad);
+    // debug ONLY
+    ball_learn_n++;
+    return 0;
+}
+
 /*
   image im
   detection *dets: = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes);
@@ -277,12 +317,13 @@ image **load_alphabet()
     dets[i].prob[j]：第i个目标的置信度
 
 */
+
 void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
-    float iou_thresh = 0.5;
-    int i,j;
-    int showEachBox = 0; // (调试阶段)
-    int showUnknown = 0; // 1-显示未知类(调试阶段)
+    float iou_thresh = 0.5;  // 人与其他目标的重叠比例(函数IOU)高于这个数则认为正在使用这个目标 可以调整成lookup table
+    int i,j;                 // 因为球本身的运动关系，很有可能远远小于0.5，建议在下一版本进行修正
+    int showEachBox = 0;     // (调试阶段) // debug ONLY
+    int showUnknown = 0;     // 1-显示未知类(调试阶段)
     // 下面的数组保存有效目标，[0]：未知, [1]：人，[2]：自行车，[3]：椅子，[4]：球
     box bboxes[MAX_OBJ_NUM];        // 有效目标们的bbox
     float probs[MAX_OBJ_NUM] = {0}; // 有效目标们的置信度
@@ -290,122 +331,150 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
     float iou_ratio[MAX_OBJ_NUM] = {0};   // 有效目标与人的相交比
     char *classname[] = {"unknown", "person", "bicycle", "chair", "sports ball"};
     char classname0[30];
-
+    
     frameNo++;
     printf("%d ", frameNo);
-    if (frameNo%20 == 0) printf("\n");
-
+    if (frameNo%20 == 0) printf("\n");    // 20帧可做调整
+    
+    int area_max = 0;      // person 或目标的最大面积，仅供多人出现情况下对演员的判断
     // 遍历每一个检测到的目标，如果置信度足够大，则将其归类(classname)
-    for(i = 0; i < num; ++i){
+    for(i = 0; i < num; ++i){     
         char labelstr[128] = {0}; // 目标原始类名
         int class = -1;           // 目标原始类号(-1： 置信度不足)
         float prob = 0;           // 目标置信度
         int cate = -1;            // 目标归并后的类号(-1: 置信度不足) 注：归并后的类名见classname
-
-        // 如果目标i有效，则设置为置信度最大那个分类
+        int area_i = (int)(im.h * dets[i].bbox.h) * (int)(im.w * dets[i].bbox.w); // person 当前目标的面积
+            
+        // person 如果目标i有效，则设置为置信度最大那个分类
         for(j = 0; j < classes; ++j){
             if (dets[i].prob[j] > thresh){
-                if (class < 0 || dets[i].prob[j] > prob){
+                if (class < 0 || dets[i].prob[j] > prob){ // 第1次被检测到或置信度更大，则保存类名和置信度
                     strcpy(labelstr, names[j]);
                     class = j;
                     prob = dets[i].prob[j];
                 }
             }
         }
-
+        
         // 提取感兴趣的几个类,并修正被误判的类名
-        if(class >= 0){  // 如果目标i的置信度足够大
-            if (strcmp(labelstr, "person")==0) // 人
-                cate = 1;
-
-            else if (strcmp(labelstr, "bicycle")==0 ||
-                     strcmp(labelstr, "motorbike")==0) // 自行车
+        if (class >= 0){  // 如果目标i的置信度足够大
+            if (strcmp(labelstr, "person")==0)          // 人
+                cate = 1;                               // cate = category
+            
+            else if (strcmp(labelstr, "bicycle")==0 || 
+                     strcmp(labelstr, "motorbike")==0)  // 归类为自行车
                 cate = 2;
-
-            else if (strcmp(labelstr, "chair")==0 ||
-                     strcmp(labelstr, "sofa")==0) // 椅子
+            
+            else if (strcmp(labelstr, "chair")==0 || 
+                     strcmp(labelstr, "sofa")==0)       // 归类为椅子
                 cate = 3;
-
-            else if (strcmp(labelstr, "sports ball")==0 ||
-                     strcmp(labelstr, "apple")==0 ||
+            
+            else if (strcmp(labelstr, "sports ball")==0 || 
+                     strcmp(labelstr, "apple")==0 || 
                      strcmp(labelstr, "mouse")==0 ||
                      strcmp(labelstr, "frisbee")==0 ||
                      strcmp(labelstr, "skateboard")==0 ||
                      strcmp(labelstr, "surfboard")==0
-                    )// 球
+                    )                                   // 归类为瑜伽球
                 cate = 4;
-
-            else  // 用于发现新的误判类
+            
+            else                                        // 用于发现新的误判类
                 cate = 0;
-
+            
             // debug 发现新的误判类，根据位置和大小，决定是否加到上面的if中
-            if (cate == 0){
+            if (cate == 0){  
                 box b = dets[i].bbox;
                 if (sw_showNewClass){
-                    printf("\nfound new class: %s [%.2f, %.2f, %.2f, %.2f], prob=%.2f\n",
+                    printf("\nfound new class: %s [%.2f, %.2f, %.2f, %.2f], prob=%.2f\n", 
                            labelstr, b.x, b.y, b.w, b.h, prob);
                 }
             }
-
-            if (prob > probs[cate]) {// 如果本未知类的置信度大于当前已保存的未知类，则替换
+            
+            // 更新算法部分！======= person ==================================
+            int change = 0;
+            if (cate == 1){                                 // 人
+                if (area_i > max(area_max, person_area_T)){ // 找到本帧中面积最大且大于阈值的人
+                    area_max = area_i;
+                    change = 1;
+                    //printf("\n---person found: area=%d, prob=%.2f(select)---", area_max, prob);
+                    // debug ONLY
+                }
+                else{                                   // 丢弃的人 属于背景部分，不再考虑
+                    //printf("\n---person found: area=%d, prob=%.2f---", area_i, prob);
+                }
+            }
+            else{
+                if (prob > probs[cate]) {               // 如果本次的置信度比当前已保存的大，则替换(针对有一个以上的同类物体)
+                    change = 1;                         // change表示置换，目前只考虑人
+                }
+            }
+            if (change == 1){                           // update新目标的全部信息
                 bboxes[cate] = dets[i].bbox;
                 probs[cate]  = prob;
                 found[cate]  = 1;
-                if (cate == 0)
+                if (cate == 0)                          // 新的误判类: 使用新的名字
                     strcpy(classname0, labelstr);
                 //printf("%d: %s(%s): %.0f%% | ", cate, classname[cate],
                 //       (strcmp(labelstr,classname[cate])==0? "": labelstr), prob*100);
             }
         }
-
-        // 显示bbox
-        // (如果是感兴趣类，或是其他类但允许显示)
+        
+        // 显示bbox // debug ONLY
+        // (如果是感兴趣类，或是其他类但允许显示) 以后可以选择加入别的场景物体
         if (showEachBox && (cate>0 || (cate==0 && showUnknown==1))){  // 如果目标i的置信度足够大
             draw_bbox_info(im, class, classes, bboxes[cate], labelstr, "", alphabet);
         }
     }
-
-    // 分析场景
+    //printf("\n"); // person
+    
+    // 分析场景模式
     int person_h = 0;
-    if (found[1]==1){ // 有人存在时才分析
-        // 修正处于遮挡中的椅子
-        if (1) {
-            // 修正椅子(遮挡)
-            if (found[3] == 1){
-                // 学习
-                bool abnormal = learn_chair(bboxes[3], im.w, im.h);
-                if (abnormal && chair_n > chair_learn_n){
-                    bboxes[3] = chair_pos;
-                    if (0)
-                        printf("\nadjust chair, abnormal: [%.2f, %.2f, %.2f, %.2f]\n",
-                           bboxes[3].x, bboxes[3].y, bboxes[3].w, bboxes[3].h); // debug
+    if (found[1]==1){                   // 有人存在时才分析
+        if (found[3] == 1){             // 修正处于遮挡中的椅子
+            // 学习
+            bool abnormal = learn_chair(bboxes[3], im.w, im.h);
+            // abnormal: 本次检测到的椅子，其位置和大小与历史状态信息严重不一样
+            // chair_n > chair_learn_n: 并且已经学习过足够多的帧了
+            if (abnormal && chair_n > chair_learn_n){
+                // 如果人与椅子没在一起
+                if (runaway(bboxes[1], bboxes[3], im.w, im.h)){
+                    chair_pos = bboxes[3]; // 人没有遮挡椅子，采信本次的结果，并用其修正历史状态
                 }
-            }
-            else{ // 椅子没有检测到
-                if (chair_n > chair_learn_n){ // 如果连续多次检测到椅子(说明真有椅子)
-                    if (h_status[3] == 2){ // 正坐着
-                        chair_pos.x += (bboxes[1].x-chair_pos.x)*0.1;
-                    }
-                    bboxes[3] = chair_pos;
-                    found[3] = 1;
+                else{                      // 如果人还在旁边，那么椅子还是被人遮住了，这时，采信历史状态
+                    bboxes[3] = chair_pos; // 用历史信息的位置大小来恢复椅子真正状态
                 }
+                if (0)
+                printf("\nadjust chair, abnormal: [%.2f, %.2f, %.2f, %.2f]\n", 
+                   bboxes[3].x, bboxes[3].y, bboxes[3].w, bboxes[3].h); // debug
             }
         }
-
+        else{                              // 椅子没有检测到
+            if (chair_n > chair_learn_n){  // 如果连续多次检测到椅子(说明真有椅子)
+                if (h_status[3] == 2){     // 正坐着
+                    float step = 0.1;
+                    // 人如果坐在椅子上移动了位置，那么让椅子的估计位置向人的中心位置回归（缓慢移动）
+                    chair_pos.x += (bboxes[1].x-chair_pos.x)*step;
+                }
+                bboxes[3] = chair_pos;
+                found[3] = 1;
+            }
+        }
+        
+        
         // 判断感兴趣目标是否处于使用状态
-        box person = bboxes[1]; // 人的bbox, (0.7, 0.5, 0.2, 0.7)
-        person_h = learn_person(person, im.h); // 更新/获取人体的平均身高
+        box person = bboxes[1];                // 人的bbox, (0.7, 0.5, 0.2, 0.7)
+        person_h = learn_person(person, im.h); // 更新or获取人体的平均身高
         for (i=2; i<5; i++){
             // 根据人与目标的重合度，判断是否进入或结束使用状态
-            if (found[i] == 1){ // 感兴趣目标检测到了
-                box obj = bboxes[i];  // 感兴趣目标的bbox
-                iou_ratio[i] = IOU(person, obj, im.w, im.h); // 相交比例
-                if (iou_ratio[i] > iou_thresh) { // 人与该目标高度重合
-
-                    if (i==3){ // 判断是否开始使用椅子(坐下)
-                        if (person_h!=0){ // 平均身高数据已经计算出来
-                            int personHeight = (int)(person.h*im.h); // 本帧身高
-                            if (personHeight<(int)(personHeightT*person_h)){ // 本帧身高明显变低
+            if (found[i] == 1){       // 感兴趣目标检测到了
+                box obj = bboxes[i];  // 获取感兴趣目标的bbox
+                iou_ratio[i] = IOU(person, obj, im.w, im.h); // 计算两者相交比例
+                if (iou_ratio[i] > iou_thresh) {             // 人与该目标高度重合
+                    
+                    if (i==3){                               // 判断是否开始使用椅子(坐下)
+                        if (person_h!=0){                    // 平均身高数据已经计算出来
+                            int personHeight = (int)(person.h*im.h);           // 本帧身高
+                            if (personHeight<(int)(personHeightT*person_h)){   // 本帧身高明显变低
                                 if (h_status[i] != 2){
                                     h_status[i] = 2;
                                     // 清除其他标志（bug: 有可能其他某个目标也是2）
@@ -413,90 +482,120 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                         if (j!=i)
                                             h_status[j] = 0;
                                     }
-                                    FILE* box_coordinate=malloc(1000*sizeof(FILE*));
-                                    box_coordinate=fopen("box_coordinate.txt","a+");
-                                    if(box_coordinate!=NULL)
-                                    {
-                                        fprintf(box_coordinate, "\n\tUser sits down.");
-                                    }
-                                    fclose(box_coordinate);
-                                    // free(box_coordinate);
                                     printf("\nsit down\n"); // debug
                                 }
                                 break;
                             }
-                            else{
+                            else{ 
                                 if (h_status[i] == 2){
-                                    h_status[i] = 0; // 站起
-                                    FILE* box_coordinate=malloc(1000*sizeof(FILE*));
-                                    box_coordinate=fopen("box_coordinate.txt","a+");
-                                    if(box_coordinate!=NULL)
-                                    {
-                                        fprintf(box_coordinate, "\n\tUser stands up.");
-                                    }
-                                    fclose(box_coordinate);
-                                    // free(box_coordinate);
-                                    printf("\nstand up\n"); // debug
+                                    h_status[i] = 0;         // 站起
+                                    printf("\nstand up\n");  // debug
                                 }
                             }
                         }
                     }
-                    else{  // 判断是否开始使用除了椅子之外的其他目标
+                    else if (i==4){                          // 球场景：置空 下面会单独处理
+                    }
+                    else{                                    // 判断是否开始使用除了椅子之外的其他目标
                         if (h_status[i] != 2){
                             h_status[i] = 2;
                             // 清除其他标志（bug: 有可能其他某个目标也是2）
-                            for (j=2; j<CUR_OBJ_N; j++){
+                            for (j=2; j<CUR_OBJ_N; j++){     // 修正人推着自行车出视野后，一直显示正在使用自行车问题
                                 if (j!=i)
                                     h_status[j] = 0;
                             }
-                            FILE* box_coordinate=malloc(1000*sizeof(FILE*));
-                            box_coordinate=fopen("box_coordinate.txt","a+");
-                            if(box_coordinate!=NULL)
-                            {
-                                fprintf(box_coordinate, "\n\tStatus : %s", h_status_info[i]);
-                            }
-                            fclose(box_coordinate);
-                            // free(box_coordinate);
                             printf("\n%s\n", h_status_info[i]); // debug
                         }
                         break;
                     }
                 }
-                else{ // 人与感兴趣目标远离，如果正在使用，则结束使用状态
-                    if (h_status[i] == 2){ // 正在使用中?
-                        if (runaway(person, obj, im.w, im.h)){
-                            h_status[i] = 0;
-                            printf("\nEND: %s\n", h_status_info[i]); // debug
+                else{                          // 说明人与感兴趣目标远离，如果正在使用，则结束使用状态
+                    if (i != 4){               // 不使用球： 下面会单独处理
+                        if (h_status[i] == 2){ // 正在使用中? 退出
+                            if (runaway(person, obj, im.w, im.h)){
+                                h_status[i] = 0;
+                                printf("\nEND: %s\n", h_status_info[i]); // debug
+                            }
                         }
                     }
                 }
             }
         }
+        
+        // 算法更新！瑜伽球================= 20180802
+        // 修正上一版bug：人推着自行车出视野后，一直显示正在使用自行车问题 最新版本里单车位置固定，已经不再是bug
+        // patch: 判断球是否离地并开始进行运动
+        if (found[4] == 1){             // 本帧检测到球
+            if (judgeBall(bboxes[4])){  // 球已经离开原处
+                if (h_status[4]==0){    // 当前不是使用状态
+                    h_status[4] = 2;
+                    // 清除其他标志（bug: 有可能其他某个目标也是2）
+                    for (j=2; j<CUR_OBJ_N; j++){        // 修正上一版bug
+                        if (j!=4)
+                            h_status[j] = 0;
+                    }
+                    printf("\n%s\n", h_status_info[4]); // debug
+                }
+            }
+            else{                                       // 球在地面上（开始或结束）
+                if (h_status[4]==2){                    // 当前处于使用状态
+                    h_status[4] = 0; 
+                    printf("\nEND: %s\n", h_status_info[4]); // debug ONLY
+                }
+            }
+        }
     }
-
+    
     // 显示结果
     char info[100];
     char status[30];
     for (i=1; i<5; i++){
-        if (found[1]==0) // 修正人推着自行车出视野后，一直显示正在使用自行车问题
-            continue;
-        if (found[i]==1){ // 检测到目标，则显示归并类名、置信度和相交比例
-            if (i==1){ // 人
+        //if (found[1]==0) // 本想解决问题，但会出新的问题: 人背对镜头后，什么都不显示了 （不再考虑）
+        //    continue;
+        
+        // 生成每个目标头上显示的信息 info
+        if (found[i]==1){   // 检测到目标
+            if (i==1){      // 人: 显示归并类名、当前身高和相对平均身高的比例
                 float ratio = getHeightRatio(bboxes[i].h, im.h);
-                sprintf(info, "%s, %.2f", classname[i], ratio);
+                int area_i = (int)(im.h * bboxes[i].h) * (int)(im.w * bboxes[i].w); // person 面积
+                sprintf(info, "%s, %d, %.2f", classname[i], area_i, ratio); 
             }
-            else
+            else            // 人以外：显示归并类名、置信度和相交比例
                 sprintf(info, "%s, %.2f, %.2f", classname[i], probs[i], iou_ratio[i]);
         }
         else
             info[0] = 0;
-
+        
+        // 生成目标使用信息 status
         if (h_status[i]==2)
             strcpy(status, h_status_info[i]);
         else
             status[0] = 0;
+        
+        // 显示本目标的检测结果和使用信息
         draw_bbox_info(im, i, classes, bboxes[i], info, status, alphabet);
     }
+}
+
+void save_video(image p, CvVideoWriter *mVideoWriter)
+{
+    image copy = copy_image(p);
+    if(p.c == 3) rgbgr_image(copy);
+    int x,y,k;
+
+    IplImage *disp = cvCreateImage(cvSize(p.w,p.h), IPL_DEPTH_8U, p.c);
+    int step = disp->widthStep;
+    for(y = 0; y < p.h; ++y){
+        for(x = 0; x < p.w; ++x){
+            for(k= 0; k < p.c; ++k){
+                disp->imageData[y*step + x*p.c + k] = 
+                    (unsigned char)(get_pixel(copy,x,y,k)*255);
+            }
+        }
+    }
+    cvWriteFrame(mVideoWriter,disp);
+    cvReleaseImage(&disp);
+    free_image(copy);
 }
 
 // 只要椅子检测到就学习椅子的位置(因为椅子在坐下之前恰好被挡住)
@@ -512,29 +611,29 @@ bool learn_chair(box chair, int imagew, int imageh)
         chair_pos.w = (chair_pos.w*chair_n + chair.w) / (chair_n+1);
         chair_pos.h = (chair_pos.h*chair_n + chair.h) / (chair_n+1);
     }
-
+    
     chair_n = chair_n+1;
-    if (chair_n == 100000)
+    if (chair_n >= CHAIR_HISTORY_N) 
         chair_n--;
-
-    if (chair_n == chair_learn_n){
-        printf("\nchair learned! [%.2f, %.2f, %.2f, %.2f]\n",
+    
+    if (chair_n == chair_learn_n){ 
+        printf("\nchair learned! [%.2f, %.2f, %.2f, %.2f]\n", 
                chair_pos.x, chair_pos.y, chair_pos.w, chair_pos.h); // debug
     }
-
-    // 判断位置和大小是否异常变化
+    
+    // 判断位置和大小是否异常变化 因为椅子可能会挪动，如果不挪动就不会出现这个问题
     bool abnormal = false;
-    if (chair_n >= chair_learn_n){
+    if (chair_n >= chair_learn_n){ 
         float T = 0.85;
         float _iou = IOU(chair, chair_pos, imagew, imageh);
         if (_iou < T){
             abnormal = true;
             if (0)
-                printf("\nchair abnormal! %.2f [%.2f, %.2f, %.2f, %.2f]\n",
+                printf("\nchair abnormal! %.2f [%.2f, %.2f, %.2f, %.2f]\n", 
                        _iou, chair.x, chair.y, chair.w, chair.h); // debug
         }
     }
-
+    
     return abnormal;
 }
 
@@ -547,13 +646,13 @@ float getHeightRatio(float h, int imageh)
     else
         return (h*imageh/person_h);
 }
-
-
+                       
+                        
 // 在人出现的最初若干帧内，学习人的身高
 int learn_person(box person, int imageh)
 {
-    int h = person.h*imageh;
-
+    int h = person.h*imageh; 
+    
     if (person_n < PERSON_LEARN_N){
         person_h += h;
         person_n++;
@@ -565,7 +664,7 @@ int learn_person(box person, int imageh)
     }
     else
         return person_h;
-
+    
 }
 
 // 画框和显示提示信息
@@ -573,14 +672,14 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
 {
     int xx = 20;
     int yy = 50;
-
+    
     int width = im.h * .006;
 
     int offset = class*123457 % classes;
     float red = get_color(2,offset,classes);
     float green = get_color(1,offset,classes);
     float blue = get_color(0,offset,classes);
-
+    
     float rgb[3];
     rgb[0] = red;
     rgb[1] = green;
@@ -596,28 +695,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
     if(right > im.w-1) right = im.w-1;
     if(top < 0) top = 0;
     if(bot > im.h-1) bot = im.h-1;
-    /*
-    show position of each bbox and write into box_coordinate.txt
-    */
-    if(alphabet && info[0]!=0)
-    {
-        FILE* box_coordinate=malloc(1000*sizeof(FILE*));
-        box_coordinate=fopen("box_coordinate.txt","a+");
-        if(box_coordinate!=NULL)
-        {
-            fprintf(box_coordinate, "\n\n[Object Info] of [%s] : \n\tBox Coordinates : (%d,%d), (%d,%d)",info,left,top,right,bot);
-        }
 
-        /*if (status != NULL){
-          fprintf(box_coordinate, "\nStatus : %s", status);
-        }*/
-
-        else error("File not opened");
-
-        fclose(box_coordinate);
-        // printf("%s:(%d,%d),(%d,%d)\n",info,left,top,right,bot);
-        // free(box_coordinate);
-    }
     // 画出每个目标的bbox
     draw_box_width(im, left, top, right, bot, width, red, green, blue);
 
@@ -628,7 +706,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         free_image(label);
         //printf("alphabet==True\n");
     }
-
+    
     // 显示文字
     if (alphabet && status[0]!=0) {
         image label = get_label(alphabet, status, (im.h*.03));
@@ -636,9 +714,9 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
         free_image(label);
         //printf("alphabet==True\n");
     }
+ 
 
-
-    // 不知道这段程序有个鸟用
+    // 不知道这段程序有什么用
     /*
     if (0 && dets[i].mask){
         printf("mask\n");
@@ -662,11 +740,11 @@ bool runaway(box person, box obj, int imagew, int imageh)
     int w1 = person.w*imagew;
     int x2 = (obj.x-obj.w/2.)*imagew;
     int w2 = obj.w*imagew;
-
+    
     int dist = (x1-x2<0? x2-x1: x1-x2);
     int T = (w1/2.+w2/2.)*ratio;
     return (dist > T);
-
+        
 }
 
 // siyao
@@ -678,22 +756,22 @@ float IOU(box person, box obj, int imagew, int imageh)
     int y1 = (person.y-person.h/2.)*imageh;
     int w1 = person.w*imagew;
     int h1 = person.h*imageh;
-
+    
     int x2 = (obj.x-obj.w/2.)*imagew;
     int y2 = (obj.y-obj.h/2.)*imageh;
     int w2 = obj.w*imagew;
     int h2 = obj.h*imageh;
-
+    
     // 相交区域的宽度
     int startx = min(x1, x2);
     int endx   = max(x1+w1, x2+w2);
     int w = w1 + w2 - (endx - startx);
-
+    
     // 相交区域的高度
     int starty = min(y1, y2);
     int endy   = max(y1+h1, y2+h2);
     int h = h1 + h2 - (endy - starty);
-
+    
     // 计算相交比例
     float ratio;
     if (w<=1 || h<=1)
@@ -704,9 +782,9 @@ float IOU(box person, box obj, int imagew, int imageh)
             ratio = 0.0;
         else
             ratio = (w*h) / (float)(area);
-    }
-
-
+    }   
+    
+    
     return ratio;
 }
 
@@ -948,7 +1026,7 @@ void show_image_cv(image p, const char *name, IplImage *disp)
     sprintf(buff, "%s", name);
 
     int step = disp->widthStep;
-    cvNamedWindow(buff, CV_WINDOW_NORMAL);
+    cvNamedWindow(buff, CV_WINDOW_NORMAL); 
     //cvMoveWindow(buff, 100*(windows%10) + 200*(windows/10), 100*(windows%10));
     ++windows;
     for(y = 0; y < p.h; ++y){
@@ -1193,7 +1271,7 @@ void place_image(image im, int w, int h, int dx, int dy, image canvas)
 
 image center_crop_image(image im, int w, int h)
 {
-    int m = (im.w < im.h) ? im.w : im.h;
+    int m = (im.w < im.h) ? im.w : im.h;   
     image c = crop_image(im, (im.w - m) / 2, (im.h - m)/2, m, m);
     image r = resize_image(c, w, h);
     free_image(c);
@@ -1355,7 +1433,7 @@ void letterbox_image_into(image im, int w, int h, image boxed)
         new_w = (im.w * h)/im.h;
     }
     image resized = resize_image(im, new_w, new_h);
-    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2);
+    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2); 
     free_image(resized);
 }
 
@@ -1375,7 +1453,7 @@ image letterbox_image(image im, int w, int h)
     fill_image(boxed, .5);
     //int i;
     //for(i = 0; i < boxed.w*boxed.h*boxed.c; ++i) boxed.data[i] = 0;
-    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2);
+    embed_image(resized, boxed, (w-new_w)/2, (h-new_h)/2); 
     free_image(resized);
     return boxed;
 }
@@ -1641,7 +1719,7 @@ image blend_image(image fore, image back, float alpha)
     for(k = 0; k < fore.c; ++k){
         for(j = 0; j < fore.h; ++j){
             for(i = 0; i < fore.w; ++i){
-                float val = alpha * get_pixel(fore, i, j, k) +
+                float val = alpha * get_pixel(fore, i, j, k) + 
                     (1 - alpha)* get_pixel(back, i, j, k);
                 set_pixel(blend, i, j, k, val);
             }
@@ -1748,7 +1826,7 @@ void saturate_exposure_image(image im, float sat, float exposure)
 
 image resize_image(image im, int w, int h)
 {
-    image resized = make_image(w, h, im.c);
+    image resized = make_image(w, h, im.c);   
     image part = make_image(w, im.h, im.c);
     int r, c, k;
     float w_scale = (float)(im.w - 1) / (w - 1);
@@ -1945,7 +2023,7 @@ image collapse_images_vert(image *ims, int n)
         free_image(copy);
     }
     return filters;
-}
+} 
 
 image collapse_images_horz(image *ims, int n)
 {
@@ -1981,7 +2059,7 @@ image collapse_images_horz(image *ims, int n)
         free_image(copy);
     }
     return filters;
-}
+} 
 
 void show_image_normalized(image im, const char *name)
 {
