@@ -34,7 +34,13 @@ char *h_status_info[] = {"", "", "use bike", "sit on chair", "play with ball"};
 int person_n = 0;          // 已经累计几针了
 int person_h = 0;          // 平均身高/中间数据
 int person_area_T = 0;     // person 面积大于这个值才检测为人(这个需要用试凑的值) 请通过视频给出建议值
+/*
+ 调试中输出person_area_T，由近及远，到达远点位置时记录下person_area_T的值
+ */
 float personHeightT = 0.8; // 当前身高/平均身高小于这个值时认为是坐下了
+/*
+ 如果模特的身高较高，需要适当减小personHeightT的值
+ */
 int frameNo = 0;           // 当前帧号
 
 // 椅子参数
@@ -49,9 +55,11 @@ int sw_showNewClass = 0;    // 如果想寻找新的误判类，改为1 (有时�
 int ball_learn_T = 10;      // 最初用多少帧来学习球的初始位置 tx2上建议可以少一点 树莓派上可以多一点
 int ball_learn_n = 0;       // 目前已经用了多少帧来学习球的初始位置
 float ball_pos;             // 球的平均初始位置(y坐标)
-float ball_rad;             // 球的平均高度pixel
-float ball_ratio = 0.8;     // 球离地的高度阈值计算公式 = 初始位置y坐标 + 平均高度*ratio 大于该阈值认为球已经被拿起
+float ball_rad;             // 球的平均高度pixel（半径）
+float ball_ratio = 0.8;     // 球离地的高度阈值计算公式 = 初始位置y坐标 + 平均高度（半径）*ratio 大于该阈值认为球已经被拿起
 // 注意！ 这个ratio需要在测试中用具体球来调整 不同size的球的ratio不一样 可给出lookup table
+//可以把ratio调低，瑜伽球发生较小移动就可以认为进入了互动
+//75cm,65cm,55cm
 
 
 // 车参数
@@ -396,7 +404,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 if (area_i > max(area_max, person_area_T)){ // 找到本帧中面积最大且大于阈值的人
                     area_max = area_i;
                     change = 1;
-                    //printf("\n---person found: area=%d, prob=%.2f(select)---", area_max, prob);
+                    printf("\n---person found: area=%d, prob=%.2f(select)---", area_max, prob);
                     // debug ONLY
                 }
                 else{                                   // 丢弃的人 属于背景部分，不再考虑
@@ -474,6 +482,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                     if (i==3){                               // 判断是否开始使用椅子(坐下)
                         if (person_h!=0){                    // 平均身高数据已经计算出来
                             int personHeight = (int)(person.h*im.h);           // 本帧身高
+                            printf("\nThe Ratio is currently: %.2f\n",personHeight/person_h);
                             if (personHeight<(int)(personHeightT*person_h)){   // 本帧身高明显变低
                                 if (h_status[i] != 2){
                                     h_status[i] = 2;
