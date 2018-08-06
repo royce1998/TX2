@@ -231,7 +231,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
         cap = cvCaptureFromFile(filename);
     }else{
         printf("open %s camera: #%d\n", (cam_index==0? "internal": "external"), cam_index);
-        cap = cvCaptureFromCAM(cam_index);
+        //cap = cvCaptureFromCAM(cam_index);
+        cap = cvCaptureFromCAM(1);
 
         if(w){
             cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
@@ -285,8 +286,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     int j;
 
-    cpu_set_t cpuset;
-    cpu_set_t cpuset2;
+    cpu_set_t cpuset; // this is the set of cpu cores to be used for the camera
+    cpu_set_t cpuset2; // this is the set of cpu cores to be used for detection
 
     CPU_ZERO(&cpuset);
     for (j = 0; j < 1; j++)
