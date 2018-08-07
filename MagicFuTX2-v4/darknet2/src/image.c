@@ -34,13 +34,7 @@ char *h_status_info[] = {"", "", "use bike", "sit on chair", "play with ball"};
 int person_n = 0;          // 已经累计几针了
 int person_h = 0;          // 平均身高/中间数据
 int person_area_T = 0;     // person 面积大于这个值才检测为人(这个需要用试凑的值) 请通过视频给出建议值
-/*
- 调试中输出person_area_T，由近及远，到达远点位置时记录下person_area_T的值
- */
 float personHeightT = 0.8; // 当前身高/平均身高小于这个值时认为是坐下了
-/*
- 如果模特的身高较高，需要适当减小personHeightT的值
- */
 int frameNo = 0;           // 当前帧号
 
 // 椅子参数
@@ -55,11 +49,9 @@ int sw_showNewClass = 0;    // 如果想寻找新的误判类，改为1 (有时�
 int ball_learn_T = 10;      // 最初用多少帧来学习球的初始位置 tx2上建议可以少一点 树莓派上可以多一点
 int ball_learn_n = 0;       // 目前已经用了多少帧来学习球的初始位置
 float ball_pos;             // 球的平均初始位置(y坐标)
-float ball_rad;             // 球的平均高度pixel（半径）
-float ball_ratio = 0.8;     // 球离地的高度阈值计算公式 = 初始位置y坐标 + 平均高度（半径）*ratio 大于该阈值认为球已经被拿起
+float ball_rad;             // 球的平均高度pixel
+float ball_ratio = 0.8;     // 球离地的高度阈值计算公式 = 初始位置y坐标 + 平均高度*ratio 大于该阈值认为球已经被拿起
 // 注意！ 这个ratio需要在测试中用具体球来调整 不同size的球的ratio不一样 可给出lookup table
-//可以把ratio调低，瑜伽球发生较小移动就可以认为进入了互动
-//75cm,65cm,55cm
 
 
 // 车参数
@@ -404,7 +396,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 if (area_i > max(area_max, person_area_T)){ // 找到本帧中面积最大且大于阈值的人
                     area_max = area_i;
                     change = 1;
-                    printf("\n---person found: area=%d, prob=%.2f(select)---", area_max, prob);
+                    //printf("\n---person found: area=%d, prob=%.2f(select)---", area_max, prob);
                     // debug ONLY
                 }
                 else{                                   // 丢弃的人 属于背景部分，不再考虑
@@ -470,60 +462,61 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
         
         
         // 判断感兴趣目标是否处于使用状态
-        box person = bboxes[1];                // 人的bbox, (0.7, 0.5, 0.2, 0.7)
+        box person = bboxes[1];                // 人的bbox, (0.7, 0.5, 0.2, 0.7) Bbox h/w ratio
         person_h = learn_person(person, im.h); // 更新or获取人体的平均身高
-        for (i=2; i<5; i++){
+        if (h_status[4] != 2) {                // 20180806 算法更新：如果当前状态正在玩球，则忽略人和其它使用物体的交叉
+            for (i=2; i<5; i++){
             // 根据人与目标的重合度，判断是否进入或结束使用状态
             if (found[i] == 1){       // 感兴趣目标检测到了
-                box obj = bboxes[i];  // 获取感兴趣目标的bbox
-                iou_ratio[i] = IOU(person, obj, im.w, im.h); // 计算两者相交比例
-                if (iou_ratio[i] > iou_thresh) {             // 人与该目标高度重合
-                    
-                    if (i==3){                               // 判断是否开始使用椅子(坐下)
-                        if (person_h!=0){                    // 平均身高数据已经计算出来
-                            int personHeight = (int)(person.h*im.h);           // 本帧身高
-                            printf("\nThe Ratio is currently: %.2f\n",personHeight/person_h);
-                            if (personHeight<(int)(personHeightT*person_h)){   // 本帧身高明显变低
-                                if (h_status[i] != 2){
-                                    h_status[i] = 2;
-                                    // 清除其他标志（bug: 有可能其他某个目标也是2）
-                                    for (j=2; j<CUR_OBJ_N; j++){
-                                        if (j!=i)
-                                            h_status[j] = 0;
+                    box obj = bboxes[i];  // 获取感兴趣目标的bbox
+                    iou_ratio[i] = IOU(person, obj, im.w, im.h); // 计算两者相交比例
+                    if (iou_ratio[i] > iou_thresh) {             // 人与该目标高度重合
+                        
+                        if (i==3){                               // 判断是否开始使用椅子(坐下)
+                            if (person_h!=0){                    // 平均身高数据已经计算出来
+                                int personHeight = (int)(person.h*im.h);           // 本帧身高
+                                if (personHeight<(int)(personHeightT*person_h)){   // 本帧身高明显变低
+                                    if (h_status[i] != 2){
+                                        h_status[i] = 2;
+                                        // 清除其他标志（bug: 有可能其他某个目标也是2）
+                                        for (j=2; j<CUR_OBJ_N; j++){
+                                            if (j!=i)
+                                                h_status[j] = 0;
+                                        }
+                                        printf("\nsit down\n"); // debug
                                     }
-                                    printf("\nsit down\n"); // debug
+                                    break;
                                 }
-                                break;
-                            }
-                            else{ 
-                                if (h_status[i] == 2){
-                                    h_status[i] = 0;         // 站起
-                                    printf("\nstand up\n");  // debug
+                                else{
+                                    if (h_status[i] == 2){
+                                        h_status[i] = 0;         // 站起
+                                        printf("\nstand up\n");  // debug
+                                    }
                                 }
                             }
                         }
-                    }
-                    else if (i==4){                          // 球场景：置空 下面会单独处理
-                    }
-                    else{                                    // 判断是否开始使用除了椅子之外的其他目标
-                        if (h_status[i] != 2){
-                            h_status[i] = 2;
-                            // 清除其他标志（bug: 有可能其他某个目标也是2）
-                            for (j=2; j<CUR_OBJ_N; j++){     // 修正人推着自行车出视野后，一直显示正在使用自行车问题
-                                if (j!=i)
-                                    h_status[j] = 0;
-                            }
-                            printf("\n%s\n", h_status_info[i]); // debug
+                        else if (i==4){                          // 球场景：置空 下面会单独处理
                         }
-                        break;
+                        else{                                    // 判断是否开始使用除了椅子之外的其他目标
+                            if (h_status[i] != 2){
+                                h_status[i] = 2;
+                                // 清除其他标志（bug: 有可能其他某个目标也是2）
+                                for (j=2; j<CUR_OBJ_N; j++){     // 修正人推着自行车出视野后，一直显示正在使用自行车问题
+                                    if (j!=i)
+                                        h_status[j] = 0;
+                                }
+                                printf("\n%s\n", h_status_info[i]); // debug
+                            }
+                            break;
+                        }
                     }
-                }
-                else{                          // 说明人与感兴趣目标远离，如果正在使用，则结束使用状态
-                    if (i != 4){               // 不使用球： 下面会单独处理
-                        if (h_status[i] == 2){ // 正在使用中? 退出
-                            if (runaway(person, obj, im.w, im.h)){
-                                h_status[i] = 0;
-                                printf("\nEND: %s\n", h_status_info[i]); // debug
+                    else{                          // 说明人与感兴趣目标远离，如果正在使用，则结束使用状态
+                        if (i != 4){               // 不使用球： 下面会单独处理
+                            if (h_status[i] == 2){ // 正在使用中? 退出
+                                if (runaway(person, obj, im.w, im.h)){
+                                    h_status[i] = 0;
+                                    printf("\nEND: %s\n", h_status_info[i]); // debug
+                                }
                             }
                         }
                     }
