@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>26. schwinnad6airdynereview.jpg</filename>
+    <size>
+        <width>610</width>
+        <height>550</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>51</xmin>
+            <ymin>10</ymin>
+            <xmax>507</xmax>
+            <ymax>531</ymax>
+        </bndbox>
+    </object>
+</annotation>

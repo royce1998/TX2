@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>62. spin_prod_532636901?wid=800&amp;hei=800&amp;op_sharpen=1.jpg</filename>
+    <size>
+        <width>1899</width>
+        <height>1900</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>303</xmin>
+            <ymin>127</ymin>
+            <xmax>1642</xmax>
+            <ymax>1819</ymax>
+        </bndbox>
+    </object>
+</annotation>

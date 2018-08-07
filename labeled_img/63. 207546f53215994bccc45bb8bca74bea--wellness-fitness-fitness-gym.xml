@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>63. 207546f53215994bccc45bb8bca74bea--wellness-fitness-fitness-gym.jpg</filename>
+    <size>
+        <width>736</width>
+        <height>1104</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>224</xmin>
+            <ymin>324</ymin>
+            <xmax>526</xmax>
+            <ymax>606</ymax>
+        </bndbox>
+    </object>
+</annotation>

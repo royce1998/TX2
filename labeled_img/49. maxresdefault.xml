@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>49. maxresdefault.jpg</filename>
+    <size>
+        <width>1920</width>
+        <height>1080</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>1048</xmin>
+            <ymin>225</ymin>
+            <xmax>1886</xmax>
+            <ymax>1011</ymax>
+        </bndbox>
+    </object>
+</annotation>

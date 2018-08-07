@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>39. pfex-15914-83178.jpg</filename>
+    <size>
+        <width>3700</width>
+        <height>4248</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>290</xmin>
+            <ymin>397</ymin>
+            <xmax>3164</xmax>
+            <ymax>3841</ymax>
+        </bndbox>
+    </object>
+</annotation>

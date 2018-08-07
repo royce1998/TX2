@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>15. cycle40-3.jpg</filename>
+    <size>
+        <width>4000</width>
+        <height>4000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>782</xmin>
+            <ymin>66</ymin>
+            <xmax>3234</xmax>
+            <ymax>3932</ymax>
+        </bndbox>
+    </object>
+</annotation>

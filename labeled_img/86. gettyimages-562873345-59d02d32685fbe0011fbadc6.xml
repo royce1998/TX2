@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>86. gettyimages-562873345-59d02d32685fbe0011fbadc6.jpg</filename>
+    <size>
+        <width>768</width>
+        <height>512</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>254</xmin>
+            <ymin>117</ymin>
+            <xmax>506</xmax>
+            <ymax>509</ymax>
+        </bndbox>
+    </object>
+</annotation>

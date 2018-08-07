@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>90. fd68c9d6f04df7ab26bf562c6d72a6ec--quiet-workout-cycle-trainer.jpg</filename>
+    <size>
+        <width>736</width>
+        <height>1099</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>42</xmin>
+            <ymin>59</ymin>
+            <xmax>712</xmax>
+            <ymax>1037</ymax>
+        </bndbox>
+    </object>
+</annotation>

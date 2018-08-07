@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>31. cyclus2-eccentric-cs-1.jpg</filename>
+    <size>
+        <width>800</width>
+        <height>594</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>40</xmin>
+            <ymin>19</ymin>
+            <xmax>762</xmax>
+            <ymax>582</ymax>
+        </bndbox>
+    </object>
+</annotation>

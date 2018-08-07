@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>23. 5a28adf1d0a5666315f39f14-2-big_1024x1024.jpg</filename>
+    <size>
+        <width>1000</width>
+        <height>1000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>26</xmin>
+            <ymin>79</ymin>
+            <xmax>534</xmax>
+            <ymax>670</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>481</xmin>
+            <ymin>323</ymin>
+            <xmax>947</xmax>
+            <ymax>887</ymax>
+        </bndbox>
+    </object>
+</annotation>

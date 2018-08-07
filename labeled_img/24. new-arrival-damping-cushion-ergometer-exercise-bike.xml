@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>24. new-arrival-damping-cushion-ergometer-exercise-bike.jpg</filename>
+    <size>
+        <width>790</width>
+        <height>727</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>82</xmin>
+            <ymin>51</ymin>
+            <xmax>636</xmax>
+            <ymax>680</ymax>
+        </bndbox>
+    </object>
+</annotation>

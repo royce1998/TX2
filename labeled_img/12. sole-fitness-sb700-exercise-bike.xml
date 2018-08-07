@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>12. sole-fitness-sb700-exercise-bike.jpg</filename>
+    <size>
+        <width>1229</width>
+        <height>1500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>312</xmin>
+            <ymin>439</ymin>
+            <xmax>1042</xmax>
+            <ymax>1394</ymax>
+        </bndbox>
+    </object>
+</annotation>

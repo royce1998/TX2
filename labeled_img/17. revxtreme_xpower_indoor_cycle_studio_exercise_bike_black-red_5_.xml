@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>17. revxtreme_xpower_indoor_cycle_studio_exercise_bike_black-red_5_.png</filename>
+    <size>
+        <width>2048</width>
+        <height>2048</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>37</xmin>
+            <ymin>47</ymin>
+            <xmax>1419</xmax>
+            <ymax>1878</ymax>
+        </bndbox>
+    </object>
+</annotation>

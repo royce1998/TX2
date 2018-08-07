@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>94. 410apog2cyl.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>84</xmin>
+            <ymin>113</ymin>
+            <xmax>416</xmax>
+            <ymax>492</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>66. proform-315-csx-recumbent-bike.jpg</filename>
+    <size>
+        <width>358</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>26</xmin>
+            <ymin>20</ymin>
+            <xmax>331</xmax>
+            <ymax>380</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>65. barton-haynes-stationary-bike-732x380.jpg</filename>
+    <size>
+        <width>732</width>
+        <height>380</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>202</xmin>
+            <ymin>99</ymin>
+            <xmax>593</xmax>
+            <ymax>380</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>73. cyclo-guy.jpg</filename>
+    <size>
+        <width>503</width>
+        <height>313</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>297</xmin>
+            <ymin>124</ymin>
+            <xmax>477</xmax>
+            <ymax>289</ymax>
+        </bndbox>
+    </object>
+</annotation>

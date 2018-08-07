@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>12. marcy-me-709-recumbent-exercise-bike.jpg</filename>
+    <size>
+        <width>1500</width>
+        <height>1458</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>135</xmin>
+            <ymin>414</ymin>
+            <xmax>1386</xmax>
+            <ymax>1387</ymax>
+        </bndbox>
+    </object>
+</annotation>

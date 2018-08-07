@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>19. spin_prod_923878312??hei=64&amp;wid=64&amp;qlt=50.jpg</filename>
+    <size>
+        <width>1900</width>
+        <height>1753</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>299</xmin>
+            <ymin>198</ymin>
+            <xmax>1391</xmax>
+            <ymax>1406</ymax>
+        </bndbox>
+    </object>
+</annotation>

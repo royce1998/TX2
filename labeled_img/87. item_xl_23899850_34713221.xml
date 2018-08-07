@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>87. item_xl_23899850_34713221.jpg</filename>
+    <size>
+        <width>600</width>
+        <height>536</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>138</xmin>
+            <ymin>4</ymin>
+            <xmax>456</xmax>
+            <ymax>483</ymax>
+        </bndbox>
+    </object>
+</annotation>

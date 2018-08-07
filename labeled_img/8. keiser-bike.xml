@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>8. keiser-bike.jpg</filename>
+    <size>
+        <width>353</width>
+        <height>346</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>31</xmin>
+            <ymin>106</ymin>
+            <xmax>309</xmax>
+            <ymax>330</ymax>
+        </bndbox>
+    </object>
+</annotation>

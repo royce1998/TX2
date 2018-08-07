@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>70. tunturi-e35-cardio-fit-series-upright-exercise-bike-with-ergometer-rytgplx9-4616-500x500_0.jpeg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>135</xmin>
+            <ymin>169</ymin>
+            <xmax>355</xmax>
+            <ymax>476</ymax>
+        </bndbox>
+    </object>
+</annotation>

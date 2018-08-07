@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>55. nordictrack-gx-4.6-pro-stationary-bike-460x409.png</filename>
+    <size>
+        <width>460</width>
+        <height>409</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>107</xmin>
+            <ymin>1</ymin>
+            <xmax>348</xmax>
+            <ymax>396</ymax>
+        </bndbox>
+    </object>
+</annotation>

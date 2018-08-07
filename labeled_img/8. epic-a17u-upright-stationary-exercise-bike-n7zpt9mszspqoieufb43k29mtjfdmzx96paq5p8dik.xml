@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>8. epic-a17u-upright-stationary-exercise-bike-n7zpt9mszspqoieufb43k29mtjfdmzx96paq5p8dik.png</filename>
+    <size>
+        <width>363</width>
+        <height>478</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>16</xmin>
+            <ymin>22</ymin>
+            <xmax>343</xmax>
+            <ymax>463</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>33. eb-282b-fitness-upright-home-use-magnetic-ergometer-spinning-exercise-bike-bicycle.jpg</filename>
+    <size>
+        <width>550</width>
+        <height>550</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>96</xmin>
+            <ymin>71</ymin>
+            <xmax>457</xmax>
+            <ymax>532</ymax>
+        </bndbox>
+    </object>
+</annotation>

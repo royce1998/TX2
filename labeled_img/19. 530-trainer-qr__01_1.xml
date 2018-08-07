@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>19. 530-trainer-qr__01_1.jpg</filename>
+    <size>
+        <width>800</width>
+        <height>600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>118</xmin>
+            <ymin>49</ymin>
+            <xmax>663</xmax>
+            <ymax>527</ymax>
+        </bndbox>
+    </object>
+</annotation>

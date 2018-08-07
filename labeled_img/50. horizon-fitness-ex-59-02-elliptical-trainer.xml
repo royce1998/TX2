@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>50. horizon-fitness-ex-59-02-elliptical-trainer.jpg</filename>
+    <size>
+        <width>761</width>
+        <height>551</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>1</xmin>
+            <ymin>120</ymin>
+            <xmax>283</xmax>
+            <ymax>529</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>346</xmin>
+            <ymin>7</ymin>
+            <xmax>741</xmax>
+            <ymax>536</ymax>
+        </bndbox>
+    </object>
+</annotation>

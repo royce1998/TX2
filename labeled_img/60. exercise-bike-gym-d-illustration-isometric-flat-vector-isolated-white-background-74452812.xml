@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>60. exercise-bike-gym-d-illustration-isometric-flat-vector-isolated-white-background-74452812.jpg</filename>
+    <size>
+        <width>800</width>
+        <height>560</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>450</xmin>
+            <ymin>64</ymin>
+            <xmax>755</xmax>
+            <ymax>495</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>68</xmin>
+            <ymin>36</ymin>
+            <xmax>379</xmax>
+            <ymax>522</ymax>
+        </bndbox>
+    </object>
+</annotation>

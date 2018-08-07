@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>11. 61dplhp4wal._sl1200_.jpg</filename>
+    <size>
+        <width>1200</width>
+        <height>1200</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>85</xmin>
+            <ymin>17</ymin>
+            <xmax>1120</xmax>
+            <ymax>1178</ymax>
+        </bndbox>
+    </object>
+</annotation>

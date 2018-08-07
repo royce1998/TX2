@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>35. b002cvu2hg.jpg</filename>
+    <size>
+        <width>370</width>
+        <height>370</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>8</xmin>
+            <ymin>30</ymin>
+            <xmax>363</xmax>
+            <ymax>350</ymax>
+        </bndbox>
+    </object>
+</annotation>

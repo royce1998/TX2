@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>98. cardiostrong-bx30-black-01_1600.jpg</filename>
+    <size>
+        <width>1600</width>
+        <height>1600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>375</xmin>
+            <ymin>83</ymin>
+            <xmax>1229</xmax>
+            <ymax>1535</ymax>
+        </bndbox>
+    </object>
+</annotation>

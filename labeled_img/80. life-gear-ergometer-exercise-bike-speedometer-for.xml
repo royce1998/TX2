@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>80. life-gear-ergometer-exercise-bike-speedometer-for.jpg</filename>
+    <size>
+        <width>350</width>
+        <height>350</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>101</xmin>
+            <ymin>42</ymin>
+            <xmax>294</xmax>
+            <ymax>327</ymax>
+        </bndbox>
+    </object>
+</annotation>

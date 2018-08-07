@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>69. rbrb_2291.jpg</filename>
+    <size>
+        <width>560</width>
+        <height>560</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>42</xmin>
+            <ymin>119</ymin>
+            <xmax>402</xmax>
+            <ymax>560</ymax>
+        </bndbox>
+    </object>
+</annotation>

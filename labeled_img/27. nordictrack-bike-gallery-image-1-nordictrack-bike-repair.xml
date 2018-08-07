@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>27. nordictrack-bike-gallery-image-1-nordictrack-bike-repair.jpg</filename>
+    <size>
+        <width>835</width>
+        <height>693</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>190</xmin>
+            <ymin>25</ymin>
+            <xmax>626</xmax>
+            <ymax>661</ymax>
+        </bndbox>
+    </object>
+</annotation>

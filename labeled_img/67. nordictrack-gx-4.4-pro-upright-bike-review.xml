@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>67. nordictrack-gx-4.4-pro-upright-bike-review.jpg</filename>
+    <size>
+        <width>835</width>
+        <height>693</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>181</xmin>
+            <ymin>19</ymin>
+            <xmax>638</xmax>
+            <ymax>679</ymax>
+        </bndbox>
+    </object>
+</annotation>

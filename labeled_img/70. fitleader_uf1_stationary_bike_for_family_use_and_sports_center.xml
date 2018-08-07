@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>70. fitleader_uf1_stationary_bike_for_family_use_and_sports_center.jpg</filename>
+    <size>
+        <width>800</width>
+        <height>800</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>118</xmin>
+            <ymin>66</ymin>
+            <xmax>610</xmax>
+            <ymax>784</ymax>
+        </bndbox>
+    </object>
+</annotation>

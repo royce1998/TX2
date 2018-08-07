@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>14. exercise-bike-vs-elliptical-main.jpg</filename>
+    <size>
+        <width>850</width>
+        <height>567</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>435</xmin>
+            <ymin>170</ymin>
+            <xmax>782</xmax>
+            <ymax>517</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>33. 0016470_cardio-stationary-bicycle-recumbent-fitness-exercise-bike-workout-home-gym.jpeg</filename>
+    <size>
+        <width>1200</width>
+        <height>1200</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>32</xmin>
+            <ymin>112</ymin>
+            <xmax>1177</xmax>
+            <ymax>1087</ymax>
+        </bndbox>
+    </object>
+</annotation>

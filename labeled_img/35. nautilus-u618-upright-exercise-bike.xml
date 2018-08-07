@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>35. nautilus-u618-upright-exercise-bike.jpg</filename>
+    <size>
+        <width>320</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>19</xmin>
+            <ymin>1</ymin>
+            <xmax>299</xmax>
+            <ymax>392</ymax>
+        </bndbox>
+    </object>
+</annotation>

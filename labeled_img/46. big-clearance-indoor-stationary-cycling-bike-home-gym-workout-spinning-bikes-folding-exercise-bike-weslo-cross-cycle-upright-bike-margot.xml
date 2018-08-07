@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>46. big-clearance-indoor-stationary-cycling-bike-home-gym-workout-spinning-bikes-folding-exercise-bike-weslo-cross-cycle-upright-bike-margot.jpg</filename>
+    <size>
+        <width>320</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>6</xmin>
+            <ymin>17</ymin>
+            <xmax>317</xmax>
+            <ymax>382</ymax>
+        </bndbox>
+    </object>
+</annotation>

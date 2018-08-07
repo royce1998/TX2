@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>9. 4853-excercise-bike-recumbent-bike-comfort_xtr-12.jpg</filename>
+    <size>
+        <width>1200</width>
+        <height>1200</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>38</xmin>
+            <ymin>92</ymin>
+            <xmax>1156</xmax>
+            <ymax>1170</ymax>
+        </bndbox>
+    </object>
+</annotation>

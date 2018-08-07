@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>90. recumbent-elliptical-weight-loss-best-of-home-gym-cardio-tips-5-benefits-of-a-recumbent-exercise-bike-of-recumbent-elliptical-weight-loss.jpg</filename>
+    <size>
+        <width>760</width>
+        <height>760</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>32</xmin>
+            <ymin>134</ymin>
+            <xmax>694</xmax>
+            <ymax>746</ymax>
+        </bndbox>
+    </object>
+</annotation>

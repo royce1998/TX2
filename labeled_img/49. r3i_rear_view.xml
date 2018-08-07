@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>49. r3i_rear_view.jpg</filename>
+    <size>
+        <width>900</width>
+        <height>900</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>56</xmin>
+            <ymin>54</ymin>
+            <xmax>850</xmax>
+            <ymax>794</ymax>
+        </bndbox>
+    </object>
+</annotation>

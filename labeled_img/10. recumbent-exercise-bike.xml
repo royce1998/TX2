@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>10. recumbent-exercise-bike.jpg</filename>
+    <size>
+        <width>1656</width>
+        <height>1967</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>86</xmin>
+            <ymin>9</ymin>
+            <xmax>1629</xmax>
+            <ymax>1914</ymax>
+        </bndbox>
+    </object>
+</annotation>

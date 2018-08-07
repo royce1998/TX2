@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>59. depositphotos_133242562-stock-photo-sporty-woman-on-gym-bike.jpg</filename>
+    <size>
+        <width>1067</width>
+        <height>1700</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>46</xmin>
+            <ymin>335</ymin>
+            <xmax>1051</xmax>
+            <ymax>1580</ymax>
+        </bndbox>
+    </object>
+</annotation>

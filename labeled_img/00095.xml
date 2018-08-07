@@ -1,0 +1,23 @@
+<annotation>
+    <folder>0</folder>
+    <filename>00095.jpg</filename>
+    <size>
+        <width>1440</width>
+        <height>1440</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>227</xmin>
+            <ymin>12</ymin>
+            <xmax>1223</xmax>
+            <ymax>1427</ymax>
+        </bndbox>
+    </object>
+</annotation>

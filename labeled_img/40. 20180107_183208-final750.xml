@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>40. 20180107_183208-final750.jpg</filename>
+    <size>
+        <width>750</width>
+        <height>360</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>176</xmin>
+            <ymin>3</ymin>
+            <xmax>556</xmax>
+            <ymax>346</ymax>
+        </bndbox>
+    </object>
+</annotation>

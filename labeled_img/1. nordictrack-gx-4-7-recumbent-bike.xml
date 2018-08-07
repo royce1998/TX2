@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>1. nordictrack-gx-4-7-recumbent-bike.jpg</filename>
+    <size>
+        <width>1500</width>
+        <height>1238</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>235</xmin>
+            <ymin>54</ymin>
+            <xmax>1246</xmax>
+            <ymax>1185</ymax>
+        </bndbox>
+    </object>
+</annotation>

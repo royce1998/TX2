@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>99. prod_1904100212??hei=64&amp;wid=64&amp;qlt=50.jpg</filename>
+    <size>
+        <width>2000</width>
+        <height>2000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>141</xmin>
+            <ymin>54</ymin>
+            <xmax>1857</xmax>
+            <ymax>1967</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>81. spirit-fitness-xbu55-fitness-bike.jpg</filename>
+    <size>
+        <width>505</width>
+        <height>700</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>79</xmin>
+            <ymin>164</ymin>
+            <xmax>448</xmax>
+            <ymax>679</ymax>
+        </bndbox>
+    </object>
+</annotation>

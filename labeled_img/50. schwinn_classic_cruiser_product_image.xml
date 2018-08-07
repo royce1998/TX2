@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>50. schwinn_classic_cruiser_product_image.jpg</filename>
+    <size>
+        <width>1708</width>
+        <height>1333</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>92</xmin>
+            <ymin>138</ymin>
+            <xmax>1396</xmax>
+            <ymax>1268</ymax>
+        </bndbox>
+    </object>
+</annotation>

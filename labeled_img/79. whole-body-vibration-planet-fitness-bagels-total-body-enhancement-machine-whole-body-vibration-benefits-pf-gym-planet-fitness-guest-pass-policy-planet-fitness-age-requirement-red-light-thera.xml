@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>79. whole-body-vibration-planet-fitness-bagels-total-body-enhancement-machine-whole-body-vibration-benefits-pf-gym-planet-fitness-guest-pass-policy-planet-fitness-age-requirement-red-light-thera.jpg</filename>
+    <size>
+        <width>2600</width>
+        <height>2600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>403</xmin>
+            <ymin>343</ymin>
+            <xmax>2094</xmax>
+            <ymax>2571</ymax>
+        </bndbox>
+    </object>
+</annotation>

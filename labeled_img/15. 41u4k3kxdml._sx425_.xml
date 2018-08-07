@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>15. 41u4k3kxdml._sx425_.jpg</filename>
+    <size>
+        <width>425</width>
+        <height>334</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>124</xmin>
+            <ymin>23</ymin>
+            <xmax>329</xmax>
+            <ymax>327</ymax>
+        </bndbox>
+    </object>
+</annotation>

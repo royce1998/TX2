@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>45. nautilus-r514c-recumbent-exercise-bike-e1477071105227.jpg</filename>
+    <size>
+        <width>670</width>
+        <height>405</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>15</xmin>
+            <ymin>48</ymin>
+            <xmax>261</xmax>
+            <ymax>349</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>405</xmin>
+            <ymin>92</ymin>
+            <xmax>651</xmax>
+            <ymax>359</ymax>
+        </bndbox>
+    </object>
+</annotation>

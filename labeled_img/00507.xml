@@ -1,0 +1,36 @@
+<annotation>
+    <folder>0</folder>
+    <filename>00507.jpg</filename>
+    <size>
+        <width>3598</width>
+        <height>2554</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>2101</xmin>
+            <ymin>793</ymin>
+            <xmax>3480</xmax>
+            <ymax>1874</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>162</xmin>
+            <ymin>832</ymin>
+            <xmax>1991</xmax>
+            <ymax>1780</ymax>
+        </bndbox>
+    </object>
+</annotation>

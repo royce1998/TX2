@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>25. nautilusu614exercisebike-4.jpg</filename>
+    <size>
+        <width>471</width>
+        <height>600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>40</xmin>
+            <ymin>17</ymin>
+            <xmax>429</xmax>
+            <ymax>580</ymax>
+        </bndbox>
+    </object>
+</annotation>

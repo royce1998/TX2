@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>10. proform-740-es-ifit-recumbent-exercise-bike-d-2017092614554644~580629.jpg</filename>
+    <size>
+        <width>466</width>
+        <height>466</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>61</xmin>
+            <ymin>90</ymin>
+            <xmax>397</xmax>
+            <ymax>430</ymax>
+        </bndbox>
+    </object>
+</annotation>

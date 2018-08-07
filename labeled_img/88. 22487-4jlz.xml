@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>88. 22487-4jlz.jpeg</filename>
+    <size>
+        <width>900</width>
+        <height>675</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>7</xmin>
+            <ymin>76</ymin>
+            <xmax>889</xmax>
+            <ymax>651</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>50. recumbent-exercise-bike-benefits-for-fitness-and-exercise.jpg</filename>
+    <size>
+        <width>600</width>
+        <height>319</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>33</xmin>
+            <ymin>11</ymin>
+            <xmax>287</xmax>
+            <ymax>316</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>307</xmin>
+            <ymin>56</ymin>
+            <xmax>598</xmax>
+            <ymax>319</ymax>
+        </bndbox>
+    </object>
+</annotation>

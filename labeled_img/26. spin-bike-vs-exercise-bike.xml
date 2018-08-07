@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>26. spin-bike-vs-exercise-bike.jpg</filename>
+    <size>
+        <width>1164</width>
+        <height>1432</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>235</xmin>
+            <ymin>337</ymin>
+            <xmax>963</xmax>
+            <ymax>1367</ymax>
+        </bndbox>
+    </object>
+</annotation>

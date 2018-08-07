@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>61. bigstock-spinning-instructor-at-gym-86163374.jpg</filename>
+    <size>
+        <width>800</width>
+        <height>533</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>28</xmin>
+            <ymin>302</ymin>
+            <xmax>203</xmax>
+            <ymax>533</ymax>
+        </bndbox>
+    </object>
+</annotation>

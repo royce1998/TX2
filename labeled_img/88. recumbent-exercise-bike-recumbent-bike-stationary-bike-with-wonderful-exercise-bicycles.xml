@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>88. recumbent-exercise-bike-recumbent-bike-stationary-bike-with-wonderful-exercise-bicycles.jpg</filename>
+    <size>
+        <width>1648</width>
+        <height>1800</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>94</xmin>
+            <ymin>60</ymin>
+            <xmax>1604</xmax>
+            <ymax>1737</ymax>
+        </bndbox>
+    </object>
+</annotation>

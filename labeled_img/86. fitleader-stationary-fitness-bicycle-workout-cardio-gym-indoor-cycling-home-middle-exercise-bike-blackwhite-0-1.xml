@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>86. fitleader-stationary-fitness-bicycle-workout-cardio-gym-indoor-cycling-home-middle-exercise-bike-blackwhite-0-1.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>103</xmin>
+            <ymin>15</ymin>
+            <xmax>430</xmax>
+            <ymax>493</ymax>
+        </bndbox>
+    </object>
+</annotation>

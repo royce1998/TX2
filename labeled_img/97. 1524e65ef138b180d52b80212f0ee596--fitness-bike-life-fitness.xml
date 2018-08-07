@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>97. 1524e65ef138b180d52b80212f0ee596--fitness-bike-life-fitness.jpg</filename>
+    <size>
+        <width>700</width>
+        <height>700</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>11</xmin>
+            <ymin>35</ymin>
+            <xmax>697</xmax>
+            <ymax>664</ymax>
+        </bndbox>
+    </object>
+</annotation>

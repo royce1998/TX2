@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>71. 51fiz%2bebxnl.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>10</xmin>
+            <ymin>27</ymin>
+            <xmax>491</xmax>
+            <ymax>483</ymax>
+        </bndbox>
+    </object>
+</annotation>

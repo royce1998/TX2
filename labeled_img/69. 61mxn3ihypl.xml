@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>69. 61mxn3ihypl.jpg</filename>
+    <size>
+        <width>1191</width>
+        <height>1482</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>107</xmin>
+            <ymin>52</ymin>
+            <xmax>1062</xmax>
+            <ymax>1450</ymax>
+        </bndbox>
+    </object>
+</annotation>
