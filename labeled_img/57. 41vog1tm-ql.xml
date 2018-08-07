@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>57. 41vog1tm-ql.jpg</filename>
+    <size>
+        <width>351</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>27</xmin>
+            <ymin>19</ymin>
+            <xmax>298</xmax>
+            <ymax>378</ymax>
+        </bndbox>
+    </object>
+</annotation>

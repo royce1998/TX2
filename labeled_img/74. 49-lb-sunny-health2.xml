@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>74. 49-lb-sunny-health2.jpg</filename>
+    <size>
+        <width>1500</width>
+        <height>1500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>55</xmin>
+            <ymin>122</ymin>
+            <xmax>1445</xmax>
+            <ymax>1428</ymax>
+        </bndbox>
+    </object>
+</annotation>

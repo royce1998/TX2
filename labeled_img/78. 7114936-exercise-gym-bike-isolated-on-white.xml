@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>78. 7114936-exercise-gym-bike-isolated-on-white.jpg</filename>
+    <size>
+        <width>992</width>
+        <height>1300</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>116</xmin>
+            <ymin>212</ymin>
+            <xmax>882</xmax>
+            <ymax>1227</ymax>
+        </bndbox>
+    </object>
+</annotation>

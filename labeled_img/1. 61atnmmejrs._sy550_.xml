@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>1. 61atnmmejrs._sy550_.jpg</filename>
+    <size>
+        <width>416</width>
+        <height>550</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>45</xmin>
+            <ymin>56</ymin>
+            <xmax>368</xmax>
+            <ymax>499</ymax>
+        </bndbox>
+    </object>
+</annotation>

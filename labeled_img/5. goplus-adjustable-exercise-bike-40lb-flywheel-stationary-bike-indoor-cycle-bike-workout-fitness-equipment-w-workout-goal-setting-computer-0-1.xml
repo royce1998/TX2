@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>5. goplus-adjustable-exercise-bike-40lb-flywheel-stationary-bike-indoor-cycle-bike-workout-fitness-equipment-w-workout-goal-setting-computer-0-1.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>38</xmin>
+            <ymin>4</ymin>
+            <xmax>469</xmax>
+            <ymax>498</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>96. cross-trainer-couple.jpg</filename>
+    <size>
+        <width>810</width>
+        <height>580</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>376</xmin>
+            <ymin>164</ymin>
+            <xmax>674</xmax>
+            <ymax>545</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>113</xmin>
+            <ymin>174</ymin>
+            <xmax>436</xmax>
+            <ymax>572</ymax>
+        </bndbox>
+    </object>
+</annotation>

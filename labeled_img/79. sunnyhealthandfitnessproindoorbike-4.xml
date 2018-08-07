@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>79. sunnyhealthandfitnessproindoorbike-4.jpg</filename>
+    <size>
+        <width>607</width>
+        <height>700</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>3</xmin>
+            <ymin>58</ymin>
+            <xmax>582</xmax>
+            <ymax>691</ymax>
+        </bndbox>
+    </object>
+</annotation>

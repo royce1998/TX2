@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>18. nautilus1.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>799</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>78</xmin>
+            <ymin>114</ymin>
+            <xmax>484</xmax>
+            <ymax>771</ymax>
+        </bndbox>
+    </object>
+</annotation>

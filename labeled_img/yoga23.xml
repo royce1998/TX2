@@ -1,0 +1,26 @@
+<annotation>
+	<folder>downloads</folder>
+	<filename>yoga23.jpg</filename>
+	<path>/Users/chenweijia/yogaball/downloads/yoga23.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>600</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>yogaball</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>45</xmin>
+			<ymin>31</ymin>
+			<xmax>581</xmax>
+			<ymax>568</ymax>
+		</bndbox>
+	</object>
+</annotation>

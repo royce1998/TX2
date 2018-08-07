@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>23. 81fo2gxb7il._sl1500_.jpg</filename>
+    <size>
+        <width>945</width>
+        <height>1500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>31</xmin>
+            <ymin>379</ymin>
+            <xmax>911</xmax>
+            <ymax>1484</ymax>
+        </bndbox>
+    </object>
+</annotation>

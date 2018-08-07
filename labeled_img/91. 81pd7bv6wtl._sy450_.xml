@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>91. 81pd7bv6wtl._sy450_.jpg</filename>
+    <size>
+        <width>309</width>
+        <height>450</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>1</xmin>
+            <ymin>15</ymin>
+            <xmax>307</xmax>
+            <ymax>443</ymax>
+        </bndbox>
+    </object>
+</annotation>

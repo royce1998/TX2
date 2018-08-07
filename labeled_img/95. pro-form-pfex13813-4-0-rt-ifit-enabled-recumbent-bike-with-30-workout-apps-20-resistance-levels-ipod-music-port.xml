@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>95. pro-form-pfex13813-4-0-rt-ifit-enabled-recumbent-bike-with-30-workout-apps-20-resistance-levels-ipod-music-port.jpg</filename>
+    <size>
+        <width>320</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>9</xmin>
+            <ymin>10</ymin>
+            <xmax>318</xmax>
+            <ymax>394</ymax>
+        </bndbox>
+    </object>
+</annotation>

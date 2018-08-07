@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>32. epic-a17r-recumbent-exercise-bike-n7zpsycqpsaat6v8968kq543owyz2moh55gwg8dncc.png</filename>
+    <size>
+        <width>475</width>
+        <height>478</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>14</xmin>
+            <ymin>8</ymin>
+            <xmax>454</xmax>
+            <ymax>451</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>43. 20150207__sjm-medical-0208-1~1.jpg</filename>
+    <size>
+        <width>645</width>
+        <height>425</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>243</xmin>
+            <ymin>127</ymin>
+            <xmax>620</xmax>
+            <ymax>394</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>87. golds-gym-cycle-trainer-290-c-upright-exercise-bike.jpg</filename>
+    <size>
+        <width>400</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>70</xmin>
+            <ymin>1</ymin>
+            <xmax>337</xmax>
+            <ymax>396</ymax>
+        </bndbox>
+    </object>
+</annotation>

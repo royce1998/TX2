@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>67. 800349.jpg</filename>
+    <size>
+        <width>368</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>68</xmin>
+            <ymin>106</ymin>
+            <xmax>308</xmax>
+            <ymax>483</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>downloads</folder>
+	<filename>yoga82.jpg</filename>
+	<path>/Users/chenweijia/yogaball/downloads/yoga82.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2048</width>
+		<height>1364</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>yogaball</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>3</xmin>
+			<ymin>571</ymin>
+			<xmax>1159</xmax>
+			<ymax>1364</ymax>
+		</bndbox>
+	</object>
+</annotation>

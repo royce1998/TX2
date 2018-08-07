@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>9. crs804701_jun14_side.jpg</filename>
+    <size>
+        <width>1200</width>
+        <height>1200</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>201</xmin>
+            <ymin>31</ymin>
+            <xmax>982</xmax>
+            <ymax>1198</ymax>
+        </bndbox>
+    </object>
+</annotation>

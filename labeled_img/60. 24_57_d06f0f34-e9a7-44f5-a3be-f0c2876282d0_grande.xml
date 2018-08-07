@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>60. 24_57_d06f0f34-e9a7-44f5-a3be-f0c2876282d0_grande.jpg</filename>
+    <size>
+        <width>600</width>
+        <height>600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>24</xmin>
+            <ymin>99</ymin>
+            <xmax>579</xmax>
+            <ymax>565</ymax>
+        </bndbox>
+    </object>
+</annotation>

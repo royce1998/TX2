@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>83. 2bd80983510d584abc4ff80c8d858221.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>320</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>113</xmin>
+            <ymin>75</ymin>
+            <xmax>291</xmax>
+            <ymax>312</ymax>
+        </bndbox>
+    </object>
+</annotation>

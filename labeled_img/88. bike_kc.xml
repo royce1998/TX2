@@ -1,0 +1,36 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>88. bike_kc.jpg</filename>
+    <size>
+        <width>400</width>
+        <height>300</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>164</xmin>
+            <ymin>80</ymin>
+            <xmax>376</xmax>
+            <ymax>286</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>137</xmin>
+            <ymin>99</ymin>
+            <xmax>288</xmax>
+            <ymax>239</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>32. cycle40-inuse-1.jpg</filename>
+    <size>
+        <width>4000</width>
+        <height>4000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>542</xmin>
+            <ymin>413</ymin>
+            <xmax>3246</xmax>
+            <ymax>4000</ymax>
+        </bndbox>
+    </object>
+</annotation>

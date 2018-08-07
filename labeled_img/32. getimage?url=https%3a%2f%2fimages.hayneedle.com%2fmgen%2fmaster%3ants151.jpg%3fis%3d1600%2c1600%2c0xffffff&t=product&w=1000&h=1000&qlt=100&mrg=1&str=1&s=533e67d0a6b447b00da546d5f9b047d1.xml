@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>32. getimage?url=https%3a%2f%2fimages.hayneedle.com%2fmgen%2fmaster%3ants151.jpg%3fis%3d1600%2c1600%2c0xffffff&amp;t=product&amp;w=1000&amp;h=1000&amp;qlt=100&amp;mrg=1&amp;str=1&amp;s=533e67d0a6b447b00da546d5f9b047d1.jpg</filename>
+    <size>
+        <width>1000</width>
+        <height>1000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>238</xmin>
+            <ymin>99</ymin>
+            <xmax>734</xmax>
+            <ymax>859</ymax>
+        </bndbox>
+    </object>
+</annotation>

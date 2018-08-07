@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>58. ntex76016_gallery_1@2x.jpg</filename>
+    <size>
+        <width>2200</width>
+        <height>1466</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>416</xmin>
+            <ymin>58</ymin>
+            <xmax>1692</xmax>
+            <ymax>1413</ymax>
+        </bndbox>
+    </object>
+</annotation>

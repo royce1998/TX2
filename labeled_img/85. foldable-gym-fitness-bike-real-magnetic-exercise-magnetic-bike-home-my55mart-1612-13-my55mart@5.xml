@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>85. foldable-gym-fitness-bike-real-magnetic-exercise-magnetic-bike-home-my55mart-1612-13-my55mart@5.jpg</filename>
+    <size>
+        <width>800</width>
+        <height>800</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>87</xmin>
+            <ymin>17</ymin>
+            <xmax>639</xmax>
+            <ymax>796</ymax>
+        </bndbox>
+    </object>
+</annotation>

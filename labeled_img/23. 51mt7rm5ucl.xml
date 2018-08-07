@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>23. 51mt7rm5ucl.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>62</xmin>
+            <ymin>52</ymin>
+            <xmax>427</xmax>
+            <ymax>427</ymax>
+        </bndbox>
+    </object>
+</annotation>

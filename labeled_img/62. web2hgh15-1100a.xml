@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>62. web2hgh15-1100a.jpg</filename>
+    <size>
+        <width>2500</width>
+        <height>2500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>207</xmin>
+            <ymin>139</ymin>
+            <xmax>2149</xmax>
+            <ymax>2330</ymax>
+        </bndbox>
+    </object>
+</annotation>

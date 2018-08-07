@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>46. 51xg7nh1hdl._sy355_.jpg</filename>
+    <size>
+        <width>355</width>
+        <height>355</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>4</xmin>
+            <ymin>62</ymin>
+            <xmax>350</xmax>
+            <ymax>305</ymax>
+        </bndbox>
+    </object>
+</annotation>

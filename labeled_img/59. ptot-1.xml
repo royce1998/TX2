@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>59. ptot-1.jpg</filename>
+    <size>
+        <width>1600</width>
+        <height>1066</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>585</xmin>
+            <ymin>108</ymin>
+            <xmax>1333</xmax>
+            <ymax>1061</ymax>
+        </bndbox>
+    </object>
+</annotation>

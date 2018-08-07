@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>97. tenive-gym-pro-indoor-stationary-upright-belt-bicycle-exercise-cycling-bike-w-lcd-display_27819246.jpeg</filename>
+    <size>
+        <width>355</width>
+        <height>355</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>32</xmin>
+            <ymin>20</ymin>
+            <xmax>306</xmax>
+            <ymax>340</ymax>
+        </bndbox>
+    </object>
+</annotation>

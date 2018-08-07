@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>36. dsc_9229.jpg</filename>
+    <size>
+        <width>880</width>
+        <height>880</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>153</xmin>
+            <ymin>11</ymin>
+            <xmax>736</xmax>
+            <ymax>851</ymax>
+        </bndbox>
+    </object>
+</annotation>

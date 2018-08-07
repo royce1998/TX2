@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>10. exercise-air-bike-for-weight-sdl231187771-1-b6c39.jpg</filename>
+    <size>
+        <width>850</width>
+        <height>995</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>189</xmin>
+            <ymin>380</ymin>
+            <xmax>679</xmax>
+            <ymax>941</ymax>
+        </bndbox>
+    </object>
+</annotation>

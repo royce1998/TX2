@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>93. htb1fhnolxxxxxcqxxxxq6xxfxxxv.jpg</filename>
+    <size>
+        <width>700</width>
+        <height>800</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>84</xmin>
+            <ymin>130</ymin>
+            <xmax>591</xmax>
+            <ymax>605</ymax>
+        </bndbox>
+    </object>
+</annotation>

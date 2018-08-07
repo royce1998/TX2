@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>84. elliptical-vs.-stationary-bike.jpg</filename>
+    <size>
+        <width>900</width>
+        <height>600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>156</xmin>
+            <ymin>81</ymin>
+            <xmax>532</xmax>
+            <ymax>535</ymax>
+        </bndbox>
+    </object>
+</annotation>

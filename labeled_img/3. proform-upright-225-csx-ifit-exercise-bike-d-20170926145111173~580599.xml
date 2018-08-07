@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>3. proform-upright-225-csx-ifit-exercise-bike-d-20170926145111173~580599.jpg</filename>
+    <size>
+        <width>466</width>
+        <height>466</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>125</xmin>
+            <ymin>20</ymin>
+            <xmax>352</xmax>
+            <ymax>446</ymax>
+        </bndbox>
+    </object>
+</annotation>

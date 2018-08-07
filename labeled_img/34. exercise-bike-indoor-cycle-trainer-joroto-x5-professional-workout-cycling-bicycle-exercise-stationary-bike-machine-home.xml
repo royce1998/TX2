@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>34. exercise-bike-indoor-cycle-trainer-joroto-x5-professional-workout-cycling-bicycle-exercise-stationary-bike-machine-home.jpg</filename>
+    <size>
+        <width>999</width>
+        <height>934</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>22</xmin>
+            <ymin>36</ymin>
+            <xmax>991</xmax>
+            <ymax>922</ymax>
+        </bndbox>
+    </object>
+</annotation>

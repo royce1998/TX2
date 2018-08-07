@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>30. screen_shot_2016-12-16_at_9.54.04_am_large.png</filename>
+    <size>
+        <width>358</width>
+        <height>480</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>55</xmin>
+            <ymin>9</ymin>
+            <xmax>285</xmax>
+            <ymax>392</ymax>
+        </bndbox>
+    </object>
+</annotation>

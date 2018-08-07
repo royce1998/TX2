@@ -1,0 +1,36 @@
+<annotation>
+    <folder>0</folder>
+    <filename>00868.jpg</filename>
+    <size>
+        <width>1200</width>
+        <height>1200</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>590</xmin>
+            <ymin>741</ymin>
+            <xmax>1124</xmax>
+            <ymax>1150</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>62</xmin>
+            <ymin>50</ymin>
+            <xmax>1135</xmax>
+            <ymax>1016</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>45. nt-gx-2-7-exercise-bike.gif</filename>
+    <size>
+        <width>347</width>
+        <height>527</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>14</xmin>
+            <ymin>1</ymin>
+            <xmax>338</xmax>
+            <ymax>515</ymax>
+        </bndbox>
+    </object>
+</annotation>

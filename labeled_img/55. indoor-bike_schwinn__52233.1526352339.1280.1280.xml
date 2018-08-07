@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>55. indoor-bike_schwinn__52233.1526352339.1280.1280.jpg</filename>
+    <size>
+        <width>1280</width>
+        <height>1280</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>43</xmin>
+            <ymin>65</ymin>
+            <xmax>1240</xmax>
+            <ymax>1213</ymax>
+        </bndbox>
+    </object>
+</annotation>

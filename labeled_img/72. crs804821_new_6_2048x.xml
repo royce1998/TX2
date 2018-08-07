@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>72. crs804821_new_6_2048x.jpg</filename>
+    <size>
+        <width>1135</width>
+        <height>1135</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>237</xmin>
+            <ymin>257</ymin>
+            <xmax>918</xmax>
+            <ymax>1113</ymax>
+        </bndbox>
+    </object>
+</annotation>

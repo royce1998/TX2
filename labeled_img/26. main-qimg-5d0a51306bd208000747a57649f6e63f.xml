@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>26. main-qimg-5d0a51306bd208000747a57649f6e63f.jpg</filename>
+    <size>
+        <width>602</width>
+        <height>603</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>28</xmin>
+            <ymin>69</ymin>
+            <xmax>589</xmax>
+            <ymax>599</ymax>
+        </bndbox>
+    </object>
+</annotation>

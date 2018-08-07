@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>90. training-indoor-fitness-gym-bicycle-workout-indoor-home.jpg</filename>
+    <size>
+        <width>399</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>13</xmin>
+            <ymin>1</ymin>
+            <xmax>392</xmax>
+            <ymax>393</ymax>
+        </bndbox>
+    </object>
+</annotation>

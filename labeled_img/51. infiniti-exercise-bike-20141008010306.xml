@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>51. infiniti-exercise-bike-20141008010306.jpg</filename>
+    <size>
+        <width>2448</width>
+        <height>3264</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>128</xmin>
+            <ymin>53</ymin>
+            <xmax>2428</xmax>
+            <ymax>3209</ymax>
+        </bndbox>
+    </object>
+</annotation>

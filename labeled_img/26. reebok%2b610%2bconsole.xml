@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>26. reebok%2b610%2bconsole.jpg</filename>
+    <size>
+        <width>1500</width>
+        <height>1057</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>114</xmin>
+            <ymin>116</ymin>
+            <xmax>1426</xmax>
+            <ymax>1057</ymax>
+        </bndbox>
+    </object>
+</annotation>

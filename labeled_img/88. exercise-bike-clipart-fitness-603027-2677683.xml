@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>88. exercise-bike-clipart-fitness-603027-2677683.jpg</filename>
+    <size>
+        <width>1000</width>
+        <height>780</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>108</xmin>
+            <ymin>17</ymin>
+            <xmax>875</xmax>
+            <ymax>774</ymax>
+        </bndbox>
+    </object>
+</annotation>

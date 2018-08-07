@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>71. 41myzh2dsql.jpg</filename>
+    <size>
+        <width>500</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>206</xmin>
+            <ymin>16</ymin>
+            <xmax>474</xmax>
+            <ymax>475</ymax>
+        </bndbox>
+    </object>
+</annotation>

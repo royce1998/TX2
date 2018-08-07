@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>68. indoor-cycling-bike-by-sunny-health-fitness-sf-b1110s.jpg</filename>
+    <size>
+        <width>1000</width>
+        <height>1000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>160</xmin>
+            <ymin>249</ymin>
+            <xmax>813</xmax>
+            <ymax>984</ymax>
+        </bndbox>
+    </object>
+</annotation>

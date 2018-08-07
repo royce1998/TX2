@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>77. chislim-q001-home-gym-fitness-spinning-bicycle-exercise-bike-qmk-1568-ebestseller-1704-09-ebestseller@1.jpg</filename>
+    <size>
+        <width>720</width>
+        <height>720</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>38</xmin>
+            <ymin>40</ymin>
+            <xmax>665</xmax>
+            <ymax>660</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>51. ad-747-gym-fitness-home-iron-spinning-bicycle-exercise-bike-qmk-ebestseller-1711-08-ebestseller@3.jpg</filename>
+    <size>
+        <width>720</width>
+        <height>720</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>60</xmin>
+            <ymin>26</ymin>
+            <xmax>530</xmax>
+            <ymax>648</ymax>
+        </bndbox>
+    </object>
+</annotation>

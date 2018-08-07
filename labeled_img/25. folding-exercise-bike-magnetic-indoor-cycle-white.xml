@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>25. folding-exercise-bike-magnetic-indoor-cycle-white.jpg</filename>
+    <size>
+        <width>600</width>
+        <height>600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>58</xmin>
+            <ymin>18</ymin>
+            <xmax>456</xmax>
+            <ymax>581</ymax>
+        </bndbox>
+    </object>
+</annotation>

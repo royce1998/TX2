@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>66. gym-bicycle-cycle-bike-fitness-home-office-cost-bicycle-chriss79-1705-28-chriss79@1.jpg</filename>
+    <size>
+        <width>790</width>
+        <height>726</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>13</xmin>
+            <ymin>14</ymin>
+            <xmax>504</xmax>
+            <ymax>709</ymax>
+        </bndbox>
+    </object>
+</annotation>

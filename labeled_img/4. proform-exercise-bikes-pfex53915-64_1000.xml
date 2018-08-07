@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>4. proform-exercise-bikes-pfex53915-64_1000.jpg</filename>
+    <size>
+        <width>1000</width>
+        <height>1000</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>153</xmin>
+            <ymin>61</ymin>
+            <xmax>822</xmax>
+            <ymax>944</ymax>
+        </bndbox>
+    </object>
+</annotation>

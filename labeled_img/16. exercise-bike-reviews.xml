@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>16. exercise-bike-reviews.jpg</filename>
+    <size>
+        <width>400</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>97</xmin>
+            <ymin>166</ymin>
+            <xmax>324</xmax>
+            <ymax>373</ymax>
+        </bndbox>
+    </object>
+</annotation>

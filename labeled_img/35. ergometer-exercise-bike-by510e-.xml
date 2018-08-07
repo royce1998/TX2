@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>35. ergometer-exercise-bike-by510e-.jpg</filename>
+    <size>
+        <width>887</width>
+        <height>1265</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>1</xmin>
+            <ymin>1</ymin>
+            <xmax>876</xmax>
+            <ymax>1254</ymax>
+        </bndbox>
+    </object>
+</annotation>

@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>10. c44f0ca2595545c08385ce6b321ec690--consoles-lcd.jpg</filename>
+    <size>
+        <width>736</width>
+        <height>1041</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>40</xmin>
+            <ymin>44</ymin>
+            <xmax>687</xmax>
+            <ymax>996</ymax>
+        </bndbox>
+    </object>
+</annotation>

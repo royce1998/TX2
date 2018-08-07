@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>30. body-rider-fan-bike.jpg</filename>
+    <size>
+        <width>1078</width>
+        <height>1500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>25</xmin>
+            <ymin>1</ymin>
+            <xmax>1054</xmax>
+            <ymax>1447</ymax>
+        </bndbox>
+    </object>
+</annotation>

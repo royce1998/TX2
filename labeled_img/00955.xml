@@ -1,0 +1,36 @@
+<annotation>
+    <folder>0</folder>
+    <filename>00955.jpg</filename>
+    <size>
+        <width>940</width>
+        <height>500</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>564</xmin>
+            <ymin>111</ymin>
+            <xmax>925</xmax>
+            <ymax>409</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>chairs</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>19</xmin>
+            <ymin>119</ymin>
+            <xmax>398</xmax>
+            <ymax>425</ymax>
+        </bndbox>
+    </object>
+</annotation>

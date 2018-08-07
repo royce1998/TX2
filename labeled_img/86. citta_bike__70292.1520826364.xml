@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>86. citta_bike__70292.1520826364.jpg</filename>
+    <size>
+        <width>1280</width>
+        <height>1280</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>205</xmin>
+            <ymin>93</ymin>
+            <xmax>1018</xmax>
+            <ymax>1161</ymax>
+        </bndbox>
+    </object>
+</annotation>

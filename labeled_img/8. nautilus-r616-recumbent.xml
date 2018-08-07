@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>8. nautilus-r616-recumbent.jpeg</filename>
+    <size>
+        <width>746</width>
+        <height>600</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>110</xmin>
+            <ymin>56</ymin>
+            <xmax>611</xmax>
+            <ymax>522</ymax>
+        </bndbox>
+    </object>
+</annotation>

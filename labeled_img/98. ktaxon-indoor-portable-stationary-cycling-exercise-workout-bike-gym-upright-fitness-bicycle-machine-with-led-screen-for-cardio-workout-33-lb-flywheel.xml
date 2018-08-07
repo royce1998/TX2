@@ -1,0 +1,23 @@
+<annotation>
+    <folder>lpics</folder>
+    <filename>98. ktaxon-indoor-portable-stationary-cycling-exercise-workout-bike-gym-upright-fitness-bicycle-machine-with-led-screen-for-cardio-workout-33-lb-flywheel.jpg</filename>
+    <size>
+        <width>320</width>
+        <height>400</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>gym_bike</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <occluded>0</occluded>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>6</xmin>
+            <ymin>49</ymin>
+            <xmax>317</xmax>
+            <ymax>368</ymax>
+        </bndbox>
+    </object>
+</annotation>
