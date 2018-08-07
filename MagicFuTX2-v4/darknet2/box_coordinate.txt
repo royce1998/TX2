@@ -1,0 +1,483 @@
+
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (83,288), (688,1050)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1112,122), (1779,642)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (133,235), (877,1079)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1111,123), (1779,640)
+
+[Object Info] of [chair, 0.52, 0.75] : 
+	Box Coordinates : (667,259), (948,565)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (121,224), (891,1079)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1114,127), (1778,639)
+
+[Object Info] of [chair, 0.56, 0.81] : 
+	Box Coordinates : (671,261), (944,568)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (117,211), (895,1079)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1113,127), (1780,640)
+
+[Object Info] of [chair, 0.56, 0.83] : 
+	Box Coordinates : (672,259), (943,568)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (124,201), (889,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1113,126), (1780,640)
+
+[Object Info] of [chair, 0.55, 0.80] : 
+	Box Coordinates : (674,259), (944,568)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (140,206), (883,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1112,126), (1782,639)
+
+[Object Info] of [chair, 0.53, 0.78] : 
+	Box Coordinates : (676,260), (943,567)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (176,220), (872,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1113,128), (1781,639)
+
+[Object Info] of [chair, 0.49, 0.73] : 
+	Box Coordinates : (674,261), (944,559)
+
+[Object Info] of [person, 0.98] : 
+	Box Coordinates : (174,229), (877,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1113,130), (1780,638)
+
+[Object Info] of [person, 0.91] : 
+	Box Coordinates : (182,274), (840,1072)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1116,129), (1777,638)
+
+[Object Info] of [person, 0.98] : 
+	Box Coordinates : (695,90), (1180,949)
+
+[Object Info] of [bicycle, 0.88, 0.00] : 
+	Box Coordinates : (1202,143), (1860,587)
+
+[Object Info] of [person, 0.84] : 
+	Box Coordinates : (991,55), (1475,790)
+
+[Object Info] of [bicycle, 0.56, 0.00] : 
+	Box Coordinates : (1536,199), (1828,636)
+
+[Object Info] of [chair, 0.56, 0.00] : 
+	Box Coordinates : (53,392), (704,1018)
+
+[Object Info] of [person, 0.91] : 
+	Box Coordinates : (989,33), (1475,825)
+
+[Object Info] of [bicycle, 0.60, 0.00] : 
+	Box Coordinates : (1537,193), (1830,642)
+
+[Object Info] of [chair, 0.56, 0.00] : 
+	Box Coordinates : (54,397), (706,1014)
+
+[Object Info] of [person, 1.11] : 
+	Box Coordinates : (866,0), (1336,924)
+
+[Object Info] of [bicycle, 0.66, 0.00] : 
+	Box Coordinates : (1545,195), (1833,643)
+
+[Object Info] of [chair, 0.56, 0.00] : 
+	Box Coordinates : (56,402), (701,1006)
+
+[Object Info] of [person, 1.02] : 
+	Box Coordinates : (823,0), (1330,880)
+
+[Object Info] of [bicycle, 0.44, 0.00] : 
+	Box Coordinates : (1541,204), (1830,640)
+
+[Object Info] of [chair, 0.51, 0.00] : 
+	Box Coordinates : (56,406), (697,1001)
+
+[Object Info] of [person, 1.02] : 
+	Box Coordinates : (738,68), (1254,959)
+
+[Object Info] of [bicycle, 0.42, 0.29] : 
+	Box Coordinates : (1017,102), (1825,670)
+
+[Object Info] of [chair, 0.46, 0.22] : 
+	Box Coordinates : (392,324), (833,767)
+
+[Object Info] of [person, 1.05] : 
+	Box Coordinates : (717,58), (1231,975)
+
+[Object Info] of [bicycle, 0.61, 0.23] : 
+	Box Coordinates : (1053,103), (1817,659)
+
+[Object Info] of [chair, 0.41, 0.23] : 
+	Box Coordinates : (364,330), (822,787)
+
+[Object Info] of [person, 1.09] : 
+	Box Coordinates : (716,37), (1228,985)
+
+[Object Info] of [bicycle, 0.89, 0.02] : 
+	Box Coordinates : (1214,129), (1850,599)
+
+[Object Info] of [chair, 0.00, 0.23] : 
+	Box Coordinates : (364,330), (822,787)
+
+[Object Info] of [person, 1.10] : 
+	Box Coordinates : (681,27), (1222,986)
+
+[Object Info] of [bicycle, 0.84, 0.00] : 
+	Box Coordinates : (1230,123), (1850,605)
+
+[Object Info] of [chair, 0.00, 0.31] : 
+	Box Coordinates : (364,330), (822,787)
+
+[Object Info] of [person, 1.06] : 
+	Box Coordinates : (723,0), (1194,899)
+
+[Object Info] of [bicycle, 0.85, 0.00] : 
+	Box Coordinates : (1227,128), (1855,602)
+
+[Object Info] of [chair, 0.42, 0.19] : 
+	Box Coordinates : (340,336), (811,803)
+
+[Object Info] of [person, 1.04] : 
+	Box Coordinates : (730,0), (1192,892)
+
+[Object Info] of [bicycle, 0.87, 0.00] : 
+	Box Coordinates : (1204,133), (1850,592)
+
+[Object Info] of [chair, 0.43, 0.15] : 
+	Box Coordinates : (320,340), (802,818)
+
+[Object Info] of [person, 1.05] : 
+	Box Coordinates : (764,0), (1204,894)
+
+[Object Info] of [bicycle, 0.92, 0.00] : 
+	Box Coordinates : (1211,133), (1852,596)
+
+[Object Info] of [chair, 0.45, 0.06] : 
+	Box Coordinates : (303,343), (795,831)
+
+[Object Info] of [person, 1.01] : 
+	Box Coordinates : (734,66), (1241,949)
+
+[Object Info] of [bicycle, 0.89, 0.00] : 
+	Box Coordinates : (1251,126), (1850,606)
+
+[Object Info] of [chair, 0.45, 0.11] : 
+	Box Coordinates : (287,345), (789,843)
+
+[Object Info] of [person, 0.86] : 
+	Box Coordinates : (842,39), (1326,787)
+
+[Object Info] of [bicycle, 0.89, 0.12] : 
+	Box Coordinates : (1254,120), (1852,613)
+
+[Object Info] of [chair, 0.51, 0.00] : 
+	Box Coordinates : (311,340), (796,827)
+	Status : use bike
+
+[Object Info] of [person, 0.53] : 
+	Box Coordinates : (1386,20), (1686,484)
+
+[Object Info] of [bicycle, 0.92, 0.81] : 
+	Box Coordinates : (1218,110), (1821,611)
+
+[Object Info] of [chair, 0.41, 0.00] : 
+	Box Coordinates : (298,341), (790,838)
+
+[Object Info] of [person, 0.58] : 
+	Box Coordinates : (1393,0), (1702,508)
+
+[Object Info] of [bicycle, 0.92, 0.77] : 
+	Box Coordinates : (1232,117), (1817,610)
+
+[Object Info] of [chair, 0.42, 0.00] : 
+	Box Coordinates : (285,343), (785,849)
+
+[Object Info] of [person, 0.58] : 
+	Box Coordinates : (1385,0), (1708,505)
+
+[Object Info] of [bicycle, 0.95, 0.74] : 
+	Box Coordinates : (1226,129), (1830,608)
+
+[Object Info] of [chair, 0.43, 0.00] : 
+	Box Coordinates : (275,344), (780,858)
+
+[Object Info] of [person, 0.56] : 
+	Box Coordinates : (1366,4), (1709,492)
+
+[Object Info] of [bicycle, 0.94, 0.77] : 
+	Box Coordinates : (1211,118), (1835,609)
+
+[Object Info] of [chair, 0.44, 0.00] : 
+	Box Coordinates : (264,345), (776,866)
+
+[Object Info] of [person, 0.48] : 
+	Box Coordinates : (1372,42), (1701,464)
+
+[Object Info] of [bicycle, 0.92, 0.82] : 
+	Box Coordinates : (1200,116), (1838,606)
+
+[Object Info] of [chair, 0.44, 0.00] : 
+	Box Coordinates : (255,346), (772,874)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (83,288), (688,1050)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1112,122), (1779,642)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (133,235), (877,1079)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1111,123), (1779,640)
+
+[Object Info] of [chair, 0.52, 0.75] : 
+	Box Coordinates : (667,259), (948,565)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (121,224), (891,1079)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1114,127), (1778,639)
+
+[Object Info] of [chair, 0.56, 0.81] : 
+	Box Coordinates : (671,261), (944,568)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (117,211), (895,1079)
+
+[Object Info] of [bicycle, 0.96, 0.00] : 
+	Box Coordinates : (1113,127), (1780,640)
+
+[Object Info] of [chair, 0.56, 0.83] : 
+	Box Coordinates : (672,259), (943,568)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (124,201), (889,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1113,126), (1780,640)
+
+[Object Info] of [chair, 0.55, 0.80] : 
+	Box Coordinates : (674,259), (944,568)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (140,206), (883,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1112,126), (1782,639)
+
+[Object Info] of [chair, 0.53, 0.78] : 
+	Box Coordinates : (676,260), (943,567)
+
+[Object Info] of [person, 1.00] : 
+	Box Coordinates : (176,220), (872,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1113,128), (1781,639)
+
+[Object Info] of [chair, 0.49, 0.73] : 
+	Box Coordinates : (674,261), (944,559)
+
+[Object Info] of [person, 0.98] : 
+	Box Coordinates : (174,229), (877,1079)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1113,130), (1780,638)
+
+[Object Info] of [person, 0.91] : 
+	Box Coordinates : (182,274), (840,1072)
+
+[Object Info] of [bicycle, 0.95, 0.00] : 
+	Box Coordinates : (1116,129), (1777,638)
+
+[Object Info] of [person, 0.98] : 
+	Box Coordinates : (695,90), (1180,949)
+
+[Object Info] of [bicycle, 0.88, 0.00] : 
+	Box Coordinates : (1202,143), (1860,587)
+
+[Object Info] of [person, 0.84] : 
+	Box Coordinates : (991,55), (1475,790)
+
+[Object Info] of [bicycle, 0.56, 0.00] : 
+	Box Coordinates : (1536,199), (1828,636)
+
+[Object Info] of [chair, 0.56, 0.00] : 
+	Box Coordinates : (53,392), (704,1018)
+
+[Object Info] of [person, 0.91] : 
+	Box Coordinates : (989,33), (1475,825)
+
+[Object Info] of [bicycle, 0.60, 0.00] : 
+	Box Coordinates : (1537,193), (1830,642)
+
+[Object Info] of [chair, 0.56, 0.00] : 
+	Box Coordinates : (54,397), (706,1014)
+
+[Object Info] of [person, 1.11] : 
+	Box Coordinates : (866,0), (1336,924)
+
+[Object Info] of [bicycle, 0.66, 0.00] : 
+	Box Coordinates : (1545,195), (1833,643)
+
+[Object Info] of [chair, 0.56, 0.00] : 
+	Box Coordinates : (56,402), (701,1006)
+
+[Object Info] of [person, 1.02] : 
+	Box Coordinates : (823,0), (1330,880)
+
+[Object Info] of [bicycle, 0.44, 0.00] : 
+	Box Coordinates : (1541,204), (1830,640)
+
+[Object Info] of [chair, 0.51, 0.00] : 
+	Box Coordinates : (56,406), (697,1001)
+
+[Object Info] of [person, 1.02] : 
+	Box Coordinates : (738,68), (1254,959)
+
+[Object Info] of [bicycle, 0.42, 0.29] : 
+	Box Coordinates : (1017,102), (1825,670)
+
+[Object Info] of [chair, 0.46, 0.22] : 
+	Box Coordinates : (392,324), (833,767)
+
+[Object Info] of [person, 1.05] : 
+	Box Coordinates : (717,58), (1231,975)
+
+[Object Info] of [bicycle, 0.61, 0.23] : 
+	Box Coordinates : (1053,103), (1817,659)
+
+[Object Info] of [chair, 0.41, 0.23] : 
+	Box Coordinates : (364,330), (822,787)
+
+[Object Info] of [person, 1.09] : 
+	Box Coordinates : (716,37), (1228,985)
+
+[Object Info] of [bicycle, 0.89, 0.02] : 
+	Box Coordinates : (1214,129), (1850,599)
+
+[Object Info] of [chair, 0.00, 0.23] : 
+	Box Coordinates : (364,330), (822,787)
+
+[Object Info] of [person, 1.10] : 
+	Box Coordinates : (681,27), (1222,986)
+
+[Object Info] of [bicycle, 0.84, 0.00] : 
+	Box Coordinates : (1230,123), (1850,605)
+
+[Object Info] of [chair, 0.00, 0.31] : 
+	Box Coordinates : (364,330), (822,787)
+
+[Object Info] of [person, 1.06] : 
+	Box Coordinates : (723,0), (1194,899)
+
+[Object Info] of [bicycle, 0.85, 0.00] : 
+	Box Coordinates : (1227,128), (1855,602)
+
+[Object Info] of [chair, 0.42, 0.19] : 
+	Box Coordinates : (340,336), (811,803)
+
+[Object Info] of [person, 1.04] : 
+	Box Coordinates : (730,0), (1192,892)
+
+[Object Info] of [bicycle, 0.87, 0.00] : 
+	Box Coordinates : (1204,133), (1850,592)
+
+[Object Info] of [chair, 0.43, 0.15] : 
+	Box Coordinates : (320,340), (802,818)
+
+[Object Info] of [person, 1.05] : 
+	Box Coordinates : (764,0), (1204,894)
+
+[Object Info] of [bicycle, 0.92, 0.00] : 
+	Box Coordinates : (1211,133), (1852,596)
+
+[Object Info] of [chair, 0.45, 0.06] : 
+	Box Coordinates : (303,343), (795,831)
+
+[Object Info] of [person, 1.01] : 
+	Box Coordinates : (734,66), (1241,949)
+
+[Object Info] of [bicycle, 0.89, 0.00] : 
+	Box Coordinates : (1251,126), (1850,606)
+
+[Object Info] of [chair, 0.45, 0.11] : 
+	Box Coordinates : (287,345), (789,843)
+
+[Object Info] of [person, 0.86] : 
+	Box Coordinates : (842,39), (1326,787)
+
+[Object Info] of [bicycle, 0.89, 0.12] : 
+	Box Coordinates : (1254,120), (1852,613)
+
+[Object Info] of [chair, 0.51, 0.00] : 
+	Box Coordinates : (311,340), (796,827)
+	Status : use bike
+
+[Object Info] of [person, 0.53] : 
+	Box Coordinates : (1386,20), (1686,484)
+
+[Object Info] of [bicycle, 0.92, 0.81] : 
+	Box Coordinates : (1218,110), (1821,611)
+
+[Object Info] of [chair, 0.41, 0.00] : 
+	Box Coordinates : (298,341), (790,838)
+
+[Object Info] of [person, 0.58] : 
+	Box Coordinates : (1393,0), (1702,508)
+
+[Object Info] of [bicycle, 0.92, 0.77] : 
+	Box Coordinates : (1232,117), (1817,610)
+
+[Object Info] of [chair, 0.42, 0.00] : 
+	Box Coordinates : (285,343), (785,849)
+
+[Object Info] of [person, 0.58] : 
+	Box Coordinates : (1385,0), (1708,505)
+
+[Object Info] of [bicycle, 0.95, 0.74] : 
+	Box Coordinates : (1226,129), (1830,608)
+
+[Object Info] of [chair, 0.43, 0.00] : 
+	Box Coordinates : (275,344), (780,858)
+
+[Object Info] of [person, 0.56] : 
+	Box Coordinates : (1366,4), (1709,492)
+
+[Object Info] of [bicycle, 0.94, 0.77] : 
+	Box Coordinates : (1211,118), (1835,609)
+
+[Object Info] of [chair, 0.44, 0.00] : 
+	Box Coordinates : (264,345), (776,866)
+
+[Object Info] of [person, 0.48] : 
+	Box Coordinates : (1372,42), (1701,464)
+
+[Object Info] of [bicycle, 0.92, 0.82] : 
+	Box Coordinates : (1200,116), (1838,606)
+
+[Object Info] of [chair, 0.44, 0.00] : 
+	Box Coordinates : (255,346), (772,874)
