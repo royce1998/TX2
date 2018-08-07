@@ -288,7 +288,7 @@ int judgeBall(box ball)
 {
     if (ball_learn_n >= ball_learn_T){ // 达到学习次数，则不再学习，位置已经固定
         if (ball.y < (ball_pos - (ball_rad*ball_ratio))){
-            //printf("judge %.2f to be used, pos=%.2f, rad=%.2f\n", ball.y, ball_pos, ball_rad);
+            printf("judge %.2f to be used, pos=%.2f, rad=%.2f\n", ball.y, ball_pos, ball_rad);
             // debug ONLY
             return 1;
         }
@@ -475,6 +475,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                         if (i==3){                               // 判断是否开始使用椅子(坐下)
                             if (person_h!=0){                    // 平均身高数据已经计算出来
                                 int personHeight = (int)(person.h*im.h);           // 本帧身高
+                                printf("\nThe Ratio is currently: %.2f\n",(float)personHeight/(float)person_h);
                                 if (personHeight<(int)(personHeightT*person_h)){   // 本帧身高明显变低
                                     if (h_status[i] != 2){
                                         h_status[i] = 2;
