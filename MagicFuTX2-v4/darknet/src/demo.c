@@ -1,7 +1,3 @@
-#define _GNU_SOURCE
-
-#include <sched.h>
-
 #include "network.h"
 #include "detection_layer.h"
 #include "region_layer.h"
@@ -12,9 +8,11 @@
 #include "image.h"
 #include "demo.h"
 #include <sys/time.h>
-#include <unistd.h>
 
 #define DEMO 1
+//--------
+#define SAVEVIDEO
+//*********
 
 // siyao
 // 加快运行(仅用于视频文件调试模式下)
@@ -23,6 +21,12 @@ int frame_skipped = 0;
 
 
 #ifdef OPENCV
+
+//-------
+#ifdef SAVEVIDEO
+   static CvVideoWriter *mVideoWriter;
+#endif
+//*********
 
 static char **demo_names;
 static image **demo_alphabet;
@@ -46,10 +50,6 @@ static float *avg;
 static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
-
-// static double detect_time = 0.0;
-
-// static pthread_mutex_t lock;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
@@ -98,28 +98,6 @@ detection *avg_predictions(network *net, int *nboxes)
     return dets;
 }
 
-void *display_in_thread(void *ptr)
-{
-    show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
-    int c = cvWaitKey(1);
-    if (c != -1) c = c%256;
-    if (c == 27) {
-        demo_done = 1;
-        return 0;
-    } else if (c == 82) {
-        demo_thresh += .02;
-    } else if (c == 84) {
-        demo_thresh -= .02;
-        if(demo_thresh <= .02) demo_thresh = .02;
-    } else if (c == 83) {
-        demo_hier += .02;
-    } else if (c == 81) {
-        demo_hier -= .02;
-        if(demo_hier <= .0) demo_hier = .0;
-    }
-    return 0;
-}
-
 void *detect_in_thread(void *ptr)
 {
     running = 1;
@@ -145,10 +123,10 @@ void *detect_in_thread(void *ptr)
     //printf("\033[1;1H");
     //printf("\nFPS:%.1f\n",fps);
     image display = buff[(buff_index+2) % 3];
-
+    
     // 显示检测结果bbox
     draw_detections(display, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-    // display_in_thread(0);
+    
     free_detections(dets, nboxes);
 
     demo_index = (demo_index + 1)%demo_frame;
@@ -164,6 +142,28 @@ void *fetch_in_thread(void *ptr)
     return 0;
 }
 
+void *display_in_thread(void *ptr)
+{
+    show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
+    int c = cvWaitKey(1);
+    if (c != -1) c = c%256;
+    if (c == 27) {
+        demo_done = 1;
+        return 0;
+    } else if (c == 82) {
+        demo_thresh += .02;
+    } else if (c == 84) {
+        demo_thresh -= .02;
+        if(demo_thresh <= .02) demo_thresh = .02;
+    } else if (c == 83) {
+        demo_hier += .02;
+    } else if (c == 81) {
+        demo_hier -= .02;
+        if(demo_hier <= .0) demo_hier = .0;
+    }
+    return 0;
+}
+
 void *display_loop(void *ptr)
 {
     while(1){
@@ -173,32 +173,9 @@ void *display_loop(void *ptr)
 
 void *detect_loop(void *ptr)
 {
-    // double start = what_time_is_it_now();
-    while(!demo_done){
-        // pthread_mutex_lock(&lock);
+    while(1){
         detect_in_thread(0);
-        // detect_time = what_time_is_it_now() - start;
-        // start = what_time_is_it_now();
-        // pthread_mutex_unlock(&lock);
     }
-    return 0;
-}
-
-void *fetch_loop(){
-    // double last_detect_time = -1.0;
-    while(!demo_done){
-        // pthread_mutex_lock(&lock);
-        buff_index = (buff_index + 1) % 3;
-        fps = 1./(what_time_is_it_now() - demo_time);
-        demo_time = what_time_is_it_now();
-        display_in_thread(0);
-        fetch_in_thread(0);
-        // sleep(detect_time * 0.8);
-        // printf("\n%.3f\n", detect_time);
-        // last_detect_time = detect_time;
-        // pthread_mutex_unlock(&lock);
-    }
-    return 0;
 }
 
 void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const char *filename, char **names, int classes, int delay, char *prefix, int avg_frames, float hier, int w, int h, int frames, int fullscreen)
@@ -213,8 +190,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     printf("Demo\n");
     net = load_network(cfgfile, weightfile, 0);
     set_batch_network(net, 1);
-    // pthread_t detect_thread;
-    // pthread_t fetch_thread;
+    pthread_t detect_thread;
+    pthread_t fetch_thread;
 
     srand(2222222);
 
@@ -229,11 +206,29 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     if(filename){
         printf("open video file: %s\n", filename);
         cap = cvCaptureFromFile(filename);
+    //-------
+
+
+    #ifdef SAVEVIDEO
+        if(cap){
+            int mfps = cvGetCaptureProperty(cap,CV_CAP_PROP_FPS);   //local video file，needn't change
+            mVideoWriter=cvCreateVideoWriter("Output.avi",CV_FOURCC('M','J','P','G'),mfps,cvSize(cvGetCaptureProperty(cap,CV_CAP_PROP_FRAME_WIDTH),cvGetCaptureProperty(cap,CV_CAP_PROP_FRAME_HEIGHT)),1);
+        }
+    #endif
+//*******
     }else{
         printf("open %s camera: #%d\n", (cam_index==0? "internal": "external"), cam_index);
-        //cap = cvCaptureFromCAM(cam_index);
-        cap = cvCaptureFromCAM(1);
+        cap = cvCaptureFromCAM(cam_index);
 
+	//--------
+    	#ifdef SAVEVIDEO
+        if(cap){
+            //int mfps = cvGetCaptureProperty(cap,CV_CAP_PROP_FPS);  //webcam video file，need change.
+            int mfps = 25;     //the output video FPS，you can set here.
+            mVideoWriter=cvCreateVideoWriter("Output_webcam.avi",CV_FOURCC('M','J','P','G'),mfps,cvSize(cvGetCaptureProperty(cap,CV_CAP_PROP_FRAME_WIDTH),cvGetCaptureProperty(cap,CV_CAP_PROP_FRAME_HEIGHT)),1);
+        }
+    	#endif
+	//********
         if(w){
             cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
         }
@@ -251,6 +246,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     int width  = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH);
     int height = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT);
     printf("video source width=%d, height=%d\n", width, height);
+    
     buff[0] = get_image_from_stream(cap);
     buff[1] = copy_image(buff[0]);
     buff[2] = copy_image(buff[0]);
@@ -259,9 +255,9 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
     ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
 
-    // int count = 0;
+    int count = 0;
     if(!prefix){
-        cvNamedWindow("Demo", CV_WINDOW_NORMAL);
+        cvNamedWindow("Demo", CV_WINDOW_NORMAL); 
         if(fullscreen){
             cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
         } else {
@@ -272,40 +268,51 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     demo_time = what_time_is_it_now();
 
-    /*if (pthread_mutex_init(&lock, NULL) != 0)
-    {
-        printf("\n mutex init failed\n");
-        return;
-    }*/
-
-    pthread_t fetch_loop_thread;
-    pthread_t detect_loop_thread;
-
-    if (pthread_create(&fetch_loop_thread, 0, fetch_loop, 0)) error("Thread creation failed");
-    if (pthread_create(&detect_loop_thread, 0, detect_loop, 0)) error("Thread creation failed");
-
-    int j;
-
-    cpu_set_t cpuset; // this is the set of cpu cores to be used for the camera
-    cpu_set_t cpuset2; // this is the set of cpu cores to be used for detection
-
-    CPU_ZERO(&cpuset);
-    for (j = 0; j < 1; j++)
-        CPU_SET(j, &cpuset);
-
-    pthread_setaffinity_np(fetch_loop_thread, 4, &cpuset);
-
-    CPU_ZERO(&cpuset2);
-    for (j = 1; j < 4; j++)
-        CPU_SET(j, &cpuset2);
-
-    pthread_setaffinity_np(detect_loop_thread, 4, &cpuset2);
-
-    // printf("\n\n\nCPUs in cpuset : %d\n\n\n", CPU_COUNT(&cpuset));
-    // printf("\n\n\nCPUs in cpuset2 : %d\n\n\n", CPU_COUNT(&cpuset2));
-
-    pthread_join(fetch_loop_thread, 0);
-    pthread_join(detect_loop_thread, 0);
+    while(!demo_done){
+        
+        buff_index = (buff_index + 1) %3;
+        if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
+        
+        // 每隔若干帧检测一次(仅用于视频文件调试模式)
+        if (1) // 将来改成0
+        {
+            frame_skipped++;
+            if (frame_skipped >= FRAME_SKIP){
+                frame_skipped = 0;
+            }
+            else{
+                display_in_thread(0);
+                pthread_join(fetch_thread, 0);
+                continue;
+            }
+        }
+        
+        if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");
+        if(!prefix){
+//-----
+            #ifdef SAVEVIDEO
+                save_video(buff[0],mVideoWriter);    
+            #endif
+//*********        
+    	    fps = 1./(what_time_is_it_now() - demo_time);
+            demo_time = what_time_is_it_now();
+            display_in_thread(0);
+        }else{
+            char name[256];
+            sprintf(name, "%s_%08d", prefix, count);
+            //save_image(buff[(buff_index + 1)%3], name);
+        
+            #ifdef SAVEVIDEO
+                  save_video(buff[0],mVideoWriter);
+            #else
+            save_image(buff[(buff_index + 1)%3], name);
+            #endif
+	//*********
+	}
+        pthread_join(fetch_thread, 0);
+        pthread_join(detect_thread, 0);
+        ++count;
+    }
 }
 
 #else
@@ -314,3 +321,4 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     fprintf(stderr, "Demo needs OpenCV for webcam images.\n");
 }
 #endif
+

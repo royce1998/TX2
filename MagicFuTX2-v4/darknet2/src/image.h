@@ -1,13 +1,8 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-
-
-// #include <Foundation/Foundation.h>
 #include <stdlib.h>
 #include <stdio.h>
-#define __USE_C99_MATH
-#include <stdbool.h>
 #include <float.h>
 #include <string.h>
 #include <math.h>
@@ -28,13 +23,16 @@ void show_image_cv(image p, const char *name, IplImage *disp);
 // siyao
 #define max(a,b)((a)>(b)?(a):(b))
 #define min(a,b)((a)<(b)?(a):(b))
-//bool learn_item(box item, int imagew, int imageh);
 bool runaway(box person, box obj, int imagew, int imageh);
 void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char *status, image **alphabet);
 float IOU(box person, box obj, int imagew, int imageh);
-int learn_person(box person, int imageh);
+int learn_person(box person, int imageh, int found_bike, box bike);
 bool learn_chair(box chair, int imagew, int imageh);
 float getHeightRatio(float h, int imageh);
+int notPersonNearBike(box person, box bike);
+box computeAvgBbox(int type, box obj);
+bool canLearnPerson(box person);
+
 
 
 float get_color(int c, int x, int max);

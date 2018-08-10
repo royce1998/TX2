@@ -16,46 +16,71 @@ int windows = 0;
 
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} };
 
-//   siyao
-//   人与各个目标的关系状态
-//   各单元对应的目标：[2]：自行车，[3]：椅子，[4]：球
-//   各单元含义：
+// siyao
+// 人与各个目标的关系状态
+// 各单元对应的目标：[2]：自行车，[3]：椅子，[4]：球
+// 各单元含义：
 //   [2]: 0-none，1-near, 2-use bike
 //   [3]: 0-none，1-near, 2-sit on chair
 //   [4]: 0-none，1-near, 2-play with ball
 
 #define MAX_OBJ_NUM 10
 int h_status[MAX_OBJ_NUM] = {0};
-#define CUR_OBJ_N 5        // 当前感兴趣目标数
+#define CUR_OBJ_N 5  // 当前感兴趣目标数
 char *h_status_info[] = {"", "", "use bike", "sit on chair", "play with ball"};
-
-// 人参数
-#define PERSON_LEARN_N 7   // 检测到人的初始多少帧内，累计计算人体的平均高度
+#define PERSON_LEARN_N 3  // 检测到人的初始多少帧内，累计计算人体的平均高度
 int person_n = 0;          // 已经累计几针了
 int person_h = 0;          // 平均身高/中间数据
-int person_area_T = 0;     // person 面积大于这个值才检测为人(这个需要用试凑的值) 请通过视频给出建议值
+int person_area_T = 0;     // person 面积大于这个值才检测为人(这个需要用试凑的值)
 float personHeightT = 0.8; // 当前身高/平均身高小于这个值时认为是坐下了
-int frameNo = 0;           // 当前帧号
+int frameNo = 0;  // 当前帧号
 
-// 椅子参数
+// 椅子
 box chair_pos;
 int chair_n = 0;    
 #define chair_learn_n 10    // 最少学习帧数
 #define CHAIR_HISTORY_N 200 // 椅子一共保存多少帧的历史记录
-int sw_showNewClass = 0;    // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里，参见椅子判断部分)
+int sw_showNewClass = 0; // 如果想寻找新的误判类，改为1 (有时候目标会被误判为其他类，这时就要加到if里)
 
 // 算法更新！===== 判断球是否在使用 20180802 =====================
-// 瑜伽球参数
-int ball_learn_T = 10;      // 最初用多少帧来学习球的初始位置 tx2上建议可以少一点 树莓派上可以多一点
-int ball_learn_n = 0;       // 目前已经用了多少帧来学习球的初始位置
-float ball_pos;             // 球的平均初始位置(y坐标)
-float ball_rad;             // 球的平均高度pixel
-float ball_ratio = 0.8;     // 球离地的高度阈值计算公式 = 初始位置y坐标 + 平均高度*ratio 大于该阈值认为球已经被拿起
-// 注意！ 这个ratio需要在测试中用具体球来调整 不同size的球的ratio不一样 可给出lookup table
+// 算法更新！===== 判断球是否在使用 20180806 =====================
+int ball_learn_T = 1;  // 最初用多少帧来学习球的初始位置
+int ball_learn_n = 0;   // 目前已经用了多少帧来学习球的初始位置
+float ball_pos;           // 球的平均初始位置(y坐标)
+float ball_rad;           // 球的平均高度
+float ball_ratio = 0.8; // 球离地的高度阈值=初始y+平均高度*ratio
 
+// 环境约束2
+int stage = 0; // 1-用过球了 2-用过单车 3-用过椅子
 
-// 车参数
-// TBD
+// 环境约束4
+int objDetectN = 10;   // 椅子和单车需要这么多帧数来加权平均
+int framesN[MAX_OBJ_NUM] = {0}; // 对应位置为识别帧数
+box objDetectBox[MAX_OBJ_NUM];  // 椅子和单车的bbox
+
+// 环境约束5
+// 人与椅子的中心距离与两者宽度和的比在以下两个值范围内时，计算人的平均身高
+float personChairNear = 0.8;
+float personChairFar = 1.5;
+
+// 算法更新！===== 增加环境约束和判断 20180809 ====================
+/*
+【表演场景】已经得到确认，以后所有录制视频均按照以下流程来
+椅子(近景，固定)、球(起止位置均在同一固定托上)、单车(远景，固定)
+ 
+【模特走位】从视野中间进入，在主持人指导下，先做瑜伽球运动，再单车，再椅子，最后从视野中间下场。
+每段时间大约30-40秒
+系统在下场10秒后自动进入无人模式
+ 
+【环境约束】为了更好应对IFA场景，在检测基础上增加以下环境约束
+环境约束1: 设置单车左边界，人在该边界左边时才学习和使用身高
+环境约束2，瑜伽球场景结束后才开始判断是否使用单车(标准不再是交叉面积比IOU，改为判断人的bbox中心x坐标是否位于单车中心附近)
+环境约束3: 使用完单车后，再次满足使用单车条件时一律认为是经过单车而不是使用单车！！！
+环境约束4: 椅子和单车位置不变，在开始检测到的若干帧内计算平均bbox，以后不管是否检测到都认为检测到，且bbox设置为之前计算的平均bbox
+环境约束5: 人只有在椅子附近时才计算平均身高
+环境约束6: 所有场景出现且仅出现一次
+*/
+
 
 float get_color(int c, int x, int max)
 {
@@ -279,17 +304,15 @@ image **load_alphabet()
     return alphabets;
 }
 
-// siyao 20180802
-// 判断是否正在持球进行运动
-// 如果没有达到学习帧数，则学习球的平均位置和高度，并返回假 此时球的参数没有被固定
-// 如果达到学习帧数，则判断当前球的位置是否高于[平均位置+平均高度]，是则返回真，否则返回假
-// 运动完毕，球如能正常放回初始位置，则球的位置不再高于[平均位置+平均高度]，返回假
+// 20180802
+// 判断是否正在玩球
+// 如果没有达到学习帧数，则学习球的平均位置和高度，并返回假
+// 如果达到，则判断当前球的位置是否高于平均位置+平均高度，是则返回真，否则返回假
 int judgeBall(box ball)
 {
-    if (ball_learn_n >= ball_learn_T){ // 达到学习次数，则不再学习，位置已经固定
-        if (ball.y < (ball_pos - (ball_rad*ball_ratio))){
-            printf("judge %.2f to be used, pos=%.2f, rad=%.2f\n", ball.y, ball_pos, ball_rad);
-            // debug ONLY
+    if (ball_learn_n >= ball_learn_T){ // 达到学习次数，则不再学习，位置在
+        if (ball.y < (ball_pos-(ball_rad*ball_ratio))){
+            //printf("judge %.2f to be used, pos=%.2f, rad=%.2f\n", ball.y, ball_pos, ball_rad);
             return 1;
         }
         else
@@ -298,10 +321,11 @@ int judgeBall(box ball)
     ball_pos = ((ball_pos*ball_learn_n + ball.y)/(ball_learn_n+1));
     ball_rad = ((ball_rad*ball_learn_n + ball.h)/(ball_learn_n+1));
     printf("learning ball (%d): pos=%.2f, rad=%.2f\n", ball_learn_n, ball_pos, ball_rad);
-    // debug ONLY
+    
     ball_learn_n++;
     return 0;
 }
+
 
 /*
   image im
@@ -317,13 +341,12 @@ int judgeBall(box ball)
     dets[i].prob[j]：第i个目标的置信度
 
 */
-
 void draw_detections(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
-    float iou_thresh = 0.5;  // 人与其他目标的重叠比例(函数IOU)高于这个数则认为正在使用这个目标 可以调整成lookup table
-    int i,j;                 // 因为球本身的运动关系，很有可能远远小于0.5，建议在下一版本进行修正
-    int showEachBox = 0;     // (调试阶段) // debug ONLY
-    int showUnknown = 0;     // 1-显示未知类(调试阶段)
+    float iou_thresh = 0.5;  // 人与其他目标的重叠比例(函数IOU)高于这个数则认为正在使用这个目标
+    int i,j;
+    int showEachBox = 0; // (调试阶段)
+    int showUnknown = 0; // 1-显示未知类(调试阶段)
     // 下面的数组保存有效目标，[0]：未知, [1]：人，[2]：自行车，[3]：椅子，[4]：球
     box bboxes[MAX_OBJ_NUM];        // 有效目标们的bbox
     float probs[MAX_OBJ_NUM] = {0}; // 有效目标们的置信度
@@ -334,9 +357,9 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
     
     frameNo++;
     printf("%d ", frameNo);
-    if (frameNo%20 == 0) printf("\n");    // 20帧可做调整
+    if (frameNo%20 == 0) printf("\n");
     
-    int area_max = 0;      // person 或目标的最大面积，仅供多人出现情况下对演员的判断
+    int area_max = 0;      // person  目标的最大面积，仅供人的判断
     // 遍历每一个检测到的目标，如果置信度足够大，则将其归类(classname)
     for(i = 0; i < num; ++i){     
         char labelstr[128] = {0}; // 目标原始类名
@@ -348,7 +371,7 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
         // person 如果目标i有效，则设置为置信度最大那个分类
         for(j = 0; j < classes; ++j){
             if (dets[i].prob[j] > thresh){
-                if (class < 0 || dets[i].prob[j] > prob){ // 第1次被检测到或置信度更大，则保存类名和置信度
+                if (class < 0 || dets[i].prob[j] > prob){ // 第1次被检测到或置信度更大，则保存
                     strcpy(labelstr, names[j]);
                     class = j;
                     prob = dets[i].prob[j];
@@ -358,15 +381,15 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
         
         // 提取感兴趣的几个类,并修正被误判的类名
         if (class >= 0){  // 如果目标i的置信度足够大
-            if (strcmp(labelstr, "person")==0)          // 人
-                cate = 1;                               // cate = category
+            if (strcmp(labelstr, "person")==0) // 人
+                cate = 1;
             
             else if (strcmp(labelstr, "bicycle")==0 || 
-                     strcmp(labelstr, "motorbike")==0)  // 归类为自行车
+                     strcmp(labelstr, "motorbike")==0) // 自行车
                 cate = 2;
             
             else if (strcmp(labelstr, "chair")==0 || 
-                     strcmp(labelstr, "sofa")==0)       // 归类为椅子
+                     strcmp(labelstr, "sofa")==0) // 椅子
                 cate = 3;
             
             else if (strcmp(labelstr, "sports ball")==0 || 
@@ -375,10 +398,10 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                      strcmp(labelstr, "frisbee")==0 ||
                      strcmp(labelstr, "skateboard")==0 ||
                      strcmp(labelstr, "surfboard")==0
-                    )                                   // 归类为瑜伽球
+                    )// 球
                 cate = 4;
             
-            else                                        // 用于发现新的误判类
+            else  // 用于发现新的误判类
                 cate = 0;
             
             // debug 发现新的误判类，根据位置和大小，决定是否加到上面的if中
@@ -390,95 +413,136 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                 }
             }
             
-            // 更新算法部分！======= person ==================================
+            // person
             int change = 0;
-            if (cate == 1){                                 // 人
-                if (area_i > max(area_max, person_area_T)){ // 找到本帧中面积最大且大于阈值的人
+            if (cate == 1){ // 人
+                if (area_i>max(area_max, person_area_T)){ // 找到本帧中面积最大且大于阈值的人
                     area_max = area_i;
                     change = 1;
                     //printf("\n---person found: area=%d, prob=%.2f(select)---", area_max, prob);
-                    // debug ONLY
                 }
-                else{                                   // 丢弃的人 属于背景部分，不再考虑
+                else{  // 丢弃的人
                     //printf("\n---person found: area=%d, prob=%.2f---", area_i, prob);
                 }
             }
             else{
-                if (prob > probs[cate]) {               // 如果本次的置信度比当前已保存的大，则替换(针对有一个以上的同类物体)
-                    change = 1;                         // change表示置换，目前只考虑人
+                if (prob > probs[cate]) {// 如果本次的置信度比当前已保存的大，则替换(针对有一个以上的同类物体)
+                    change = 1;
                 }
             }
-            if (change == 1){                           // update新目标的全部信息
+            if (change == 1){
                 bboxes[cate] = dets[i].bbox;
                 probs[cate]  = prob;
                 found[cate]  = 1;
-                if (cate == 0)                          // 新的误判类: 使用新的名字
+                if (cate == 0)  // 新的误判类: 使用新的名字
                     strcpy(classname0, labelstr);
                 //printf("%d: %s(%s): %.0f%% | ", cate, classname[cate],
                 //       (strcmp(labelstr,classname[cate])==0? "": labelstr), prob*100);
             }
         }
         
-        // 显示bbox // debug ONLY
-        // (如果是感兴趣类，或是其他类但允许显示) 以后可以选择加入别的场景物体
+        // 显示bbox
+        // (如果是感兴趣类，或是其他类但允许显示)
         if (showEachBox && (cate>0 || (cate==0 && showUnknown==1))){  // 如果目标i的置信度足够大
             draw_bbox_info(im, class, classes, bboxes[cate], labelstr, "", alphabet);
         }
     }
     //printf("\n"); // person
     
-    // 分析场景模式
-    int person_h = 0;
-    if (found[1]==1){                   // 有人存在时才分析
-        if (found[3] == 1){             // 修正处于遮挡中的椅子
-            // 学习
-            bool abnormal = learn_chair(bboxes[3], im.w, im.h);
-            // abnormal: 本次检测到的椅子，其位置和大小与历史状态信息严重不一样
-            // chair_n > chair_learn_n: 并且已经学习过足够多的帧了
-            if (abnormal && chair_n > chair_learn_n){
-                // 如果人与椅子没在一起
-                if (runaway(bboxes[1], bboxes[3], im.w, im.h)){
-                    chair_pos = bboxes[3]; // 人没有遮挡椅子，采信本次的结果，并用其修正历史状态
-                }
-                else{                      // 如果人还在旁边，那么椅子还是被人遮住了，这时，采信历史状态
-                    bboxes[3] = chair_pos; // 用历史信息的位置大小来恢复椅子真正状态
-                }
-                if (0)
-                printf("\nadjust chair, abnormal: [%.2f, %.2f, %.2f, %.2f]\n", 
-                   bboxes[3].x, bboxes[3].y, bboxes[3].w, bboxes[3].h); // debug
+    // 算法更新！===== 环境约束4 20180809 =====================
+    // 计算椅子(3)和单车(2)的平均坐标，或用已经计算好的坐标设置当前位置
+    if (1){
+        if (framesN[2] >= objDetectN){ // 平均bbox已经可用
+            bboxes[2] = objDetectBox[2];
+            found[2]=1;
+            printf("use fix bike\n");
+        }
+        else{
+            if (found[2]==1){
+                computeAvgBbox(2, bboxes[2]);
+                printf("learning bike\n");
             }
         }
-        else{                              // 椅子没有检测到
-            if (chair_n > chair_learn_n){  // 如果连续多次检测到椅子(说明真有椅子)
-                if (h_status[3] == 2){     // 正坐着
-                    float step = 0.1;
-                    // 人如果坐在椅子上移动了位置，那么让椅子的估计位置向人的中心位置回归（缓慢移动）
-                    chair_pos.x += (bboxes[1].x-chair_pos.x)*step;
-                }
-                bboxes[3] = chair_pos;
-                found[3] = 1;
+        if (framesN[3] >= objDetectN){ // 平均bbox已经可用
+            bboxes[3] = objDetectBox[3];
+            found[3]=1;
+            printf("use fix chair\n");
+        }
+        else{
+            if (found[3]==1){
+                computeAvgBbox(3, bboxes[3]);
+                printf("learning chair\n");
             }
         }
-        
-        
+    }
+    
+    // 算法更新！===== 20180809 =====================
+    // 分析场景
+    int person_height = 0; // 20180809
+    if (found[1]==1){ // 有人存在时才分析
+        if (0){
+            // 修正处于遮挡中的椅子
+            if (found[3] == 1){
+                // 学习
+                bool abnormal = learn_chair(bboxes[3], im.w, im.h);
+                // abnormal: 本次检测到的椅子，其位置和大小与历史上的严重不一样
+                // chair_n > chair_learn_n: 已经学习过足够多的帧了
+                if (abnormal && chair_n > chair_learn_n){
+                    // 如果人与椅子没在一起
+                    if (runaway(bboxes[1], bboxes[3], im.w, im.h)){
+                        chair_pos = bboxes[3]; // 人没有遮挡椅子，采信本次的结果，并用其修正历史状态
+                    }
+                    else{ // 如果人还在旁边，那么椅子还是被人遮住了，这时，采信历史状态
+                        bboxes[3] = chair_pos; // 用历史上的位置大小来恢复
+                    }
+                    if (0)
+                    printf("\nadjust chair, abnormal: [%.2f, %.2f, %.2f, %.2f]\n", 
+                       bboxes[3].x, bboxes[3].y, bboxes[3].w, bboxes[3].h); // debug
+                }
+            }
+            else{ // 椅子没有检测到
+                if (chair_n > chair_learn_n){ // 如果连续多次检测到椅子(说明真有椅子)
+                    if (h_status[3] == 2){ // 正坐着
+                        float step = 0.1;
+                        // 人如果坐在椅子上移动了位置，那么让椅子的估计位置向人的中心位置缓慢移动
+                        chair_pos.x += (bboxes[1].x-chair_pos.x)*step;
+                    }
+                    bboxes[3] = chair_pos;
+                    found[3] = 1;
+                }
+            }
+        }
+        // 算法更新！===== 20180809 =====================
         // 判断感兴趣目标是否处于使用状态
-        box person = bboxes[1];                // 人的bbox, (0.7, 0.5, 0.2, 0.7) Bbox h/w ratio
-        person_h = learn_person(person, im.h); // 更新or获取人体的平均身高
-        if (h_status[4] != 2) {                // 20180806 算法更新：如果当前状态正在玩球，则忽略人和其它使用物体的交叉
+        box person = bboxes[1]; // 人的bbox, (0.7, 0.5, 0.2, 0.7) 
+        person_height = learn_person(person, im.h, found[2], bboxes[2]);  // 20180809 更新/获取人体的平均身高 
+        if (h_status[4] != 2){ // 20180806 patch: 如果当前状态为正在玩球，则忽略人与其他物体的交叉
             for (i=2; i<5; i++){
-            // 根据人与目标的重合度，判断是否进入或结束使用状态
-            if (found[i] == 1){       // 感兴趣目标检测到了
-                    box obj = bboxes[i];  // 获取感兴趣目标的bbox
-                    iou_ratio[i] = IOU(person, obj, im.w, im.h); // 计算两者相交比例
-                    if (iou_ratio[i] > iou_thresh) {             // 人与该目标高度重合
-                        
-                        if (i==3){                               // 判断是否开始使用椅子(坐下)
-                            if (person_h!=0){                    // 平均身高数据已经计算出来
-                                int personHeight = (int)(person.h*im.h);           // 本帧身高
-                                printf("\nThe Ratio is currently: %.2f\n",(float)personHeight/(float)person_h);
-                                if (personHeight<(int)(personHeightT*person_h)){   // 本帧身高明显变低
+                // 根据人与目标的重合度，判断是否进入或结束使用状态
+                if (found[i] == 1){ // 感兴趣目标检测到了
+                    box obj = bboxes[i];  // 感兴趣目标的bbox
+                    iou_ratio[i] = IOU(person, obj, im.w, im.h); // 相交比例
+                    
+                    // // 算法更新！===== 环境约束2 20180809 =====================
+                    bool using = 0; 
+                    if (i==2){ // bike
+                        float ratioBike = 0.666; // 人的中心x坐标与bike中心的x坐标的距离小于bike半宽度的2/3,则认为是在使用bike
+                        float dist = person.x-bboxes[2].x;
+                        if (dist<0) dist = -dist;
+                        using = (dist < ratioBike*bboxes[2].w/2);
+                    }
+                    else{
+                        using = (iou_ratio[i] > iou_thresh);
+                    }
+                    if (using) { // 人与该目标高度重合
+
+                        if (i==3){ // 判断是否开始使用椅子(坐下)
+                            if (person_height!=0){  // 20180809 平均身高数据已经计算出来
+                                int personHeight = (int)(person.h*im.h); // 本帧身高
+                                if (personHeight<(int)(personHeightT*person_height)){  // 20180809 本帧身高明显变低
                                     if (h_status[i] != 2){
                                         h_status[i] = 2;
+                                        stage = 3; // 算法更新！===== 环境约束4 20180809 =====================
                                         // 清除其他标志（bug: 有可能其他某个目标也是2）
                                         for (j=2; j<CUR_OBJ_N; j++){
                                             if (j!=i)
@@ -488,21 +552,22 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                                     }
                                     break;
                                 }
-                                else{
+                                else{ 
                                     if (h_status[i] == 2){
-                                        h_status[i] = 0;         // 站起
-                                        printf("\nstand up\n");  // debug
+                                        h_status[i] = 0; // 站起
+                                        printf("\nstand up\n"); // debug
                                     }
                                 }
                             }
                         }
-                        else if (i==4){                          // 球场景：置空 下面会单独处理
+                        else if (i==4){ // 球： 下面会单独处理
                         }
-                        else{                                    // 判断是否开始使用除了椅子之外的其他目标
-                            if (h_status[i] != 2){
+                        else{  // bike // 算法更新！===== 环境约束2和3 20180809 =====================
+                            if (h_status[i] != 2 && (stage == 1 || stage == 2)){  // 20180809 约束2,3
                                 h_status[i] = 2;
+                                stage = 2; // 算法更新！===== 环境约束2 20180809 =====================
                                 // 清除其他标志（bug: 有可能其他某个目标也是2）
-                                for (j=2; j<CUR_OBJ_N; j++){     // 修正人推着自行车出视野后，一直显示正在使用自行车问题
+                                for (j=2; j<CUR_OBJ_N; j++){ // 修正人推着自行车出视野后，一直显示正在使用自行车问题
                                     if (j!=i)
                                         h_status[j] = 0;
                                 }
@@ -511,9 +576,9 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
                             break;
                         }
                     }
-                    else{                          // 说明人与感兴趣目标远离，如果正在使用，则结束使用状态
-                        if (i != 4){               // 不使用球： 下面会单独处理
-                            if (h_status[i] == 2){ // 正在使用中? 退出
+                    else{ // 人与感兴趣目标远离，如果正在使用，则结束使用状态
+                        if (i != 4){ // 球： 下面会单独处理
+                            if (h_status[i] == 2){ // 正在使用中?
                                 if (runaway(person, obj, im.w, im.h)){
                                     h_status[i] = 0;
                                     printf("\nEND: %s\n", h_status_info[i]); // debug
@@ -525,25 +590,25 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
             }
         }
         
-        // 算法更新！瑜伽球================= 20180802
-        // 修正上一版bug：人推着自行车出视野后，一直显示正在使用自行车问题 最新版本里单车位置固定，已经不再是bug
-        // patch: 判断球是否离地并开始进行运动
-        if (found[4] == 1){             // 本帧检测到球
-            if (judgeBall(bboxes[4])){  // 球已经离开原处
-                if (h_status[4]==0){    // 当前不是使用状态
-                    h_status[4] = 2;
+        // 20180802
+        // patch: 判断球是否离地
+        if (found[4] == 1){ // 本帧检测到球
+            if (judgeBall(bboxes[4])){ // 球离地了
+                if (h_status[4]==0){ // 当前不是使用状态
+                    h_status[4] = 2; 
+                    stage = 1;  // 算法更新！===== 环境约束2 20180809 =====================
                     // 清除其他标志（bug: 有可能其他某个目标也是2）
-                    for (j=2; j<CUR_OBJ_N; j++){        // 修正上一版bug
+                    for (j=2; j<CUR_OBJ_N; j++){ // 修正人推着自行车出视野后，一直显示正在使用自行车问题
                         if (j!=4)
                             h_status[j] = 0;
                     }
                     printf("\n%s\n", h_status_info[4]); // debug
                 }
             }
-            else{                                       // 球在地面上（开始或结束）
-                if (h_status[4]==2){                    // 当前处于使用状态
+            else{ // 球在地面上
+                if (h_status[4]==2){ // 当前处于使用状态
                     h_status[4] = 0; 
-                    printf("\nEND: %s\n", h_status_info[4]); // debug ONLY
+                    printf("\nEND: %s\n", h_status_info[4]); // debug
                 }
             }
         }
@@ -553,17 +618,17 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
     char info[100];
     char status[30];
     for (i=1; i<5; i++){
-        //if (found[1]==0) // 本想解决问题，但会出新的问题: 人背对镜头后，什么都不显示了 （不再考虑）
+        //if (found[1]==0) // 本想解决问题，但会出新的问题: 人背对镜头后，什么都不显示了
         //    continue;
         
         // 生成每个目标头上显示的信息 info
-        if (found[i]==1){   // 检测到目标
-            if (i==1){      // 人: 显示归并类名、当前身高和相对平均身高的比例
+        if (found[i]==1){ // 检测到目标
+            if (i==1){ // 人: 显示归并类名、当前身高和相对平均身高的比例
                 float ratio = getHeightRatio(bboxes[i].h, im.h);
                 int area_i = (int)(im.h * bboxes[i].h) * (int)(im.w * bboxes[i].w); // person 面积
                 sprintf(info, "%s, %d, %.2f", classname[i], area_i, ratio); 
             }
-            else            // 人以外：显示归并类名、置信度和相交比例
+            else  // 人以外：显示归并类名、置信度和相交比例
                 sprintf(info, "%s, %.2f, %.2f", classname[i], probs[i], iou_ratio[i]);
         }
         else
@@ -577,6 +642,35 @@ void draw_detections(image im, detection *dets, int num, float thresh, char **na
         
         // 显示本目标的检测结果和使用信息
         draw_bbox_info(im, i, classes, bboxes[i], info, status, alphabet);
+    }
+}
+
+// 算法更新！===== 环境约束4 20180809 =====================
+// 计算平均bbox
+// type: 椅子(3)和单车(2)
+// int objDetectN = 10; // 椅子和单车这么多帧数来加权平均
+// int framesN[MAX_OBJ_NUM]; // 对应位置为识别帧数
+// box objDetectBox[MAX_OBJ_NUM]; // 椅子和单车的bbox
+box computeAvgBbox(int type, box obj)
+{
+    // 尚未计算出平均bbox时，输入空bbox
+    box bbox;
+    bbox.x = 0; bbox.y = 0; bbox.w = 0; bbox.h = 0;
+    // 当前累计帧数和平均bbox
+    int n = framesN[type];
+    box t = objDetectBox[type];
+    
+    if (n < objDetectN) { // 尚未计算出平均bbox
+        t.x = (t.x*n + obj.x)/(n+1);
+        t.y = (t.y*n + obj.y)/(n+1);
+        t.w = (t.w*n + obj.w)/(n+1);
+        t.h = (t.h*n + obj.h)/(n+1);
+        objDetectBox[type] = t;
+        framesN[type]++;
+        return bbox;
+    }
+    else{ // 计算出了，直接输出
+        return t;
     }
 }
 
@@ -624,7 +718,7 @@ bool learn_chair(box chair, int imagew, int imageh)
                chair_pos.x, chair_pos.y, chair_pos.w, chair_pos.h); // debug
     }
     
-    // 判断位置和大小是否异常变化 因为椅子可能会挪动，如果不挪动就不会出现这个问题
+    // 判断位置和大小是否异常变化
     bool abnormal = false;
     if (chair_n >= chair_learn_n){ 
         float T = 0.85;
@@ -650,10 +744,40 @@ float getHeightRatio(float h, int imageh)
         return (h*imageh/person_h);
 }
                        
-                        
-// 在人出现的最初若干帧内，学习人的身高
-int learn_person(box person, int imageh)
+
+// 算法更新！===== 环境约束5 20180809 =====================
+// 是否可以学习人的身高
+bool canLearnPerson(box person)
 {
+    if (framesN[3]<objDetectN) // 椅子的平均值还没有产生
+        return false;
+    
+    float dist = person.x-objDetectBox[3].x;
+    if (dist<0)
+        dist = -dist;
+    float ww = person.w+objDetectBox[3].w;
+    float ratio = dist/ww;
+    if (ratio>personChairNear && ratio<personChairFar)
+        return true;
+    else 
+        return false;
+    
+}
+
+// siyao
+// 在人出现的最初若干帧内，学习人的身高
+int learn_person(box person, int imageh, int found_bike, box bike)
+{
+     // 20180809
+    if (found_bike == 1){
+        if (notPersonNearBike(person, bike) == 0)
+            return person_h;
+    }
+    
+    // 算法更新！===== 环境约束5 20180809 =====================
+    if (!canLearnPerson(person))
+        return 0;
+    
     int h = person.h*imageh; 
     
     if (person_n < PERSON_LEARN_N){
@@ -719,7 +843,7 @@ void draw_bbox_info(image im, int class, int classes, box bbox, char *info, char
     }
  
 
-    // 不知道这段程序有什么用
+    // 无用程序部分 注释掉
     /*
     if (0 && dets[i].mask){
         printf("mask\n");
@@ -748,6 +872,19 @@ bool runaway(box person, box obj, int imagew, int imageh)
     int T = (w1/2.+w2/2.)*ratio;
     return (dist > T);
         
+}
+
+// 判断人不在椅子附近 - 用于环境约束1
+ // 20180809
+int notPersonNearBike(box person, box bike)
+{
+    float dist = person.x-bike.x;
+    if (dist<0)
+        dist = -dist;
+    if (dist > person.w/2+bike.w/2)
+        return 1;
+    else
+        return 0;
 }
 
 // siyao
