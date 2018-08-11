@@ -304,6 +304,104 @@ image **load_alphabet()
     return alphabets;
 }
 
+/*
+ draw_detection function-8.11
+ */
+void draw_detections_royce(char *file_name,int savedcounter, image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
+{
+    int i,j;
+    
+    char buff2[256];
+    sprintf(buff2, "%s_%d.txt", file_name, savedcounter);
+    
+    FILE *f = fopen(buff2, "w");
+    
+    for(i = 0; i < num; ++i){
+        char labelstr[4096] = {0};
+        int class = -1;
+        for(j = 0; j < classes; ++j){
+            if (dets[i].prob[j] > thresh){
+                if (class < 0) {
+                    strcat(labelstr, names[j]);
+                    class = j;
+                } else {
+                    strcat(labelstr, ", ");
+                    strcat(labelstr, names[j]);
+                }
+                printf("%s: %.0f%%\n", names[j], dets[i].prob[j]*100);
+            }
+        }
+        if(class >= 0){
+            int width = im.h * .006;
+            
+            /*
+             if(0){
+             width = pow(prob, 1./2.)*10+1;
+             alphabet = 0;
+             }
+             */
+            
+            //printf("%d %s: %.0f%%\n", i, names[class], prob*100);
+            int offset = class*123457 % classes;
+            float red = get_color(2,offset,classes);
+            float green = get_color(1,offset,classes);
+            float blue = get_color(0,offset,classes);
+            float rgb[3];
+            
+            //width = prob*20+2;
+            
+            rgb[0] = red;
+            rgb[1] = green;
+            rgb[2] = blue;
+            box b = dets[i].bbox;
+            //printf("%f %f %f %f\n", b.x, b.y, b.w, b.h);
+            
+            int left  = (b.x-b.w/2.)*im.w;
+            int right = (b.x+b.w/2.)*im.w;
+            int top   = (b.y-b.h/2.)*im.h;
+            int bot   = (b.y+b.h/2.)*im.h;
+            
+            if(left < 0) left = 0;
+            if(right > im.w-1) right = im.w-1;
+            if(top < 0) top = 0;
+            if(bot > im.h-1) bot = im.h-1;
+            
+            int centerx = (left + right) / 2;
+            int centery = (top + bot) / 2;
+            
+            int yolow = right - left;
+            int yoloh = bot - top;
+            
+            //int yolo1 = ((left + right)/2.)
+            
+            fprintf(f, "%d %f %f %f %f\n", class, (1.0*centerx/im.w), (1.0*centery/im.h), (1.0*yolow/im.w), (1.0*yoloh/im.h));
+            draw_box_width(im, left, top, right, bot, width, red, green, blue);
+            if (alphabet) {
+                image label = get_label(alphabet, labelstr, (im.h*.03));
+                draw_label(im, top + width, left, label, rgb);
+                free_image(label);
+            }
+            if (dets[i].mask){
+                image mask = float_to_image(14, 14, 1, dets[i].mask);
+                image resized_mask = resize_image(mask, b.w*im.w, b.h*im.h);
+                image tmask = threshold_image(resized_mask, .5);
+                embed_image(tmask, im, left, top);
+                free_image(mask);
+                free_image(resized_mask);
+                free_image(tmask);
+            }
+        }
+    }
+    fclose(f);
+}
+
+/*
+ draw_detection function-8.11
+ */
+
+
+
+
 // 20180802
 // 判断是否正在玩球
 // 如果没有达到学习帧数，则学习球的平均位置和高度，并返回假
@@ -1191,8 +1289,24 @@ void show_image_cv(image p, const char *name, IplImage *disp)
     cvShowImage(buff, disp);
 }
 #endif
-
-void show_image(image p, const char *name)
+/*
+ change void show_image to int show image_Royce
+ */
+//void show_image(image p, const char *name)
+//{
+//#ifdef OPENCV
+//    IplImage *disp = cvCreateImage(cvSize(p.w,p.h), IPL_DEPTH_8U, p.c);
+//    image copy = copy_image(p);
+//    constrain_image(copy);
+//    show_image_cv(copy, name, disp);
+//    free_image(copy);
+//    cvReleaseImage(&disp);
+//#else
+//    fprintf(stderr, "Not compiled with OpenCV, saving to %s.png instead\n", name);
+//    save_image(p, name);
+//#endif
+//}
+int show_image(image p, const char *name, int ms)
 {
 #ifdef OPENCV
     IplImage *disp = cvCreateImage(cvSize(p.w,p.h), IPL_DEPTH_8U, p.c);
@@ -1201,11 +1315,18 @@ void show_image(image p, const char *name)
     show_image_cv(copy, name, disp);
     free_image(copy);
     cvReleaseImage(&disp);
+    int c = cvWaitKey(ms);
+    if (c != -1) c = c%256;
+    return c;
 #else
     fprintf(stderr, "Not compiled with OpenCV, saving to %s.png instead\n", name);
     save_image(p, name);
+    return 0;
 #endif
 }
+/*
+ change void show_image to int show_image_Royce
+ */
 
 #ifdef OPENCV
 
@@ -1289,7 +1410,7 @@ int fill_image_from_stream(CvCapture *cap, image im)
     return 1;
 }
 
-void save_image_jpg(image p, const char *name)
+void save_image_jpg(image p, char *name)
 {
     image copy = copy_image(p);
     if(p.c == 3) rgbgr_image(copy);
@@ -1347,7 +1468,7 @@ void show_image_layers(image p, char *name)
     for(i = 0; i < p.c; ++i){
         sprintf(buff, "%s - Layer %d", name, i);
         image layer = get_image_layer(p, i);
-        show_image(layer, buff);
+        show_image(layer, buff,1);
         free_image(layer);
     }
 }
@@ -1355,7 +1476,7 @@ void show_image_layers(image p, char *name)
 void show_image_collapsed(image p, char *name)
 {
     image c = collapse_image_layers(p, 1);
-    show_image(c, name);
+    show_image(c, name,1);
     free_image(c);
 }
 
@@ -2026,16 +2147,22 @@ void test_resize(char *filename)
     distort_image(c4, .1, .66666, 1.5);
 
 
-    show_image(im,   "Original");
-    show_image(gray, "Gray");
-    show_image(c1, "C1");
-    show_image(c2, "C2");
-    show_image(c3, "C3");
-    show_image(c4, "C4");
+//    show_image(im,   "Original");
+//    show_image(gray, "Gray");
+//    show_image(c1, "C1");
+//    show_image(c2, "C2");
+//    show_image(c3, "C3");
+//    show_image(c4, "C4");
+    show_image(im,   "Original", 1);
+    show_image(gray, "Gray", 1);
+    show_image(c1, "C1", 1);
+    show_image(c2, "C2", 1);
+    show_image(c3, "C3", 1);
+    show_image(c4, "C4", 1);
 #ifdef OPENCV
     while(1){
         image aug = random_augment_image(im, 0, .75, 320, 448, 320, 320);
-        show_image(aug, "aug");
+        show_image(aug, "aug", 1);
         free_image(aug);
 
 
@@ -2050,7 +2177,7 @@ void test_resize(char *filename)
         float dhue = rand_uniform(-hue, hue);
 
         distort_image(c, dhue, dsat, dexp);
-        show_image(c, "rand");
+        show_image(c, "rand", 1);
         printf("%f %f %f\n", dhue, dsat, dexp);
         free_image(c);
         cvWaitKey(0);
@@ -2205,7 +2332,7 @@ void show_image_normalized(image im, const char *name)
 {
     image c = copy_image(im);
     normalize_image(c);
-    show_image(c, name);
+    show_image(c, name,1);
     free_image(c);
 }
 
@@ -2223,7 +2350,7 @@ void show_images(image *ims, int n, char *window)
      */
     normalize_image(m);
     save_image(m, window);
-    show_image(m, window);
+    show_image(m, window,1);
     free_image(m);
 }
 

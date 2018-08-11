@@ -11,12 +11,6 @@
 
 #define DEMO 1
 
-// siyao
-// 加快运行(仅用于视频文件调试模式下)
-#define FRAME_SKIP 3
-int frame_skipped = 0;
-
-
 #ifdef OPENCV
 
 static char **demo_names;
@@ -41,6 +35,10 @@ static float *avg;
 static int demo_done = 0;
 static int demo_total = 0;
 double demo_time;
+
+int savedcounter = 0;
+
+char *file_name;
 
 detection *get_network_boxes(network *net, int w, int h, float thresh, float hier, int *map, int relative, int *num);
 
@@ -108,34 +106,67 @@ void *detect_in_thread(void *ptr)
     dets = avg_predictions(net, &nboxes);
 
 
+    /*
+       int i,j;
+       box zero = {0};
+       int classes = l.classes;
+       for(i = 0; i < demo_detections; ++i){
+       avg[i].objectness = 0;
+       avg[i].bbox = zero;
+       memset(avg[i].prob, 0, classes*sizeof(float));
+       for(j = 0; j < demo_frame; ++j){
+       axpy_cpu(classes, 1./demo_frame, dets[j][i].prob, 1, avg[i].prob, 1);
+       avg[i].objectness += dets[j][i].objectness * 1./demo_frame;
+       avg[i].bbox.x += dets[j][i].bbox.x * 1./demo_frame;
+       avg[i].bbox.y += dets[j][i].bbox.y * 1./demo_frame;
+       avg[i].bbox.w += dets[j][i].bbox.w * 1./demo_frame;
+       avg[i].bbox.h += dets[j][i].bbox.h * 1./demo_frame;
+       }
+    //copy_cpu(classes, dets[0][i].prob, 1, avg[i].prob, 1);
+    //avg[i].objectness = dets[0][i].objectness;
+    }
+     */
+
     if (nms > 0) do_nms_obj(dets, nboxes, l.classes, nms);
 
-    //printf("\033[2J");
-    //printf("\033[1;1H");
-    //printf("\nFPS:%.1f\n",fps);
+    printf("\033[2J");
+    printf("\033[1;1H");
+    printf("\nFPS:%.1f\n",fps);
+    printf("Objects:\n\n");
     image display = buff[(buff_index+2) % 3];
-    
-    // 显示检测结果bbox
-    draw_detections(display, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-    
+    if(savedcounter >= 2)
+        draw_detections_royce(file_name, (savedcounter-2), display, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
     free_detections(dets, nboxes);
 
     demo_index = (demo_index + 1)%demo_frame;
     running = 0;
+    savedcounter += 1;
     return 0;
 }
 
 void *fetch_in_thread(void *ptr)
 {
-    int status = fill_image_from_stream(cap, buff[buff_index]);
+    char buff3[256];
+    //int status = fill_image_from_stream(cap, buff[buff_index]);	    
+    //image temp = buff[buff_index];
+    sprintf(buff3, "%s_%d.jpg", file_name, savedcounter);
+    image temp = get_image_from_stream(cap);
+    save_image_jpg(temp, buff3);
+    buff[buff_index] = temp;
     letterbox_image_into(buff[buff_index], net->w, net->h, buff_letter[buff_index]);
-    if(status == 0) demo_done = 1;
+    //if(status == 0) demo_done = 1;
+    //show_image_cv(temp, buff3, ipl);
+    //demo_done = 1;
     return 0;
 }
 
 void *display_in_thread(void *ptr)
 {
-    show_image_cv(buff[(buff_index + 1)%3], "Demo", ipl);
+    if(savedcounter >= 2){
+        char buff2[256];
+        sprintf(buff2, "%s_%d_boxed.jpg", file_name, (savedcounter - 2));
+        show_image_cv(buff[(buff_index + 1)%3], buff2, ipl);
+    }
     int c = cvWaitKey(1);
     if (c != -1) c = c%256;
     if (c == 27) {
@@ -195,10 +226,10 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     avg = calloc(demo_total, sizeof(float));
 
     if(filename){
-        printf("open video file: %s\n", filename);
+        printf("video file: %s\n", filename);
         cap = cvCaptureFromFile(filename);
+        file_name = filename;
     }else{
-        printf("open %s camera: #%d\n", (cam_index==0? "internal": "external"), cam_index);
         cap = cvCaptureFromCAM(cam_index);
 
         if(w){
@@ -214,11 +245,6 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
 
     if(!cap) error("Couldn't connect to webcam.\n");
 
-    // show video source info
-    int width  = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH);
-    int height = cvGetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT);
-    printf("video source width=%d, height=%d\n", width, height);
-    
     buff[0] = get_image_from_stream(cap);
     buff[1] = copy_image(buff[0]);
     buff[2] = copy_image(buff[0]);
@@ -228,7 +254,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
 
     int count = 0;
-    if(!prefix){
+    /*if(!prefix){
         cvNamedWindow("Demo", CV_WINDOW_NORMAL); 
         if(fullscreen){
             cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
@@ -236,29 +262,13 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
             cvMoveWindow("Demo", 0, 0);
             cvResizeWindow("Demo", 1352, 1013);
         }
-    }
+    }*/
 
     demo_time = what_time_is_it_now();
 
     while(!demo_done){
-        
         buff_index = (buff_index + 1) %3;
         if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
-        
-        // 每隔若干帧检测一次(仅用于视频文件调试模式)
-        if (1) // 将来改成0
-        {
-            frame_skipped++;
-            if (frame_skipped >= FRAME_SKIP){
-                frame_skipped = 0;
-            }
-            else{
-                display_in_thread(0);
-                pthread_join(fetch_thread, 0);
-                continue;
-            }
-        }
-        
         if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");
         if(!prefix){
             fps = 1./(what_time_is_it_now() - demo_time);
@@ -275,6 +285,95 @@ void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const ch
     }
 }
 
+/*
+   void demo_compare(char *cfg1, char *weight1, char *cfg2, char *weight2, float thresh, int cam_index, const char *filename, char **names, int classes, int delay, char *prefix, int avg_frames, float hier, int w, int h, int frames, int fullscreen)
+   {
+   demo_frame = avg_frames;
+   predictions = calloc(demo_frame, sizeof(float*));
+   image **alphabet = load_alphabet();
+   demo_names = names;
+   demo_alphabet = alphabet;
+   demo_classes = classes;
+   demo_thresh = thresh;
+   demo_hier = hier;
+   printf("Demo\n");
+   net = load_network(cfg1, weight1, 0);
+   set_batch_network(net, 1);
+   pthread_t detect_thread;
+   pthread_t fetch_thread;
+
+   srand(2222222);
+
+   if(filename){
+   printf("video file: %s\n", filename);
+   cap = cvCaptureFromFile(filename);
+   }else{
+   cap = cvCaptureFromCAM(cam_index);
+
+   if(w){
+   cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_WIDTH, w);
+   }
+   if(h){
+   cvSetCaptureProperty(cap, CV_CAP_PROP_FRAME_HEIGHT, h);
+   }
+   if(frames){
+   cvSetCaptureProperty(cap, CV_CAP_PROP_FPS, frames);
+   }
+   }
+
+   if(!cap) error("Couldn't connect to webcam.\n");
+
+   layer l = net->layers[net->n-1];
+   demo_detections = l.n*l.w*l.h;
+   int j;
+
+   avg = (float *) calloc(l.outputs, sizeof(float));
+   for(j = 0; j < demo_frame; ++j) predictions[j] = (float *) calloc(l.outputs, sizeof(float));
+
+   boxes = (box *)calloc(l.w*l.h*l.n, sizeof(box));
+   probs = (float **)calloc(l.w*l.h*l.n, sizeof(float *));
+   for(j = 0; j < l.w*l.h*l.n; ++j) probs[j] = (float *)calloc(l.classes+1, sizeof(float));
+
+   buff[0] = get_image_from_stream(cap);
+   buff[1] = copy_image(buff[0]);
+   buff[2] = copy_image(buff[0]);
+   buff_letter[0] = letterbox_image(buff[0], net->w, net->h);
+   buff_letter[1] = letterbox_image(buff[0], net->w, net->h);
+   buff_letter[2] = letterbox_image(buff[0], net->w, net->h);
+   ipl = cvCreateImage(cvSize(buff[0].w,buff[0].h), IPL_DEPTH_8U, buff[0].c);
+
+   int count = 0;
+   if(!prefix){
+   cvNamedWindow("Demo", CV_WINDOW_NORMAL); 
+   if(fullscreen){
+   cvSetWindowProperty("Demo", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+   } else {
+   cvMoveWindow("Demo", 0, 0);
+   cvResizeWindow("Demo", 1352, 1013);
+   }
+   }
+
+   demo_time = what_time_is_it_now();
+
+   while(!demo_done){
+buff_index = (buff_index + 1) %3;
+if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
+if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");
+if(!prefix){
+    fps = 1./(what_time_is_it_now() - demo_time);
+    demo_time = what_time_is_it_now();
+    display_in_thread(0);
+}else{
+    char name[256];
+    sprintf(name, "%s_%08d", prefix, count);
+    save_image(buff[(buff_index + 1)%3], name);
+}
+pthread_join(fetch_thread, 0);
+pthread_join(detect_thread, 0);
+++count;
+}
+}
+*/
 #else
 void demo(char *cfgfile, char *weightfile, float thresh, int cam_index, const char *filename, char **names, int classes, int delay, char *prefix, int avg, float hier, int w, int h, int frames, int fullscreen)
 {
